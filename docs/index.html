@@ -63,6 +63,9 @@
       gap: 0.5em;
     }
     .color-picker label {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
       margin: 0;
       font-weight: normal;
     }
@@ -192,7 +195,7 @@
       } else if (style === 'sphere') {
         viewer.setStyle({}, { sphere: {} });
       }
-      applyColorOverrides();
+      // Do NOT call applyColorOverrides() here; it's called when loading a model or changing a color picker
       viewer.zoomTo();
       viewer.render();
     }
@@ -216,8 +219,8 @@
           applyColorOverrides();
           viewer.render();
         });
+        label.appendChild(input);
         wrapper.appendChild(label);
-        wrapper.appendChild(input);
         colorControlsDiv.appendChild(wrapper);
       });
     }
@@ -250,34 +253,33 @@
       `;
 
       setupColorControls(meta.stoichiometry);
+      applyColorOverrides();
     }
 
-
+    // Load and render the chosen XYZ file (single-frame or multi-frame for MD)
     function loadXYZ(file) {
-      console.log("Fetching:", "./" + file);
       fetch(`./${file}`)
         .then(resp => {
           if (!resp.ok) throw new Error("File not found");
           return resp.text();
         })
         .then(data => {
-          // (rest of your existing logic goes here)
-          viewerDiv.innerHTML = "";
+          viewerDiv.innerHTML = '';
           viewer = $3Dmol.createViewer(viewerDiv, { backgroundColor: 'white' });
-    
+
           const meta = metadata[file] || {};
           if (meta.run_type === "Molecular Dynamics") {
-            // MD trajectory: load all frames
+            // MD trajectory: load all frames & animate
             viewer.addModelsData(data, 'xyz');
             setStyle(styleSelect.value);
             viewer.setAnimationMode("loop");
             viewer.animate({ loop: true, step: 100 });
           } else {
-            // Single frame
+            // Single-frame (start or geo_opt)
             viewer.addModel(data, 'xyz');
             setStyle(styleSelect.value);
           }
-    
+
           updateDetails(file);
         })
         .catch(err => {
@@ -287,8 +289,6 @@
           colorControlsDiv.innerHTML = "";
         });
     }
-
-
 
     // Populate the “System Type” dropdown
     function populateSystemTypes() {
@@ -355,10 +355,12 @@
       const funcs = new Set();
       for (const relpath in metadata) {
         const m = metadata[relpath];
-        if (m.system_type === sysVal
-            && m.material === matVal
-            && m.size === sizeVal
-            && m.functional) {
+        if (
+          m.system_type === sysVal &&
+          m.material === matVal &&
+          m.size === sizeVal &&
+          m.functional
+        ) {
           funcs.add(m.functional);
         }
       }
@@ -381,11 +383,13 @@
       const runs = new Set();
       for (const relpath in metadata) {
         const m = metadata[relpath];
-        if (m.system_type === sysVal
-            && m.material === matVal
-            && m.size === sizeVal
-            && m.functional === funcVal
-            && m.run_type) {
+        if (
+          m.system_type === sysVal &&
+          m.material === matVal &&
+          m.size === sizeVal &&
+          m.functional === funcVal &&
+          m.run_type
+        ) {
           runs.add(m.run_type);
         }
       }
@@ -410,11 +414,13 @@
 
       for (const relpath in metadata) {
         const m = metadata[relpath];
-        if (m.system_type === sysVal
-            && m.material === matVal
-            && m.size === sizeVal
-            && m.functional === funcVal
-            && m.run_type === runVal) {
+        if (
+          m.system_type === sysVal &&
+          m.material === matVal &&
+          m.size === sizeVal &&
+          m.functional === funcVal &&
+          m.run_type === runVal
+        ) {
           matches.push(relpath);
         }
       }
@@ -429,7 +435,7 @@
 
       if (matches.length > 0) {
         selectFile.disabled = false;
-        styleSelect.disabled = false;
+        styleSelect.disabled = false;   // ensure style selector is enabled
         loadXYZ(matches[0]);
       } else {
         selectFile.disabled = true;
