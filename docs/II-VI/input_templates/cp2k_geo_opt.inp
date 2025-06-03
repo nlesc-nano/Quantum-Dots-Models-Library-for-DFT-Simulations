@@ -1,0 +1,82 @@
+&FORCE_EVAL
+  &DFT
+    CHARGE 0
+    BASIS_SET_FILE_NAME $PATH_TO_DATA/BASIS_MOLOPT_UZH 
+    &MGRID
+      CUTOFF  400
+      NGRIDS  4
+    &END
+    &POISSON
+       POISSON_SOLVER MULTIPOLE 
+       PERIODIC None 
+    &END 
+    POTENTIAL_FILE_NAME  $PATH_TO_DATA/POTENTIAL_UZH
+    &QS
+      METHOD  gapw
+    &END
+#    &PRINT
+#      &PDOS
+#        NLUMO 100
+#      &END
+#    &END
+    &SCF
+      &OT
+        N_DIIS  7
+        MINIMIZER  DIIS
+        PRECONDITIONER  full_single_inverse
+      &END
+      EPS_SCF  1e-06
+      MAX_SCF 200  
+      SCF_GUESS  restart 
+    &END
+    WFN_RESTART_FILE_NAME CdSe-RESTART.wfn 
+    &XC
+      &XC_FUNCTIONAL
+        &MGGA_XC_HLE17
+        &END
+      &END
+      &XC_GRID
+        XC_DERIV  spline3
+        XC_SMOOTH_RHO  none
+      &END
+    &END
+  &END
+  &SUBSYS
+    &TOPOLOGY
+      COORDINATE XYZ
+      COORD_FILE_NAME start.xyz  
+      &CENTER_COORDINATES
+      &END
+    &END
+    &CELL
+      ABC  32 32 32          
+      PERIODIC None  
+    &END
+    &KIND Cd 
+      BASIS_SET  DZVP-MOLOPT-GGA-GTH-q12
+      POTENTIAL  GTH-GGA-q12
+    &END
+    &KIND Se
+      BASIS_SET  DZVP-MOLOPT-GGA-GTH-q6
+      POTENTIAL  GTH-GGA-q6
+    &END
+    &KIND Cl
+      BASIS_SET  DZVP-MOLOPT-GGA-GTH-q7
+      POTENTIAL  GTH-GGA-q7
+    &END
+  &END
+&END
+
+&GLOBAL
+  PRINT_LEVEL low 
+  PROJECT  CdSe 
+  RUN_TYPE GEO_OPT 
+&END
+
+&MOTION
+  &GEO_OPT
+     MAX_ITER 500
+     OPTIMIZER LBFGS
+  &END
+&END
+

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quantum Dots 3D Viewer</title>
+  <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+  <style>
+    body { font-family: sans-serif; margin: 2em; }
+    #viewer { width: 800px; height: 600px; position: relative; }
+    #xyz-file { width: 400px; }
+  </style>
+</head>
+<body>
+  <h2>Quantum Dots 3D Viewer</h2>
+  <label for="xyz-file">Select a structure:</label>
+  <select id="xyz-file"></select>
+  <div id="viewer"></div>
+
+  <script src="file_list.js"></script>
+  <script>
+    const select = document.getElementById('xyz-file');
+    const viewerDiv = document.getElementById('viewer');
+
+    // Populate dropdown with all xyz files (paths relative to docs/)
+    xyzFiles.forEach(file => {
+      const option = document.createElement('option');
+      option.value = file;
+      option.text = file;
+      select.appendChild(option);
+    });
+
+    function loadXYZ(file) {
+      fetch(file)
+        .then(response => {
+          if (!response.ok) throw new Error("File not found");
+          return response.text();
+        })
+        .then(data => {
+          viewerDiv.innerHTML = ""; // Clear previous viewer
+          const viewer = $3Dmol.createViewer(viewerDiv, { backgroundColor: "white" });
+          viewer.addModel(data, "xyz");
+          viewer.setStyle({}, { stick: {} });
+          viewer.zoomTo();
+          viewer.render();
+        })
+        .catch(err => {
+          viewerDiv.innerHTML = "<b>Error loading file.</b>";
+        });
+    }
+
+    // Initial load
+    if (xyzFiles.length > 0) loadXYZ(xyzFiles[0]);
+    select.addEventListener('change', () => {
+      loadXYZ(select.value);
+    });
+  </script>
+</body>
+</html>
+
