@@ -164,7 +164,7 @@
       "I": "#6600AA",  "Cd": "#FFD700", "Se": "#FFA500", "Pb": "#808080"
     };
 
-    // Helper: Convert "#RRGGBB" --> "0xRRGGBB"
+    // Helper: Convert "#RRGGBB" → "0xRRGGBB"
     function hexToXYZColor(hex) {
       return "0x" + hex.slice(1);
     }
@@ -195,7 +195,7 @@
       } else if (style === 'sphere') {
         viewer.setStyle({}, { sphere: {} });
       }
-      // Do NOT call applyColorOverrides() here; it's called when loading a model or changing a color picker
+      // No color‐override here—colors are applied whenever a model is loaded
       viewer.zoomTo();
       viewer.render();
     }
@@ -256,7 +256,7 @@
       applyColorOverrides();
     }
 
-    // Load and render the chosen XYZ file (single-frame or multi-frame for MD)
+    // Load and render the chosen XYZ file (always as a single frame)
     function loadXYZ(file) {
       fetch(`./${file}`)
         .then(resp => {
@@ -267,18 +267,9 @@
           viewerDiv.innerHTML = '';
           viewer = $3Dmol.createViewer(viewerDiv, { backgroundColor: 'white' });
 
-          const meta = metadata[file] || {};
-          if (meta.run_type === "Molecular Dynamics") {
-            // MD trajectory: load all frames & animate
-            viewer.addModelsData(data, 'xyz');
-            setStyle(styleSelect.value);
-            viewer.setAnimationMode("loop");
-            viewer.animate({ loop: true, step: 100 });
-          } else {
-            // Single-frame (start or geo_opt)
-            viewer.addModel(data, 'xyz');
-            setStyle(styleSelect.value);
-          }
+          // Always treat MD “pos” as single‐frame (no animation)
+          viewer.addModel(data, 'xyz');
+          setStyle(styleSelect.value);
 
           updateDetails(file);
         })
