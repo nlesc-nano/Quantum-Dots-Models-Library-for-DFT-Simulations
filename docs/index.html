@@ -7,27 +7,47 @@
   <style>
     body { font-family: sans-serif; margin: 2em; }
     #viewer { width: 800px; height: 600px; position: relative; }
-    #xyz-file { width: 400px; }
+    #xyz-file, #style { width: 400px; }
   </style>
 </head>
 <body>
   <h2>Quantum Dots 3D Viewer</h2>
   <label for="xyz-file">Select a structure:</label>
   <select id="xyz-file"></select>
+  <label for="style">Style:</label>
+  <select id="style">
+    <option value="stick">Stick</option>
+    <option value="ballstick">Ball and Stick</option>
+    <option value="sphere">Space Filling (CPK)</option>
+  </select>
   <div id="viewer"></div>
-
   <script src="file_list.js"></script>
   <script>
     const select = document.getElementById('xyz-file');
+    const styleSelect = document.getElementById('style');
     const viewerDiv = document.getElementById('viewer');
+    let viewer, currentData = null;
 
-    // Populate dropdown with all xyz files (paths relative to docs/)
     xyzFiles.forEach(file => {
       const option = document.createElement('option');
       option.value = file;
       option.text = file;
       select.appendChild(option);
     });
+
+    function setStyle(style) {
+      if (!viewer) return;
+      viewer.setStyle({}, {}); // clear all
+      if (style === 'stick') {
+        viewer.setStyle({}, {stick:{}});
+      } else if (style === 'ballstick') {
+        viewer.setStyle({}, {stick:{}, sphere:{scale:0.3}});
+      } else if (style === 'sphere') {
+        viewer.setStyle({}, {sphere:{}});
+      }
+      viewer.zoomTo();
+      viewer.render();
+    }
 
     function loadXYZ(file) {
       fetch(file)
@@ -36,23 +56,20 @@
           return response.text();
         })
         .then(data => {
-          viewerDiv.innerHTML = ""; // Clear previous viewer
-          const viewer = $3Dmol.createViewer(viewerDiv, { backgroundColor: "white" });
+          viewerDiv.innerHTML = "";
+          viewer = $3Dmol.createViewer(viewerDiv, { backgroundColor: "white" });
           viewer.addModel(data, "xyz");
-          viewer.setStyle({}, { stick: {} });
-          viewer.zoomTo();
-          viewer.render();
+          currentData = data;
+          setStyle(styleSelect.value);
         })
         .catch(err => {
           viewerDiv.innerHTML = "<b>Error loading file.</b>";
         });
     }
 
-    // Initial load
     if (xyzFiles.length > 0) loadXYZ(xyzFiles[0]);
-    select.addEventListener('change', () => {
-      loadXYZ(select.value);
-    });
+    select.addEventListener('change', () => loadXYZ(select.value));
+    styleSelect.addEventListener('change', () => setStyle(styleSelect.value));
   </script>
 </body>
 </html>
