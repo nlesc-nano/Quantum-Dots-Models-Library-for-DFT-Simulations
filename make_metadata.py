@@ -74,19 +74,44 @@ def parse_metadata(relpath):
     return metadata
 
 def count_atoms(xyz_path):
+    """
+    Count atoms only from the first frame of an XYZ file.
+    This way, if an MD “pos” file has many frames, we don’t aggregate across all frames.
+    """
     counts = {}
     try:
         with open(xyz_path, 'r') as f:
-            lines = f.readlines()
-        # skip first two lines of XYZ format
-        for line in lines[2:]:
-            token = line.strip().split()
-            if not token:
-                continue
-            atom = token[0]
-            counts[atom] = counts.get(atom, 0) + 1
+            # 1) read first line: number of atoms (N)
+            first = f.readline()
+            if not first:
+                return counts
+            try:
+                n_atoms = int(first.strip())
+            except ValueError:
+                # not a valid XYZ; fallback to naive parse of entire file
+                lines = [first] + f.readlines()
+                for line in lines[2:]:
+                    parts = line.strip().split()
+                    if parts:
+                        el = parts[0]
+                        counts[el] = counts.get(el, 0) + 1
+                return counts
+
+            # 2) skip comment line
+            comment = f.readline()
+
+            # 3) read exactly n_atoms lines and count
+            for _ in range(n_atoms):
+                line = f.readline()
+                if not line:
+                    break
+                parts = line.strip().split()
+                if parts:
+                    el = parts[0]
+                    counts[el] = counts.get(el, 0) + 1
     except Exception:
         pass
+
     return counts
 
 def compute_all_ratios(counts):

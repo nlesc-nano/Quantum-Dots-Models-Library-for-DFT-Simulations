@@ -252,7 +252,7 @@
       setupColorControls(meta.stoichiometry);
     }
 
-    // Load and render the chosen XYZ file
+    // Load and render the chosen XYZ file (single‐frame or multi‐frame for MD)
     function loadXYZ(file) {
       fetch(file)
         .then(resp => {
@@ -262,8 +262,21 @@
         .then(data => {
           viewerDiv.innerHTML = '';
           viewer = $3Dmol.createViewer(viewerDiv, { backgroundColor: 'white' });
-          viewer.addModel(data, 'xyz');
-          setStyle(styleSelect.value);
+
+          const meta = metadata[file] || {};
+          if (meta.run_type === "Molecular Dynamics") {
+            // MD trajectory: load all frames as a multi‐model
+            viewer.addModelsData(data, 'xyz');
+            setStyle(styleSelect.value);
+            // Animate: loop through frames, 100 ms per frame
+            viewer.setAnimationMode("loop");
+            viewer.animate({ loop: true, step: 100 });
+          } else {
+            // Single‐frame
+            viewer.addModel(data, 'xyz');
+            setStyle(styleSelect.value);
+          }
+
           updateDetails(file);
         })
         .catch(() => {
@@ -430,7 +443,6 @@
         filterMaterial.value = "";
         filterMaterial.disabled = false;
       } else {
-        // Reset all downstream filters
         filterMaterial.innerHTML = '<option value="">— Select Material —</option>';
         filterMaterial.disabled = true;
       }
