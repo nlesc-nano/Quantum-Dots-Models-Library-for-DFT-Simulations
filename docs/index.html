@@ -75,40 +75,42 @@
     <div>
       <label for="filter-system">System Type:</label>
       <select id="filter-system">
-        <option value="">All</option>
+        <option value="">— Select System —</option>
       </select>
     </div>
     <div>
       <label for="filter-material">Material:</label>
-      <select id="filter-material">
-        <option value="">All</option>
+      <select id="filter-material" disabled>
+        <option value="">— Select Material —</option>
       </select>
     </div>
     <div>
       <label for="filter-size">Size (nm):</label>
-      <select id="filter-size">
-        <option value="">All</option>
+      <select id="filter-size" disabled>
+        <option value="">— Select Size —</option>
       </select>
     </div>
     <div>
       <label for="filter-functional">DFT Functional:</label>
-      <select id="filter-functional">
-        <option value="">All</option>
+      <select id="filter-functional" disabled>
+        <option value="">— Select Functional —</option>
       </select>
     </div>
     <div>
       <label for="filter-runtype">Run Type:</label>
-      <select id="filter-runtype">
-        <option value="">All</option>
+      <select id="filter-runtype" disabled>
+        <option value="">— Select Run Type —</option>
       </select>
     </div>
     <div>
       <label for="xyz-file">Structure File:</label>
-      <select id="xyz-file"></select>
+      <select id="xyz-file" disabled>
+        <option value="">— Select File —</option>
+      </select>
     </div>
     <div>
       <label for="style">Rendering Style:</label>
-      <select id="style">
+      <select id="style" disabled>
         <option value="stick">Stick</option>
         <option value="ballstick">Ball &amp; Stick</option>
         <option value="sphere">Space Filling (CPK)</option>
@@ -133,8 +135,7 @@
       .then(response => response.json())
       .then(data => {
         metadata = data;
-        initializeFilters();
-        updateFileList();
+        populateSystemTypes();
       })
       .catch(() => {
         console.warn('Could not load metadata.json');
@@ -272,66 +273,134 @@
         });
     }
 
-    // Populate filter dropdowns based on metadata
-    function initializeFilters() {
-      const systems     = new Set();
-      const materials   = new Set();
-      const sizes       = new Set();
-      const functionals = new Set();
-      const runTypes    = new Set();
-
+    // Populate the “System Type” dropdown
+    function populateSystemTypes() {
+      const systems = new Set();
       for (const relpath in metadata) {
         const m = metadata[relpath];
-        if (m.system_type)     systems.add(m.system_type);
-        if (m.material)        materials.add(m.material);
-        if (m.size != null)    sizes.add(m.size);
-        if (m.functional)      functionals.add(m.functional);
-        if (m.run_type)        runTypes.add(m.run_type);
+        if (m.system_type) systems.add(m.system_type);
       }
-
-      // Helper to sort sizes numerically
-      const sortedSizes = Array.from(sizes).sort((a, b) => a - b);
-
-      // Populate a <select> with given set
-      function populateSelect(selectEl, values, formatter = v => v) {
-        values.forEach(val => {
-          const opt = document.createElement('option');
-          opt.value = val;
-          opt.text = formatter(val);
-          selectEl.appendChild(opt);
-        });
-      }
-
-      populateSelect(filterSystem,     Array.from(systems).sort());
-      populateSelect(filterMaterial,   Array.from(materials).sort());
-      populateSelect(filterSize,       sortedSizes, v => `${v} nm`);
-      populateSelect(filterFunctional, Array.from(functionals).sort());
-      populateSelect(filterRunType,    Array.from(runTypes).sort());
+      Array.from(systems).sort().forEach(val => {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.text = val;
+        filterSystem.appendChild(opt);
+      });
     }
 
-    // Filter file list according to selected filters
-    function updateFileList() {
+    // Populate “Material” based on selected system
+    function populateMaterials() {
+      filterMaterial.innerHTML = '<option value="">— Select Material —</option>';
+      const selectedSystem = filterSystem.value;
+      const mats = new Set();
+      for (const relpath in metadata) {
+        const m = metadata[relpath];
+        if (m.system_type === selectedSystem) {
+          if (m.material) mats.add(m.material);
+        }
+      }
+      Array.from(mats).sort().forEach(val => {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.text = val;
+        filterMaterial.appendChild(opt);
+      });
+      filterMaterial.disabled = mats.size === 0;
+    }
+
+    // Populate “Size” based on system + material
+    function populateSizes() {
+      filterSize.innerHTML = '<option value="">— Select Size —</option>';
+      const sysVal = filterSystem.value;
+      const matVal = filterMaterial.value;
+      const sizes = new Set();
+      for (const relpath in metadata) {
+        const m = metadata[relpath];
+        if (m.system_type === sysVal && m.material === matVal && m.size != null) {
+          sizes.add(m.size);
+        }
+      }
+      Array.from(sizes).sort((a, b) => a - b).forEach(val => {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.text = `${val} nm`;
+        filterSize.appendChild(opt);
+      });
+      filterSize.disabled = sizes.size === 0;
+    }
+
+    // Populate “DFT Functional” based on system + material + size
+    function populateFunctionals() {
+      filterFunctional.innerHTML = '<option value="">— Select Functional —</option>';
+      const sysVal = filterSystem.value;
+      const matVal = filterMaterial.value;
+      const sizeVal = parseFloat(filterSize.value);
+      const funcs = new Set();
+      for (const relpath in metadata) {
+        const m = metadata[relpath];
+        if (m.system_type === sysVal
+            && m.material === matVal
+            && m.size === sizeVal
+            && m.functional) {
+          funcs.add(m.functional);
+        }
+      }
+      Array.from(funcs).sort().forEach(val => {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.text = val;
+        filterFunctional.appendChild(opt);
+      });
+      filterFunctional.disabled = funcs.size === 0;
+    }
+
+    // Populate “Run Type” based on system + material + size + functional
+    function populateRunTypes() {
+      filterRunType.innerHTML = '<option value="">— Select Run Type —</option>';
+      const sysVal = filterSystem.value;
+      const matVal = filterMaterial.value;
+      const sizeVal = parseFloat(filterSize.value);
+      const funcVal = filterFunctional.value;
+      const runs = new Set();
+      for (const relpath in metadata) {
+        const m = metadata[relpath];
+        if (m.system_type === sysVal
+            && m.material === matVal
+            && m.size === sizeVal
+            && m.functional === funcVal
+            && m.run_type) {
+          runs.add(m.run_type);
+        }
+      }
+      Array.from(runs).sort().forEach(val => {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.text = val;
+        filterRunType.appendChild(opt);
+      });
+      filterRunType.disabled = runs.size === 0;
+    }
+
+    // Populate the “Structure File” dropdown based on all previous selections
+    function populateFileList() {
+      selectFile.innerHTML = '<option value="">— Select File —</option>';
       const sysVal = filterSystem.value;
       const matVal = filterMaterial.value;
       const sizeVal = parseFloat(filterSize.value);
       const funcVal = filterFunctional.value;
       const runVal = filterRunType.value;
-
-      // Clear current options
-      selectFile.innerHTML = '';
-
-      // Build filtered list
       const matches = [];
-      xyzFiles.forEach(relpath => {
+
+      for (const relpath in metadata) {
         const m = metadata[relpath];
-        if (!m) return;
-        if (sysVal && m.system_type !== sysVal) return;
-        if (matVal && m.material !== matVal) return;
-        if (sizeVal && m.size !== sizeVal) return;
-        if (funcVal && m.functional !== funcVal) return;
-        if (runVal && m.run_type !== runVal) return;
-        matches.push(relpath);
-      });
+        if (m.system_type === sysVal
+            && m.material === matVal
+            && m.size === sizeVal
+            && m.functional === funcVal
+            && m.run_type === runVal) {
+          matches.push(relpath);
+        }
+      }
 
       matches.sort();
       matches.forEach(relpath => {
@@ -343,28 +412,118 @@
 
       if (matches.length > 0) {
         selectFile.disabled = false;
+        styleSelect.disabled = false;
         loadXYZ(matches[0]);
       } else {
-        const opt = document.createElement('option');
-        opt.value = '';
-        opt.text = 'No matching structures';
-        selectFile.appendChild(opt);
         selectFile.disabled = true;
+        styleSelect.disabled = true;
         viewerDiv.innerHTML = "<b>No structure to display</b>";
         detailsDiv.innerHTML = "<i>No details available.</i>";
         colorControlsDiv.innerHTML = "";
       }
     }
 
-    // Event listeners for filters and file selection
-    filterSystem.addEventListener('change', updateFileList);
-    filterMaterial.addEventListener('change', updateFileList);
-    filterSize.addEventListener('change', updateFileList);
-    filterFunctional.addEventListener('change', updateFileList);
-    filterRunType.addEventListener('change', updateFileList);
-    selectFile.addEventListener('change', () => {
-      if (selectFile.value) loadXYZ(selectFile.value);
+    // Event listeners chaining
+    filterSystem.addEventListener('change', () => {
+      if (filterSystem.value) {
+        populateMaterials();
+        filterMaterial.value = "";
+        filterMaterial.disabled = false;
+      } else {
+        // Reset all downstream filters
+        filterMaterial.innerHTML = '<option value="">— Select Material —</option>';
+        filterMaterial.disabled = true;
+      }
+      filterSize.innerHTML = '<option value="">— Select Size —</option>';
+      filterSize.disabled = true;
+      filterFunctional.innerHTML = '<option value="">— Select Functional —</option>';
+      filterFunctional.disabled = true;
+      filterRunType.innerHTML = '<option value="">— Select Run Type —</option>';
+      filterRunType.disabled = true;
+      selectFile.innerHTML = '<option value="">— Select File —</option>';
+      selectFile.disabled = true;
+      styleSelect.disabled = true;
+      viewerDiv.innerHTML = "<b>Select a System Type first</b>";
+      detailsDiv.innerHTML = "";
+      colorControlsDiv.innerHTML = "";
     });
+
+    filterMaterial.addEventListener('change', () => {
+      if (filterMaterial.value) {
+        populateSizes();
+        filterSize.value = "";
+        filterSize.disabled = false;
+      } else {
+        filterSize.innerHTML = '<option value="">— Select Size —</option>';
+        filterSize.disabled = true;
+      }
+      filterFunctional.innerHTML = '<option value="">— Select Functional —</option>';
+      filterFunctional.disabled = true;
+      filterRunType.innerHTML = '<option value="">— Select Run Type —</option>';
+      filterRunType.disabled = true;
+      selectFile.innerHTML = '<option value="">— Select File —</option>';
+      selectFile.disabled = true;
+      styleSelect.disabled = true;
+      viewerDiv.innerHTML = "<b>Select a Material first</b>";
+      detailsDiv.innerHTML = "";
+      colorControlsDiv.innerHTML = "";
+    });
+
+    filterSize.addEventListener('change', () => {
+      if (filterSize.value) {
+        populateFunctionals();
+        filterFunctional.value = "";
+        filterFunctional.disabled = false;
+      } else {
+        filterFunctional.innerHTML = '<option value="">— Select Functional —</option>';
+        filterFunctional.disabled = true;
+      }
+      filterRunType.innerHTML = '<option value="">— Select Run Type —</option>';
+      filterRunType.disabled = true;
+      selectFile.innerHTML = '<option value="">— Select File —</option>';
+      selectFile.disabled = true;
+      styleSelect.disabled = true;
+      viewerDiv.innerHTML = "<b>Select a Size first</b>";
+      detailsDiv.innerHTML = "";
+      colorControlsDiv.innerHTML = "";
+    });
+
+    filterFunctional.addEventListener('change', () => {
+      if (filterFunctional.value) {
+        populateRunTypes();
+        filterRunType.value = "";
+        filterRunType.disabled = false;
+      } else {
+        filterRunType.innerHTML = '<option value="">— Select Run Type —</option>';
+        filterRunType.disabled = true;
+      }
+      selectFile.innerHTML = '<option value="">— Select File —</option>';
+      selectFile.disabled = true;
+      styleSelect.disabled = true;
+      viewerDiv.innerHTML = "<b>Select a Functional first</b>";
+      detailsDiv.innerHTML = "";
+      colorControlsDiv.innerHTML = "";
+    });
+
+    filterRunType.addEventListener('change', () => {
+      if (filterRunType.value) {
+        populateFileList();
+      } else {
+        selectFile.innerHTML = '<option value="">— Select File —</option>';
+        selectFile.disabled = true;
+        styleSelect.disabled = true;
+        viewerDiv.innerHTML = "<b>Select a Run Type first</b>";
+        detailsDiv.innerHTML = "";
+        colorControlsDiv.innerHTML = "";
+      }
+    });
+
+    selectFile.addEventListener('change', () => {
+      if (selectFile.value) {
+        loadXYZ(selectFile.value);
+      }
+    });
+
     styleSelect.addEventListener('change', () => setStyle(styleSelect.value));
   </script>
 </body>
