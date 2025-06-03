@@ -30,11 +30,14 @@
       margin-bottom: 0.3em;
       font-weight: bold;
     }
-    select, input[type="color"] {
+    select, input[type="color"], button {
       padding: 0.3em;
       font-size: 1em;
       width: 100%;
       box-sizing: border-box;
+    }
+    button {
+      cursor: pointer;
     }
     #structure-details {
       margin: 1em 0;
@@ -120,6 +123,10 @@
         <option value="sphere">Space Filling (CPK)</option>
       </select>
     </div>
+    <div>
+      <label>&nbsp;</label>
+      <button id="download-btn" disabled>Download Structure</button>
+    </div>
   </div>
 
   <div id="structure-details">
@@ -153,10 +160,12 @@
     const filterRunType    = document.getElementById('filter-runtype');
     const selectFile       = document.getElementById('xyz-file');
     const styleSelect      = document.getElementById('style');
+    const downloadBtn      = document.getElementById('download-btn');
     const viewerDiv        = document.getElementById('viewer');
     const detailsDiv       = document.getElementById('details-content');
     const colorControlsDiv = document.getElementById('color-controls');
     let viewer = null;
+    let currentFile = "";
 
     // Default CPK-like colors
     const defaultColors = {
@@ -196,7 +205,6 @@
       } else if (style === 'sphere') {
         viewer.setStyle({}, { sphere: {} });
       }
-      // No color‐override here—colors reapply after loading a model
       viewer.zoomTo();
       viewer.render();
     }
@@ -259,6 +267,9 @@
 
     // Load and render the chosen XYZ file (multi-frame MD if supported)
     function loadXYZ(file) {
+      currentFile = file;
+      downloadBtn.disabled = false;
+      downloadBtn.innerText = `Download ${file.split('/').pop()}`;
       fetch(`./${file}`)
         .then(resp => {
           if (!resp.ok) throw new Error("File not found");
@@ -297,6 +308,17 @@
           colorControlsDiv.innerHTML = "";
         });
     }
+
+    // Trigger download of the current file
+    downloadBtn.addEventListener('click', () => {
+      if (!currentFile) return;
+      const link = document.createElement('a');
+      link.href = `./${currentFile}`;
+      link.download = currentFile.split('/').pop();
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
 
     // Populate the “System Type” dropdown
     function populateSystemTypes() {
@@ -448,6 +470,7 @@
       } else {
         selectFile.disabled = true;
         styleSelect.disabled = true;
+        downloadBtn.disabled = true;
         viewerDiv.innerHTML = "<b>No structure to display</b>";
         detailsDiv.innerHTML = "<i>No details available.</i>";
         colorControlsDiv.innerHTML = "";
@@ -473,6 +496,7 @@
       selectFile.innerHTML = '<option value="">— Select File —</option>';
       selectFile.disabled = true;
       styleSelect.disabled = true;
+      downloadBtn.disabled = true;
       viewerDiv.innerHTML = "<b>Select a System Type first</b>";
       detailsDiv.innerHTML = "";
       colorControlsDiv.innerHTML = "";
@@ -494,6 +518,7 @@
       selectFile.innerHTML = '<option value="">— Select File —</option>';
       selectFile.disabled = true;
       styleSelect.disabled = true;
+      downloadBtn.disabled = true;
       viewerDiv.innerHTML = "<b>Select a Material first</b>";
       detailsDiv.innerHTML = "";
       colorControlsDiv.innerHTML = "";
@@ -513,6 +538,7 @@
       selectFile.innerHTML = '<option value="">— Select File —</option>';
       selectFile.disabled = true;
       styleSelect.disabled = true;
+      downloadBtn.disabled = true;
       viewerDiv.innerHTML = "<b>Select a Size first</b>";
       detailsDiv.innerHTML = "";
       colorControlsDiv.innerHTML = "";
@@ -530,6 +556,7 @@
       selectFile.innerHTML = '<option value="">— Select File —</option>';
       selectFile.disabled = true;
       styleSelect.disabled = true;
+      downloadBtn.disabled = true;
       viewerDiv.innerHTML = "<b>Select a Functional first</b>";
       detailsDiv.innerHTML = "";
       colorControlsDiv.innerHTML = "";
@@ -542,6 +569,7 @@
         selectFile.innerHTML = '<option value="">— Select File —</option>';
         selectFile.disabled = true;
         styleSelect.disabled = true;
+        downloadBtn.disabled = true;
         viewerDiv.innerHTML = "<b>Select a Run Type first</b>";
         detailsDiv.innerHTML = "";
         colorControlsDiv.innerHTML = "";
