@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>Quantum Dots 3D Viewer</title>
-  <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+  <!-- Use the latest 3Dmol.js build from jsDelivr to support multi-frame MD -->
+  <script src="https://cdn.jsdelivr.net/gh/3dmol/3Dmol.js/build/3Dmol.js"></script>
   <style>
     body {
       font-family: sans-serif;
@@ -195,7 +196,7 @@
       } else if (style === 'sphere') {
         viewer.setStyle({}, { sphere: {} });
       }
-      // No color‐override here—colors are applied whenever a model is loaded
+      // No color‐override here—colors reapply after loading a model
       viewer.zoomTo();
       viewer.render();
     }
@@ -256,7 +257,7 @@
       applyColorOverrides();
     }
 
-    // Load and render the chosen XYZ file (always as a single frame)
+    // Load and render the chosen XYZ file (multi-frame MD if supported)
     function loadXYZ(file) {
       fetch(`./${file}`)
         .then(resp => {
@@ -267,9 +268,25 @@
           viewerDiv.innerHTML = '';
           viewer = $3Dmol.createViewer(viewerDiv, { backgroundColor: 'white' });
 
-          // Always treat MD “pos” as single‐frame (no animation)
-          viewer.addModel(data, 'xyz');
-          setStyle(styleSelect.value);
+          const meta = metadata[file] || {};
+          if (meta.run_type === "Molecular Dynamics" && viewer.addModelsAsFrames) {
+            // Use addModelsAsFrames() if available for multi-frame MD
+            viewer.addModelsAsFrames(data, 'xyz');
+            setStyle(styleSelect.value);
+            viewer.setAnimationMode("loop");
+            viewer.animate({ loop: true, step: 100 });
+          } else {
+            // Fallback: single-frame using the first frame
+            let firstFrame = data;
+            if (meta.run_type === "Molecular Dynamics") {
+              // Extract just the first frame manually:
+              const lines = data.split('\n');
+              const n = parseInt(lines[0].trim());
+              firstFrame = lines.slice(0, n + 2).join('\n');
+            }
+            viewer.addModel(firstFrame, 'xyz');
+            setStyle(styleSelect.value);
+          }
 
           updateDetails(file);
         })
