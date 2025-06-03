@@ -5,16 +5,18 @@ import itertools
 
 def parse_metadata(relpath):
     """
-    Given a relative path like "II-VI/ZnSe/HLE17/28ang/geo_opt/Zn176Se147Cl58_HLE17_28ang_OPT.xyz",
+    Given a relative path like "II-VI/ZnSe/HLE17/28ang/geo_opt/StartXYZ.xyz",
     extract:
-      - system_type    → "II-VI"
-      - material       → "ZnSe"
-      - filename       → "Zn176Se147Cl58_HLE17_28ang_OPT.xyz"
-      - size (in nm)   → 2.8
-      - functional     → "HLE17"  (if present; else "")
-      - basis          → "DZVP"   (if filename contains DZVP/TZVP, use that; else if functional=="HLE17", use "DZVP")
-      - run_type       → "Geometry Optimization"  if any folder is "geo_opt", or "Molecular Dynamics" if any folder is "md"
-      - code           → "CP2k" (default) or "ORCA" if filename contains "orca"
+      - system_type   → "II-VI"
+      - material      → "ZnSe"
+      - filename      → "StartXYZ.xyz"
+      - size (in nm)  → parsed from “28ang” → 2.8
+      - functional    → "HLE17" if present
+      - basis         → parsed from filename if “DZVP”/“TZVP” or default to "DZVP" when functional=="HLE17"
+      - run_type      → "Geometry Optimization" if any folder is "geo_opt",
+                         "Molecular Dynamics" if any folder is "md",
+                         "Start" if any folder is "start" or if neither geo_opt nor md appear
+      - code          → "ORCA" if “orca” in filename; else default "CP2k"
     """
     parts = relpath.split('/')
     filename = os.path.basename(relpath)
@@ -24,27 +26,21 @@ def parse_metadata(relpath):
         "filename": filename
     }
 
-    # ─── Size in nm ──────────────────────────────────────────────────────────────────────
-    # Look for either “NNNnm” or “NNNang” (case‐insensitive)
-    nm_match   = re.search(r'(\d+(\.\d+)?)\s*nm', filename, re.IGNORECASE)
-    ang_match  = re.search(r'(\d+(\.\d+)?)\s*ang', filename, re.IGNORECASE)
+    # ─── Size in nm ───────────────────────────────────────────────────────
+    nm_match  = re.search(r'(\d+(\.\d+)?)\s*nm', filename, re.IGNORECASE)
+    ang_match = re.search(r'(\d+(\.\d+)?)\s*ang', filename, re.IGNORECASE)
     if nm_match:
         metadata["size"] = float(nm_match.group(1))
     elif ang_match:
-        # Convert Å → nm
-        ang_val = float(ang_match.group(1))
-        metadata["size"] = round(ang_val / 10.0, 3)
+        metadata["size"] = round(float(ang_match.group(1)) / 10.0, 3)
     else:
         metadata["size"] = None
 
-    # Always store size in nm; no need for units field:
-    # metadata["size_units"] = "nm"
-
-    # ─── Functional ──────────────────────────────────────────────────────────────────
+    # ─── Functional ───────────────────────────────────────────────────────
     func_match = re.search(r'(HLE17|PBE|B3LYP|HSE06)', filename, re.IGNORECASE)
     metadata["functional"] = func_match.group(1).upper() if func_match else ""
 
-    # ─── Basis Set ───────────────────────────────────────────────────────────────────
+    # ─── Basis Set ────────────────────────────────────────────────────────
     basis_match = re.search(r'(DZVP|TZVP)', filename, re.IGNORECASE)
     if basis_match:
         metadata["basis"] = basis_match.group(1).upper()
@@ -53,7 +49,7 @@ def parse_metadata(relpath):
     else:
         metadata["basis"] = ""
 
-    # ─── Run Type (from any “geo_opt” or “md” folder) ───────────────────────────────────
+    # ─── Run Type ─────────────────────────────────────────────────────────
     run_type = ""
     for part in parts:
         low = part.lower()
@@ -63,9 +59,15 @@ def parse_metadata(relpath):
         elif low == "md":
             run_type = "Molecular Dynamics"
             break
+        elif low == "start":
+            run_type = "Start"
+            break
+    # If neither geo_opt, md, nor start was found, default to "Start"
+    if not run_type:
+        run_type = "Start"
     metadata["run_type"] = run_type
 
-    # ─── DFT Code (default CP2k; override if “orca” in filename) ────────────────────────
+    # ─── DFT Code ──────────────────────────────────────────────────────────
     if re.search(r'orca', filename, re.IGNORECASE):
         metadata["code"] = "ORCA"
     else:
@@ -76,19 +78,18 @@ def parse_metadata(relpath):
 def count_atoms(xyz_path):
     """
     Count atoms only from the first frame of an XYZ file.
-    This way, if an MD “pos” file has many frames, we don’t aggregate across all frames.
+    That way, for an MD “pos” file with multiple frames, we only count the first frame.
     """
     counts = {}
     try:
         with open(xyz_path, 'r') as f:
-            # 1) read first line: number of atoms (N)
             first = f.readline()
             if not first:
                 return counts
             try:
                 n_atoms = int(first.strip())
             except ValueError:
-                # not a valid XYZ; fallback to naive parse of entire file
+                # If header is malformed, fall back to counting all lines after line 2
                 lines = [first] + f.readlines()
                 for line in lines[2:]:
                     parts = line.strip().split()
@@ -97,10 +98,10 @@ def count_atoms(xyz_path):
                         counts[el] = counts.get(el, 0) + 1
                 return counts
 
-            # 2) skip comment line
-            comment = f.readline()
+            # Skip comment line
+            f.readline()
 
-            # 3) read exactly n_atoms lines and count
+            # Read exactly n_atoms lines for the first frame
             for _ in range(n_atoms):
                 line = f.readline()
                 if not line:
@@ -128,21 +129,24 @@ def compute_all_ratios(counts):
 def find_xyz_files(root):
     xyz_paths = []
     for dirpath, dirnames, filenames in os.walk(root):
-        # Skip any folder named “md” entirely – except we do want “pos” files if under md
         parts = dirpath.split(os.sep)
-        if any(p.lower() == "md" for p in parts):
-            # In an “md” folder: only include .xyz files containing “pos” in the name
-            for f in filenames:
-                if f.lower().endswith(".xyz") and "pos" in f.lower():
-                    rel = os.path.relpath(os.path.join(dirpath, f), root).replace("\\", "/")
-                    xyz_paths.append(rel)
-            continue
+        in_md_folder = any(p.lower() == "md" for p in parts)
+        in_start_folder = any(p.lower() == "start" for p in parts)
 
-        # Otherwise (not under md), include every .xyz
         for f in filenames:
-            if f.lower().endswith(".xyz"):
-                rel = os.path.relpath(os.path.join(dirpath, f), root).replace("\\", "/")
+            if not f.lower().endswith(".xyz"):
+                continue
+
+            rel = os.path.relpath(os.path.join(dirpath, f), root).replace("\\", "/")
+
+            if in_md_folder:
+                # In an MD folder: only include files containing “pos”
+                if "pos" in f.lower():
+                    xyz_paths.append(rel)
+            else:
+                # Include everything else (including “start” frames, geo_opt, etc.)
                 xyz_paths.append(rel)
+
     xyz_paths.sort()
     return xyz_paths
 
@@ -167,4 +171,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
