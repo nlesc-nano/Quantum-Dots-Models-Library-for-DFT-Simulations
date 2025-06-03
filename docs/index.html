@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>Quantum Dots 3D Viewer</title>
-  <!-- Use the latest 3Dmol.js build from jsDelivr to support multi-frame MD -->
-  <script src="https://cdn.jsdelivr.net/gh/3dmol/3Dmol.js/build/3Dmol.js"></script>
+  <!-- Use a 3Dmol.js build that defines $3Dmol -->
+  <script src="https://cdn.jsdelivr.net/npm/3dmol@2.1.0/build/3Dmol-min.js"></script>
   <style>
     body {
       font-family: sans-serif;
@@ -466,6 +466,7 @@
       if (matches.length > 0) {
         selectFile.disabled = false;
         styleSelect.disabled = false;   // ensure style selector is enabled
+        downloadBtn.disabled = false;
         loadXYZ(matches[0]);
       } else {
         selectFile.disabled = true;
@@ -586,4 +587,5 @@
   </script>
 </body>
 </html>
+
 
