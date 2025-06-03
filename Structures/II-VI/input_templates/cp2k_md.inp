@@ -1,0 +1,111 @@
+&FORCE_EVAL
+  &DFT
+    CHARGE 0
+    BASIS_SET_FILE_NAME $PATH_TO_DATA/BASIS_MOLOPT_UZH 
+    POTENTIAL_FILE_NAME $PATH_TO_DATA/POTENTIAL_UZH
+    &MGRID
+      CUTOFF  400
+      NGRIDS  4
+    &END
+    &POISSON
+       POISSON_SOLVER MULTIPOLE 
+       PERIODIC None 
+    &END 
+    &QS
+      METHOD  gapw
+    &END
+    &SCF
+      &OT
+        N_DIIS  7
+        MINIMIZER  DIIS
+        PRECONDITIONER  full_single_inverse
+      &END
+      EPS_SCF  1e-06
+      MAX_SCF 200  
+      SCF_GUESS  restart 
+    &END
+    WFN_RESTART_FILE_NAME CdSe-RESTART.wfn 
+    &XC
+      &XC_FUNCTIONAL
+        &MGGA_XC_HLE17
+        &END
+      &END
+      &XC_GRID
+        XC_DERIV  spline3
+        XC_SMOOTH_RHO  none
+      &END
+    &END
+  &END
+  &SUBSYS
+    &TOPOLOGY
+      COORDINATE XYZ
+      COORD_FILE_NAME  CdSe-pos-1.xyz  
+      &CENTER_COORDINATES
+      &END
+    &END
+    &CELL
+      ABC  32 32 32          
+      PERIODIC None  
+    &END
+    &KIND Cd 
+      BASIS_SET  DZVP-MOLOPT-GGA-GTH-q12
+      POTENTIAL  GTH-GGA-q12
+    &END
+    &KIND Se
+      BASIS_SET  DZVP-MOLOPT-GGA-GTH-q6
+      POTENTIAL  GTH-GGA-q6
+    &END
+    &KIND Cl
+      BASIS_SET  DZVP-MOLOPT-GGA-GTH-q7
+      POTENTIAL  GTH-GGA-q7
+    &END
+  &END
+&END
+
+&GLOBAL
+  PRINT_LEVEL low 
+  PROJECT  CdSe 
+  RUN_TYPE MD
+&END
+
+&MOTION
+ &MD
+  &THERMOSTAT
+   TYPE CSVR
+   &CSVR
+     TIMECON 250
+   &END CSVR
+  &END THERMOSTAT
+  ENSEMBLE NVT
+  STEPS 3000
+  TIMESTEP 2.5  
+  TEMPERATURE 300
+ &END MD
+ &PRINT
+  &TRAJECTORY
+   &EACH
+    MD 1 
+   &END EACH
+  &END TRAJECTORY
+  &VELOCITIES ON
+   &EACH
+    MD 1
+   &END EACH
+  &END VELOCITIES
+  &FORCES ON
+   &EACH
+    MD 1
+   &END EACH
+  &END FORCES
+ &END PRINT
+&END MOTION
+
+#&EXT_RESTART
+#   RESTART_FILE_NAME CdSe-1.restart  
+#   RESTART_POS T
+#   RESTART_VEL T
+#   RESTART_THERMOSTAT T  
+#&END EXT_RESTART
+
+
+
