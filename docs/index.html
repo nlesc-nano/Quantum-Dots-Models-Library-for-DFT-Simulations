@@ -252,39 +252,43 @@
       setupColorControls(meta.stoichiometry);
     }
 
-    // Load and render the chosen XYZ file (single‐frame or multi‐frame for MD)
+
     function loadXYZ(file) {
-      fetch(file)
+      console.log("Fetching:", "./" + file);
+      fetch(`./${file}`)
         .then(resp => {
           if (!resp.ok) throw new Error("File not found");
           return resp.text();
         })
         .then(data => {
-          viewerDiv.innerHTML = '';
+          // (rest of your existing logic goes here)
+          viewerDiv.innerHTML = "";
           viewer = $3Dmol.createViewer(viewerDiv, { backgroundColor: 'white' });
-
+    
           const meta = metadata[file] || {};
           if (meta.run_type === "Molecular Dynamics") {
-            // MD trajectory: load all frames as a multi‐model
+            // MD trajectory: load all frames
             viewer.addModelsData(data, 'xyz');
             setStyle(styleSelect.value);
-            // Animate: loop through frames, 100 ms per frame
             viewer.setAnimationMode("loop");
             viewer.animate({ loop: true, step: 100 });
           } else {
-            // Single‐frame
+            // Single frame
             viewer.addModel(data, 'xyz');
             setStyle(styleSelect.value);
           }
-
+    
           updateDetails(file);
         })
-        .catch(() => {
+        .catch(err => {
+          console.error("Error fetching", file, "→", err);
           viewerDiv.innerHTML = "<b>Error loading file.</b>";
           detailsDiv.innerHTML = "<b>No details available.</b>";
           colorControlsDiv.innerHTML = "";
         });
     }
+
+
 
     // Populate the “System Type” dropdown
     function populateSystemTypes() {
