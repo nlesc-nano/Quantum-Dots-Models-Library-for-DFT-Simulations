@@ -677,7 +677,7 @@
       catStatus.textContent = "Running CAT…";
       runCatBtn.disabled = true;
     
-      fetch("http://localhost:8000/attach", {
+      fetch("https://cat-backend-integration.onrender.com", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
