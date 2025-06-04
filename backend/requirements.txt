@@ -1,0 +1,6 @@
+fastapi
+uvicorn[standard]
+pyyaml
+schema==0.7.4
+git+https://github.com/nlesc-nano/CAT
+

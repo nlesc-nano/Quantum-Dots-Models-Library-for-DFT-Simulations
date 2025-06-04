@@ -133,6 +133,30 @@
     </div>
   </div>
 
+  <!-- CAT integration panel -->
+  <details>
+    <summary>Attach Ligand (CAT)</summary>
+    <div style="margin-top:0.5em;">
+      <label for="smiles-input">SMILES:
+        <input id="smiles-input" type="text" value="C(=O)O" placeholder="e.g. C(=O)O" />
+      </label>
+      <label style="margin-left:1em;">
+        <input type="checkbox" id="split-checkbox" checked /> split
+      </label>
+      <button id="run-cat-btn" disabled style="margin-left:1em;">Run CAT</button>
+    </div>
+    <div id="cat-status" style="margin-top:0.5em; font-size:0.9em; color:#333;">
+      Enter a SMILES and click “Run CAT” after selecting a QD.
+    </div>
+    <div style="margin-top:0.5em;">
+      <label for="cat-output-select"><b>Choose CAT output:</b></label>
+      <select id="cat-output-select" disabled style="margin-left:0.5em; min-width:200px;">
+        <option value="">— none —</option>
+      </select>
+      <button id="download-catxyz-btn" disabled style="margin-left:1em;">Download CAT‐XYZ</button>
+    </div>
+  </details>
+
   <div id="structure-details">
     <b>Structure Details</b>
     <div id="details-content">Select a structure to see details.</div>
@@ -171,6 +195,7 @@
     const colorControlsDiv = document.getElementById('color-controls');
     let viewer = null;
     let currentFile = "";
+    let currentXYZText = "";   // ← will store the raw XYZ we fetched
 
     // Default CPK-like colors
     const defaultColors = {
@@ -284,10 +309,20 @@
           return resp.text();
         })
         .then(data => {
+
+          // Store the raw XYZ (or first-frame if MD) into currentXYZText
+          const meta = metadata[file] || {};
+          let xyzToLoad = data;
+          if (meta.run_type === "Molecular Dynamics") {
+            const lines = data.split('\n');
+            const n = parseInt(lines[0].trim());
+            xyzToLoad = lines.slice(0, n + 2).join('\n');
+          }
+          currentXYZText = xyzToLoad;
+      
           viewerDiv.innerHTML = '';
           viewer = $3Dmol.createViewer(viewerDiv, { backgroundColor: 'white' });
 
-          const meta = metadata[file] || {};
           if (meta.run_type === "Molecular Dynamics" && viewer.addModelsAsFrames) {
             // Use addModelsAsFrames() if available for multi-frame MD
             viewer.addModelsAsFrames(data, 'xyz');
@@ -296,18 +331,12 @@
             viewer.animate({ loop: true, step: 100 });
           } else {
             // Fallback: single-frame using the first frame
-            let firstFrame = data;
-            if (meta.run_type === "Molecular Dynamics") {
-              // Extract just the first frame manually:
-              const lines = data.split('\n');
-              const n = parseInt(lines[0].trim());
-              firstFrame = lines.slice(0, n + 2).join('\n');
-            }
-            viewer.addModel(firstFrame, 'xyz');
+            viewer.addModel(xyzToLoad, 'xyz');
             setStyle(styleSelect.value);
           }
 
           updateDetails(file);
+          afterLoadSuccess();
         })
         .catch(err => {
           console.error("Error fetching", file, "→", err);
@@ -618,6 +647,175 @@
     });
 
     styleSelect.addEventListener('change', () => setStyle(styleSelect.value));
+
+    // ─── CAT UI elements ──────────────────────────────────────────────────────
+    const runCatBtn   = document.getElementById("run-cat-btn");
+    const smilesInput = document.getElementById("smiles-input");
+    const splitCheck  = document.getElementById("split-checkbox");
+    const catStatus   = document.getElementById("cat-status");
+    
+    // Disable Run CAT until a structure is loaded
+    function enableCatUI(enable) {
+      runCatBtn.disabled = !enable;
+      if (!enable) {
+        catStatus.textContent = "Select a structure first.";
+      }
+    }
+    enableCatUI(false);
+    
+    // In your loadXYZ(file) success callback, add this line so CAT UI becomes enabled:
+    function afterLoadSuccess() {
+      enableCatUI(true);
+    }
+    // At the end of loadXYZ (after updateDetails), call:
+    afterLoadSuccess();
+    
+    // ─── Run CAT on button click ──────────────────────────────────────────────
+    runCatBtn.addEventListener("click", () => {
+      if (!viewer || !currentFile) return;
+      const xyzText = currentXYZText;
+      catStatus.textContent = "Running CAT…";
+      runCatBtn.disabled = true;
+    
+      fetch("https://cat-backend-integration.onrender.com/attach", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          xyztext: xyzText,
+          smiles: smilesInput.value.trim(),
+          split: splitCheck.checked
+        })
+      })
+      .then(r => {
+        if (!r.ok) return r.json().then(err => { throw err; });
+        return r.json();
+      })
+      .then(resp => {
+        // If resp is null/undefined (no JSON), bail out early:
+        if (!resp) {
+          catStatus.textContent = "No response from CAT backend.";
+          return;
+        }
+
+        // If the backend only returned a single "xyz" (old‐style), wrap it into results[]
+        if (!resp.results && resp.xyz) {
+          resp = {
+            results: [{ filename: "cat_output.xyz", xyz: resp.xyz }],
+            message: "Single structure generated"
+          };
+        }
+
+        // resp.results is an array of { filename, xyz }
+        if (!resp.results || !resp.results.length) {
+          catStatus.textContent = "CAT returned no structures.";
+          return;
+        }
+    
+        // 1) Populate the dropdown (#cat-output-select)
+        const outSelect = document.getElementById("cat-output-select");
+        outSelect.innerHTML = '<option value="">— choose —</option>';
+        resp.results.forEach((entry, idx) => {
+          const opt = document.createElement("option");
+          opt.value = idx;                  // use index as the value
+          opt.text  = entry.filename;       // show “qdXYZ.xyz” or similar
+          outSelect.appendChild(opt);
+        });
+        outSelect.disabled = false;
+        catStatus.textContent = resp.message || `Returned ${resp.results.length} structure(s)`;
+    
+        // 2) Show the first result by default
+        const first = resp.results[0];
+        loadCATResult(first);   // see helper below
+    
+        // 3) Enable “Download CAT‐XYZ” button for that first result
+        const downloadCatBtn = document.getElementById("download-catxyz-btn");
+        downloadCatBtn.disabled = false;
+        downloadCatBtn.onclick = () => downloadCATXYZ(first.filename, first.xyz);
+    
+        // 4) When user picks a different dropdown option, re‐render & update details
+        outSelect.onchange = () => {
+          const idx = parseInt(outSelect.value);
+          if (isNaN(idx) || idx < 0 || idx >= resp.results.length) return;
+          const chosen = resp.results[idx];
+          loadCATResult(chosen);
+          downloadCatBtn.disabled = false;
+          downloadCatBtn.onclick = () => downloadCATXYZ(chosen.filename, chosen.xyz);
+        };
+      })
+      .catch(err => {
+        catStatus.textContent = "Error: " + (err.detail || err);
+        console.error(err);
+      })
+      .finally(() => runCatBtn.disabled = false);
+    });
+
+    /**
+     * Helper: render a CAT result (an object { filename, xyz })
+     * into the existing 3Dmol viewer and update the “details” panel.
+     */
+    function loadCATResult(entry) {
+      // Clear old viewer
+      viewerDiv.innerHTML = "";
+      viewer = $3Dmol.createViewer(viewerDiv, { backgroundColor: "white" });
+      viewer.addModel(entry.xyz, "xyz");
+      setStyle(styleSelect.value);
+      viewer.zoomTo();
+      viewer.render();
+    
+      // Recompute simple “structure details” from the raw XYZ text
+      // (we do a naive atom‐count from the first frame)
+      const lines = entry.xyz.split("\n");
+      let nAtoms = parseInt(lines[0].trim()) || 0;
+      const stoichCounts = {};
+      let start = 2;               // skip the first two lines
+      for (let i = 0; i < nAtoms && start + i < lines.length; i++) {
+        const tokens = lines[start + i].trim().split(/\s+/);
+        if (tokens.length >= 4) {
+          const el = tokens[0];
+          stoichCounts[el] = (stoichCounts[el]||0) + 1;
+        }
+      }
+      // Build a little HTML snippet for details
+      const stoichText = Object.entries(stoichCounts)
+        .map(([el, cnt]) => `${el} (${cnt})`).join(", ") || "N/A";
+      const ratios = [];
+      const elems = Object.keys(stoichCounts);
+      for (let i = 0; i < elems.length; i++) {
+        for (let j = i+1; j < elems.length; j++) {
+          const e1 = elems[i], e2 = elems[j];
+          const r1 = (stoichCounts[e1] / stoichCounts[e2]).toFixed(3);
+          const r2 = (stoichCounts[e2] / stoichCounts[e1]).toFixed(3);
+          ratios.push(`${e1}/${e2} = ${r1}`, `${e2}/${e1} = ${r2}`);
+        }
+      }
+      const ratiosText = ratios.join(", ") || "N/A";
+    
+      detailsDiv.innerHTML = `
+        <b>Filename:</b> ${entry.filename}<br>
+        <b>Total atoms:</b> ${nAtoms}<br>
+        <b>Stoichiometry:</b> ${stoichText}<br>
+        <b>Ratios:</b> ${ratiosText}
+      `;
+      // Rebuild color pickers based on the new stoichiometry
+      setupColorControls(stoichCounts);
+      applyColorOverrides();
+    }
+    
+    /**
+     * Helper: trigger a download of a CAT result’s XYZ text
+     */
+    function downloadCATXYZ(fname, xyzText) {
+      const blob = new Blob([xyzText], { type: "chemical/x-xyz" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = fname;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
   </script>
 </body>
 </html>
