@@ -493,6 +493,8 @@
         styleSelect.disabled = false;   // ensure style selector is enabled
         downloadBtn.disabled = false;
         downloadPngBtn.disabled = false;
+        // Select and display the first file that was loaded
+        selectFile.value = matches[0];
         loadXYZ(matches[0]);
       } else {
         selectFile.disabled = true;
