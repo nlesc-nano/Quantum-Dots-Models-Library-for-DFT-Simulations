@@ -1,0 +1,59 @@
+name: Daily QD List & Metadata Update
+
+# Run every day at 03:00 UTC. Adjust the cron if you want a different time.
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:    # also allows you to manually trigger from the Actions tab
+
+jobs:
+  update-qds:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out the repository (so we can read/write files)
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          # Allow pushing from this workflow
+          persist-credentials: true
+
+      # 2. Set up Python
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      # 3. Install any Python dependencies (if needed)
+      #    If your make scripts only use the stdlib, you can skip this.
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          # If you have a requirements.txt, uncomment:
+          # pip install -r requirements.txt
+
+      # 4. Run make_file_list.py
+      - name: Generate file_list.js
+        run: python make_file_list.py
+
+      # 5. Run make_metadata.py
+      - name: Generate metadata.json
+        run: python make_metadata.py
+
+      # 6. Commit and push any changes, if present
+      - name: Commit & push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add file_list.js metadata.json
+          # If other files are modified, include them too:
+          # git add path/to/other‐output
+          if ! git diff --quiet --cached; then
+            git commit -m "Automated daily update: refresh file_list.js & metadata.json"
+            git push
+          else
+            echo "No changes detected—skipping commit."
+          fi
+
+
+
