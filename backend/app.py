@@ -4,6 +4,7 @@ import os
 import tempfile
 import subprocess
 import yaml
+import shutil
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -88,6 +89,12 @@ def attach(req: AttachRequest):
         except OSError as e:
             raise HTTPException(status_code=500, detail=f"Failed reading {fname}: {e}")
         all_results.append({"filename": fname, "xyz": txt})
+
+    # Cleanup temporary directory after collecting results
+    try:
+        shutil.rmtree(tmpdir)
+    except OSError as e:
+        print(f"Warning: failed to remove temp directory {tmpdir}: {e}")
 
     return {"results": all_results, "message": f"CAT generated {len(all_results)} structure(s)"}
 
