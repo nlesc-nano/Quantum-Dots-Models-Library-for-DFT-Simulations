@@ -2343,36 +2343,227 @@
       "Cl/In": 1.452
     }
   },
-  "III-V/InP/InP_1116_GeoOpt-pos-1.xyz": {
+  "III-V/InP/HLE17/18ang/geo_opt/In31P20Cl33_HLE17_18ang_opt.xyz": {
     "system_type": "III-V",
     "material": "InP",
-    "filename": "InP_1116_GeoOpt-pos-1.xyz",
-    "size": null,
-    "functional": "",
-    "basis": "",
+    "filename": "In31P20Cl33_HLE17_18ang_opt.xyz",
+    "size": 1.8,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "In": 31,
+      "P": 20,
+      "Cl": 31
+    },
+    "ratios": {
+      "In/P": 1.55,
+      "P/In": 0.645,
+      "In/Cl": 1.0,
+      "Cl/In": 1.0,
+      "P/Cl": 0.645,
+      "Cl/P": 1.55
+    }
+  },
+  "III-V/InP/HLE17/18ang/start/In31P20Cl33_HLE17_18ang_start.xyz": {
+    "system_type": "III-V",
+    "material": "InP",
+    "filename": "In31P20Cl33_HLE17_18ang_start.xyz",
+    "size": 1.8,
+    "functional": "HLE17",
+    "basis": "DZVP",
     "run_type": "Start",
     "code": "CP2K",
     "stoichiometry": {
-      "Cl": 243,
-      "In": 477,
-      "P": 396
+      "In": 31,
+      "P": 20,
+      "Cl": 31
     },
     "ratios": {
-      "Cl/In": 0.509,
-      "In/Cl": 1.963,
-      "Cl/P": 0.614,
-      "P/Cl": 1.63,
-      "In/P": 1.205,
-      "P/In": 0.83
+      "In/P": 1.55,
+      "P/In": 0.645,
+      "In/Cl": 1.0,
+      "Cl/In": 1.0,
+      "P/Cl": 0.645,
+      "Cl/P": 1.55
     }
   },
-  "III-V/InP/InP_1847_GeoOpt-pos-1.xyz": {
+  "III-V/InP/HLE17/23ang/geo_opt/In107P73Cl102_HLE17_23ang_opt.xyz": {
     "system_type": "III-V",
     "material": "InP",
-    "filename": "InP_1847_GeoOpt-pos-1.xyz",
-    "size": null,
-    "functional": "",
-    "basis": "",
+    "filename": "In107P73Cl102_HLE17_23ang_opt.xyz",
+    "size": 2.3,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "In": 107,
+      "P": 73,
+      "Cl": 102
+    },
+    "ratios": {
+      "In/P": 1.466,
+      "P/In": 0.682,
+      "In/Cl": 1.049,
+      "Cl/In": 0.953,
+      "P/Cl": 0.716,
+      "Cl/P": 1.397
+    }
+  },
+  "III-V/InP/HLE17/23ang/start/In107P73Cl102_HLE17_23ang_start.xyz": {
+    "system_type": "III-V",
+    "material": "InP",
+    "filename": "In107P73Cl102_HLE17_23ang_start.xyz",
+    "size": 2.3,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Start",
+    "code": "CP2K",
+    "stoichiometry": {
+      "In": 107,
+      "P": 73,
+      "Cl": 102
+    },
+    "ratios": {
+      "In/P": 1.466,
+      "P/In": 0.682,
+      "In/Cl": 1.049,
+      "Cl/In": 0.953,
+      "P/Cl": 0.716,
+      "Cl/P": 1.397
+    }
+  },
+  "III-V/InP/HLE17/29ang/geo_opt/In249P194Cl165_HLE17_29ang_opt.xyz": {
+    "system_type": "III-V",
+    "material": "InP",
+    "filename": "In249P194Cl165_HLE17_29ang_opt.xyz",
+    "size": 2.9,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "In": 249,
+      "P": 194,
+      "Cl": 165
+    },
+    "ratios": {
+      "In/P": 1.284,
+      "P/In": 0.779,
+      "In/Cl": 1.509,
+      "Cl/In": 0.663,
+      "P/Cl": 1.176,
+      "Cl/P": 0.851
+    }
+  },
+  "III-V/InP/HLE17/29ang/start/In249P194Cl165_HLE17_29ang_start.xyz": {
+    "system_type": "III-V",
+    "material": "InP",
+    "filename": "In249P194Cl165_HLE17_29ang_start.xyz",
+    "size": 2.9,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Start",
+    "code": "CP2K",
+    "stoichiometry": {
+      "In": 249,
+      "P": 194,
+      "Cl": 165
+    },
+    "ratios": {
+      "In/P": 1.284,
+      "P/In": 0.779,
+      "In/Cl": 1.509,
+      "Cl/In": 0.663,
+      "P/Cl": 1.176,
+      "Cl/P": 0.851
+    }
+  },
+  "III-V/InP/HLE17/35ang/geo_opt/In477P396Cl243_HLE17_35ang_opt.xyz": {
+    "system_type": "III-V",
+    "material": "InP",
+    "filename": "In477P396Cl243_HLE17_35ang_opt.xyz",
+    "size": 3.5,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "In": 477,
+      "P": 396,
+      "Cl": 243
+    },
+    "ratios": {
+      "In/P": 1.205,
+      "P/In": 0.83,
+      "In/Cl": 1.963,
+      "Cl/In": 0.509,
+      "P/Cl": 1.63,
+      "Cl/P": 0.614
+    }
+  },
+  "III-V/InP/HLE17/35ang/start/In477P396Cl243_HLE17_35ang_start.xyz": {
+    "system_type": "III-V",
+    "material": "InP",
+    "filename": "In477P396Cl243_HLE17_35ang_start.xyz",
+    "size": 3.5,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Start",
+    "code": "CP2K",
+    "stoichiometry": {
+      "In": 477,
+      "P": 396,
+      "Cl": 243
+    },
+    "ratios": {
+      "In/P": 1.205,
+      "P/In": 0.83,
+      "In/Cl": 1.963,
+      "Cl/In": 0.509,
+      "P/Cl": 1.63,
+      "Cl/P": 0.614
+    }
+  },
+  "III-V/InP/HLE17/41ang/geo_opt/In790P688Cl348Zn21_HLE17_41ang_opt.xyz": {
+    "system_type": "III-V",
+    "material": "InP",
+    "filename": "In790P688Cl348Zn21_HLE17_41ang_opt.xyz",
+    "size": 4.1,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "In": 790,
+      "P": 688,
+      "Cl": 348,
+      "Zn": 21
+    },
+    "ratios": {
+      "In/P": 1.148,
+      "P/In": 0.871,
+      "In/Cl": 2.27,
+      "Cl/In": 0.441,
+      "In/Zn": 37.619,
+      "Zn/In": 0.027,
+      "P/Cl": 1.977,
+      "Cl/P": 0.506,
+      "P/Zn": 32.762,
+      "Zn/P": 0.031,
+      "Cl/Zn": 16.571,
+      "Zn/Cl": 0.06
+    }
+  },
+  "III-V/InP/HLE17/41ang/start/In790P688Cl348Zn21_HLE17_41ang_start.xyz": {
+    "system_type": "III-V",
+    "material": "InP",
+    "filename": "In790P688Cl348Zn21_HLE17_41ang_start.xyz",
+    "size": 4.1,
+    "functional": "HLE17",
+    "basis": "DZVP",
     "run_type": "Start",
     "code": "CP2K",
     "stoichiometry": {
@@ -2396,37 +2587,14 @@
       "Zn/Cl": 0.06
     }
   },
-  "III-V/InP/InP_282_GeoOpt-pos-1.xyz": {
+  "III-V/InP/HLE17/47ang/geo_opt/In1242P1108Cl460Zn29_HLE17_47ang_opt.xyz": {
     "system_type": "III-V",
     "material": "InP",
-    "filename": "InP_282_GeoOpt-pos-1.xyz",
-    "size": null,
-    "functional": "",
-    "basis": "",
-    "run_type": "Start",
-    "code": "CP2K",
-    "stoichiometry": {
-      "In": 107,
-      "Cl": 102,
-      "P": 73
-    },
-    "ratios": {
-      "In/Cl": 1.049,
-      "Cl/In": 0.953,
-      "In/P": 1.466,
-      "P/In": 0.682,
-      "Cl/P": 1.397,
-      "P/Cl": 0.716
-    }
-  },
-  "III-V/InP/InP_2839_GeoOpt-pos-1.xyz": {
-    "system_type": "III-V",
-    "material": "InP",
-    "filename": "InP_2839_GeoOpt-pos-1.xyz",
-    "size": null,
-    "functional": "",
-    "basis": "",
-    "run_type": "Start",
+    "filename": "In1242P1108Cl460Zn29_HLE17_47ang_opt.xyz",
+    "size": 4.7,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
     "code": "CP2K",
     "stoichiometry": {
       "In": 1242,
@@ -2449,50 +2617,34 @@
       "Zn/Cl": 0.063
     }
   },
-  "III-V/InP/InP_608_GeoOpt-pos-1.xyz": {
+  "III-V/InP/HLE17/47ang/start/In1242P1108Cl460Zn29_HLE17_47ang_start.xyz": {
     "system_type": "III-V",
     "material": "InP",
-    "filename": "InP_608_GeoOpt-pos-1.xyz",
-    "size": null,
-    "functional": "",
-    "basis": "",
+    "filename": "In1242P1108Cl460Zn29_HLE17_47ang_start.xyz",
+    "size": 4.7,
+    "functional": "HLE17",
+    "basis": "DZVP",
     "run_type": "Start",
     "code": "CP2K",
     "stoichiometry": {
-      "Cl": 165,
-      "In": 249,
-      "P": 194
+      "In": 1242,
+      "P": 1108,
+      "Cl": 460,
+      "Zn": 29
     },
     "ratios": {
-      "Cl/In": 0.663,
-      "In/Cl": 1.509,
-      "Cl/P": 0.851,
-      "P/Cl": 1.176,
-      "In/P": 1.284,
-      "P/In": 0.779
-    }
-  },
-  "III-V/InP/InP_92_GeoOpt-pos-1.xyz": {
-    "system_type": "III-V",
-    "material": "InP",
-    "filename": "InP_92_GeoOpt-pos-1.xyz",
-    "size": null,
-    "functional": "",
-    "basis": "",
-    "run_type": "Start",
-    "code": "CP2K",
-    "stoichiometry": {
-      "P": 16,
-      "In": 31,
-      "Cl": 45
-    },
-    "ratios": {
-      "P/In": 0.516,
-      "In/P": 1.938,
-      "P/Cl": 0.356,
-      "Cl/P": 2.812,
-      "In/Cl": 0.689,
-      "Cl/In": 1.452
+      "In/P": 1.121,
+      "P/In": 0.892,
+      "In/Cl": 2.7,
+      "Cl/In": 0.37,
+      "In/Zn": 42.828,
+      "Zn/In": 0.023,
+      "P/Cl": 2.409,
+      "Cl/P": 0.415,
+      "P/Zn": 38.207,
+      "Zn/P": 0.026,
+      "Cl/Zn": 15.862,
+      "Zn/Cl": 0.063
     }
   },
   "IV-VI/PbS/PbS_1532-pos-1.xyz": {
