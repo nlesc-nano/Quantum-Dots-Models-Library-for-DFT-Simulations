@@ -46,6 +46,7 @@ def attach(req: AttachRequest):
             "ligand":  {"dirname": "ligand", "optimize": True, "split": req.split, "anchor": None, "cosmo-rs": False},
             "qd":      {"dirname": "qd",   "construct_qd": True, "optimize": False, "bulkiness": False,
                         "activation_strain": False, "dissociate": False},
+            "database": {}, 
         },
     }
     yaml_path = os.path.join(tmpdir, "input.yaml")
