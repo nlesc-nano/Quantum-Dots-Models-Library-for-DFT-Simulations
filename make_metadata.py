@@ -16,7 +16,7 @@ def parse_metadata(relpath):
       - run_type      → "Geometry Optimization" if any folder is "geo_opt",
                          "Molecular Dynamics" if any folder is "md",
                          "Start" if any folder is "start" or if neither geo_opt nor md appear
-      - code          → "ORCA" if “orca” in filename; else default "CP2k"
+      - code          → "ORCA" if “orca” in filename; else default "CP2K"
     """
     parts = relpath.split('/')
     filename = os.path.basename(relpath)
@@ -71,7 +71,7 @@ def parse_metadata(relpath):
     if re.search(r'orca', filename, re.IGNORECASE):
         metadata["code"] = "ORCA"
     else:
-        metadata["code"] = "CP2k"
+        metadata["code"] = "CP2K"
 
     return metadata
 

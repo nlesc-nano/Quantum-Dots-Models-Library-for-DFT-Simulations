@@ -7,7 +7,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 16,
       "S": 13,
@@ -30,7 +30,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 16,
       "S": 13,
@@ -53,7 +53,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 68,
       "Cl": 26,
@@ -76,7 +76,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 68,
       "S": 55,
@@ -99,7 +99,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 176,
       "S": 147,
@@ -122,7 +122,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 176,
       "S": 147,
@@ -145,7 +145,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 324,
       "Cl": 86,
@@ -168,7 +168,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 324,
       "S": 281,
@@ -191,7 +191,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cl": 150,
       "S": 517,
@@ -214,7 +214,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 592,
       "S": 517,
@@ -237,7 +237,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 16,
       "Se": 13,
@@ -260,7 +260,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Molecular Dynamics",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 16,
       "Se": 13,
@@ -283,7 +283,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 16,
       "Se": 13,
@@ -306,7 +306,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 68,
       "Cl": 26,
@@ -329,7 +329,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Molecular Dynamics",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 68,
       "Cl": 26,
@@ -352,7 +352,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 68,
       "Cl": 26,
@@ -375,7 +375,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 176,
       "Se": 147,
@@ -398,7 +398,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 324,
       "Cl": 86,
@@ -421,7 +421,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cl": 150,
       "Se": 517,
@@ -444,7 +444,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 176,
       "Se": 147,
@@ -467,7 +467,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 176,
       "Se": 147,
@@ -490,7 +490,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 324,
       "Cl": 86,
@@ -513,7 +513,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 68,
       "Se": 55,
@@ -536,7 +536,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cl": 150,
       "Se": 517,
@@ -559,7 +559,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 310,
       "Cl": 58,
@@ -582,7 +582,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 360,
       "Se": 309,
@@ -605,7 +605,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 310,
       "Cl": 58,
@@ -628,7 +628,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 16,
       "Te": 13,
@@ -651,7 +651,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 16,
       "Te": 13,
@@ -674,7 +674,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 68,
       "Cl": 26,
@@ -697,7 +697,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 68,
       "Te": 55,
@@ -720,7 +720,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 176,
       "Te": 147,
@@ -743,7 +743,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 176,
       "Te": 147,
@@ -766,7 +766,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 324,
       "Cl": 86,
@@ -789,7 +789,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 324,
       "Te": 281,
@@ -812,7 +812,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cl": 150,
       "Te": 517,
@@ -835,7 +835,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cd": 592,
       "Te": 517,
@@ -858,7 +858,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 16,
       "S": 13,
@@ -881,7 +881,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 68,
       "S": 55,
@@ -904,7 +904,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 176,
       "S": 147,
@@ -927,7 +927,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 324,
       "S": 281,
@@ -950,7 +950,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 592,
       "S": 517,
@@ -973,7 +973,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 16,
       "S": 13,
@@ -996,7 +996,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 68,
       "S": 55,
@@ -1019,7 +1019,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 176,
       "S": 147,
@@ -1042,7 +1042,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 324,
       "S": 281,
@@ -1065,7 +1065,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 592,
       "S": 517,
@@ -1088,7 +1088,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 16,
       "Se": 13,
@@ -1111,7 +1111,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 68,
       "Se": 55,
@@ -1134,7 +1134,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 176,
       "Se": 147,
@@ -1157,7 +1157,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 324,
       "Se": 281,
@@ -1180,7 +1180,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 592,
       "Se": 517,
@@ -1203,7 +1203,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 16,
       "Se": 13,
@@ -1226,7 +1226,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 68,
       "Se": 55,
@@ -1249,7 +1249,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 176,
       "Se": 147,
@@ -1272,7 +1272,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 324,
       "Se": 281,
@@ -1295,7 +1295,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 592,
       "Se": 517,
@@ -1318,7 +1318,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 16,
       "Te": 13,
@@ -1341,7 +1341,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 68,
       "Te": 55,
@@ -1364,7 +1364,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 176,
       "Te": 147,
@@ -1387,7 +1387,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 324,
       "Te": 281,
@@ -1410,7 +1410,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 592,
       "Te": 517,
@@ -1433,7 +1433,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 16,
       "Te": 13,
@@ -1456,7 +1456,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 68,
       "Te": 55,
@@ -1479,7 +1479,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 176,
       "Te": 147,
@@ -1502,7 +1502,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 324,
       "Te": 281,
@@ -1525,7 +1525,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Hg": 592,
       "Te": 517,
@@ -1548,7 +1548,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 16,
       "S": 13,
@@ -1571,7 +1571,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 68,
       "S": 55,
@@ -1594,7 +1594,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 176,
       "S": 147,
@@ -1617,7 +1617,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 324,
       "S": 281,
@@ -1640,7 +1640,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 592,
       "S": 517,
@@ -1663,7 +1663,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 16,
       "Se": 13,
@@ -1686,7 +1686,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 16,
       "Se": 13,
@@ -1709,7 +1709,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 68,
       "Cl": 26,
@@ -1732,7 +1732,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 68,
       "Se": 55,
@@ -1755,7 +1755,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 176,
       "Se": 147,
@@ -1778,7 +1778,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 176,
       "Se": 147,
@@ -1801,7 +1801,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 324,
       "Se": 281,
@@ -1824,7 +1824,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 592,
       "Se": 517,
@@ -1847,7 +1847,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 16,
       "Te": 13,
@@ -1870,7 +1870,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 68,
       "Te": 55,
@@ -1893,7 +1893,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 176,
       "Te": 147,
@@ -1916,7 +1916,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 324,
       "Te": 281,
@@ -1939,7 +1939,7 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Zn": 592,
       "Te": 517,
@@ -1962,7 +1962,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cl": 150,
       "S": 517,
@@ -1992,7 +1992,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cl": 150,
       "Se": 370,
@@ -2031,7 +2031,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cl": 150,
       "S": 370,
@@ -2061,7 +2061,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cl": 150,
       "S": 370,
@@ -2100,7 +2100,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cl": 150,
       "Se": 517,
@@ -2130,7 +2130,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cl": 150,
       "S": 370,
@@ -2169,7 +2169,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cl": 150,
       "S": 370,
@@ -2199,7 +2199,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cl": 243,
       "In": 477,
@@ -2222,7 +2222,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "In": 790,
       "As": 688,
@@ -2252,7 +2252,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "In": 107,
       "Cl": 102,
@@ -2275,7 +2275,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "In": 1242,
       "As": 1108,
@@ -2305,7 +2305,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cl": 165,
       "In": 249,
@@ -2328,7 +2328,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "As": 16,
       "In": 31,
@@ -2351,7 +2351,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cl": 243,
       "In": 477,
@@ -2374,7 +2374,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "In": 790,
       "P": 688,
@@ -2404,7 +2404,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "In": 107,
       "Cl": 102,
@@ -2427,7 +2427,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "In": 1242,
       "P": 1108,
@@ -2457,7 +2457,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Cl": 165,
       "In": 249,
@@ -2480,7 +2480,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "P": 16,
       "In": 31,
@@ -2503,7 +2503,7 @@
     "functional": "",
     "basis": "",
     "run_type": "Start",
-    "code": "CP2k",
+    "code": "CP2K",
     "stoichiometry": {
       "Pb": 706,
       "S": 586,
