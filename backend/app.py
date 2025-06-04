@@ -59,7 +59,7 @@ def attach(req: AttachRequest):
     # 4) Run CAT
     try:
         subprocess.run(
-            ["init_cat", "-i", "input.yaml"],
+            ["init_cat", "input.yaml"],
             cwd=tmpdir,
             check=True,
             capture_output=True
