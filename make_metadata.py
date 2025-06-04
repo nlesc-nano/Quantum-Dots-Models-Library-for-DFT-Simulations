@@ -131,7 +131,6 @@ def find_xyz_files(root):
     for dirpath, dirnames, filenames in os.walk(root):
         parts = dirpath.split(os.sep)
         in_md_folder = any(p.lower() == "md" for p in parts)
-        in_start_folder = any(p.lower() == "start" for p in parts)
 
         for f in filenames:
             if not f.lower().endswith(".xyz"):
