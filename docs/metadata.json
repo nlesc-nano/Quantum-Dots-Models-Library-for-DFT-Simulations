@@ -1080,6 +1080,29 @@
       "Cl/S": 0.29
     }
   },
+  "II-VI/HgS/PBE/12ang/geo_opt/Hg16S13Cl6_PBE_12ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "HgS",
+    "filename": "Hg16S13Cl6_PBE_12ang_OPT.xyz",
+    "size": 1.2,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 16,
+      "S": 13,
+      "Cl": 6
+    },
+    "ratios": {
+      "Hg/S": 1.231,
+      "S/Hg": 0.812,
+      "Hg/Cl": 2.667,
+      "Cl/Hg": 0.375,
+      "S/Cl": 2.167,
+      "Cl/S": 0.462
+    }
+  },
   "II-VI/HgS/PBE/12ang/start/Hg16S13Cl6_HLE17_12ang_start.xyz": {
     "system_type": "II-VI",
     "material": "HgS",
@@ -1239,6 +1262,29 @@
       "Cl/Hg": 0.375,
       "Se/Cl": 2.167,
       "Cl/Se": 0.462
+    }
+  },
+  "II-VI/HgSe/HLE17/20ang/geo_opt/Hg68Se55Cl26_HLE17_20ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "HgSe",
+    "filename": "Hg68Se55Cl26_HLE17_20ang_OPT.xyz",
+    "size": 2.0,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 68,
+      "Cl": 26,
+      "Se": 55
+    },
+    "ratios": {
+      "Hg/Cl": 2.615,
+      "Cl/Hg": 0.382,
+      "Hg/Se": 1.236,
+      "Se/Hg": 0.809,
+      "Cl/Se": 0.473,
+      "Se/Cl": 2.115
     }
   },
   "II-VI/HgSe/HLE17/20ang/start/Hg68Se55Cl26_HLE17_20ang_start.xyz": {
@@ -1402,6 +1448,29 @@
       "Cl/Se": 0.29
     }
   },
+  "II-VI/HgSe/PBE/12ang/geo_opt/Hg16Se13Cl6_PBE_12ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "HgSe",
+    "filename": "Hg16Se13Cl6_PBE_12ang_OPT.xyz",
+    "size": 1.2,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 16,
+      "Se": 13,
+      "Cl": 6
+    },
+    "ratios": {
+      "Hg/Se": 1.231,
+      "Se/Hg": 0.812,
+      "Hg/Cl": 2.667,
+      "Cl/Hg": 0.375,
+      "Se/Cl": 2.167,
+      "Cl/Se": 0.462
+    }
+  },
   "II-VI/HgSe/PBE/12ang/start/Hg16Se13Cl6_HLE17_12ang_start.xyz": {
     "system_type": "II-VI",
     "material": "HgSe",
@@ -1425,6 +1494,29 @@
       "Cl/Se": 0.462
     }
   },
+  "II-VI/HgSe/PBE/20ang/geo_opt/Hg68Se55Cl26_PBE_20ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "HgSe",
+    "filename": "Hg68Se55Cl26_PBE_20ang_OPT.xyz",
+    "size": 2.0,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 68,
+      "Se": 55,
+      "Cl": 26
+    },
+    "ratios": {
+      "Hg/Se": 1.236,
+      "Se/Hg": 0.809,
+      "Hg/Cl": 2.615,
+      "Cl/Hg": 0.382,
+      "Se/Cl": 2.115,
+      "Cl/Se": 0.473
+    }
+  },
   "II-VI/HgSe/PBE/20ang/start/Hg68Se55Cl26_HLE17_20ang_start.xyz": {
     "system_type": "II-VI",
     "material": "HgSe",
@@ -1446,6 +1538,29 @@
       "Cl/Hg": 0.382,
       "Se/Cl": 2.115,
       "Cl/Se": 0.473
+    }
+  },
+  "II-VI/HgSe/PBE/28ang/geo_opt/Hg176Se147Cl58_PBE_28ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "HgSe",
+    "filename": "Hg176Se147Cl58_PBE_28ang_OPT.xyz",
+    "size": 2.8,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 176,
+      "Se": 147,
+      "Cl": 58
+    },
+    "ratios": {
+      "Hg/Se": 1.197,
+      "Se/Hg": 0.835,
+      "Hg/Cl": 3.034,
+      "Cl/Hg": 0.33,
+      "Se/Cl": 2.534,
+      "Cl/Se": 0.395
     }
   },
   "II-VI/HgSe/PBE/28ang/start/Hg176Se147Cl58_HLE17_28ang_start.xyz": {
@@ -1862,6 +1977,29 @@
       "Cl/Te": 0.29
     }
   },
+  "II-VI/ZnS/HLE17/12ang/geo_opt/Zn16S13Cl6_HLE17_12ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "ZnS",
+    "filename": "Zn16S13Cl6_HLE17_12ang_OPT.xyz",
+    "size": 1.2,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Zn": 16,
+      "S": 13,
+      "Cl": 6
+    },
+    "ratios": {
+      "Zn/S": 1.231,
+      "S/Zn": 0.812,
+      "Zn/Cl": 2.667,
+      "Cl/Zn": 0.375,
+      "S/Cl": 2.167,
+      "Cl/S": 0.462
+    }
+  },
   "II-VI/ZnS/HLE17/12ang/start/Zn16S13Cl6_HLE17_12ang_start.xyz": {
     "system_type": "II-VI",
     "material": "ZnS",
@@ -1883,6 +2021,29 @@
       "Cl/Zn": 0.375,
       "S/Cl": 2.167,
       "Cl/S": 0.462
+    }
+  },
+  "II-VI/ZnS/HLE17/20ang/geo_opt/Zn68S55Cl26_HLE17_20ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "ZnS",
+    "filename": "Zn68S55Cl26_HLE17_20ang_OPT.xyz",
+    "size": 2.0,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Zn": 68,
+      "Cl": 26,
+      "S": 55
+    },
+    "ratios": {
+      "Zn/Cl": 2.615,
+      "Cl/Zn": 0.382,
+      "Zn/S": 1.236,
+      "S/Zn": 0.809,
+      "Cl/S": 0.473,
+      "S/Cl": 2.115
     }
   },
   "II-VI/ZnS/HLE17/20ang/start/Zn68S55Cl26_HLE17_20ang_start.xyz": {
@@ -1908,6 +2069,29 @@
       "Cl/S": 0.473
     }
   },
+  "II-VI/ZnS/HLE17/28ang/geo_opt/Zn176S147Cl58_HLE17_28ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "ZnS",
+    "filename": "Zn176S147Cl58_HLE17_28ang_OPT.xyz",
+    "size": 2.8,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Zn": 176,
+      "S": 147,
+      "Cl": 58
+    },
+    "ratios": {
+      "Zn/S": 1.197,
+      "S/Zn": 0.835,
+      "Zn/Cl": 3.034,
+      "Cl/Zn": 0.33,
+      "S/Cl": 2.534,
+      "Cl/S": 0.395
+    }
+  },
   "II-VI/ZnS/HLE17/28ang/start/Zn176S147Cl58_HLE17_28ang_start.xyz": {
     "system_type": "II-VI",
     "material": "ZnS",
@@ -1929,6 +2113,29 @@
       "Cl/Zn": 0.33,
       "S/Cl": 2.534,
       "Cl/S": 0.395
+    }
+  },
+  "II-VI/ZnS/HLE17/34ang/geo_opt/Zn324S281Cl86_HLE17_34ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "ZnS",
+    "filename": "Zn324S281Cl86_HLE17_34ang_OPT.xyz",
+    "size": 3.4,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Zn": 324,
+      "Cl": 86,
+      "S": 281
+    },
+    "ratios": {
+      "Zn/Cl": 3.767,
+      "Cl/Zn": 0.265,
+      "Zn/S": 1.153,
+      "S/Zn": 0.867,
+      "Cl/S": 0.306,
+      "S/Cl": 3.267
     }
   },
   "II-VI/ZnS/HLE17/34ang/start/Zn324S281Cl86_HLE17_34ang_start.xyz": {
@@ -2115,6 +2322,29 @@
       "Cl/Se": 0.395
     }
   },
+  "II-VI/ZnSe/HLE17/34ang/geo_opt/Zn324Se281Cl86_HLE17_34ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "ZnSe",
+    "filename": "Zn324Se281Cl86_HLE17_34ang_OPT.xyz",
+    "size": 3.4,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Zn": 324,
+      "Cl": 86,
+      "Se": 281
+    },
+    "ratios": {
+      "Zn/Cl": 3.767,
+      "Cl/Zn": 0.265,
+      "Zn/Se": 1.153,
+      "Se/Zn": 0.867,
+      "Cl/Se": 0.306,
+      "Se/Cl": 3.267
+    }
+  },
   "II-VI/ZnSe/HLE17/34ang/start/Zn324Se281Cl86_HLE17_34ang_start.xyz": {
     "system_type": "II-VI",
     "material": "ZnSe",
@@ -2161,6 +2391,29 @@
       "Cl/Se": 0.29
     }
   },
+  "II-VI/ZnTe/HLE17/12ang/geo_opt/Zn16Te13Cl6_HLE17_12ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "ZnTe",
+    "filename": "Zn16Te13Cl6_HLE17_12ang_OPT.xyz",
+    "size": 1.2,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Zn": 16,
+      "Te": 13,
+      "Cl": 6
+    },
+    "ratios": {
+      "Zn/Te": 1.231,
+      "Te/Zn": 0.812,
+      "Zn/Cl": 2.667,
+      "Cl/Zn": 0.375,
+      "Te/Cl": 2.167,
+      "Cl/Te": 0.462
+    }
+  },
   "II-VI/ZnTe/HLE17/12ang/start/Zn16Te13Cl6_HLE17_12ang_start.xyz": {
     "system_type": "II-VI",
     "material": "ZnTe",
@@ -2182,6 +2435,29 @@
       "Cl/Zn": 0.375,
       "Te/Cl": 2.167,
       "Cl/Te": 0.462
+    }
+  },
+  "II-VI/ZnTe/HLE17/20ang/geo_opt/Zn68Te55Cl26_HLE17_20ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "ZnTe",
+    "filename": "Zn68Te55Cl26_HLE17_20ang_OPT.xyz",
+    "size": 2.0,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Zn": 68,
+      "Cl": 26,
+      "Te": 55
+    },
+    "ratios": {
+      "Zn/Cl": 2.615,
+      "Cl/Zn": 0.382,
+      "Zn/Te": 1.236,
+      "Te/Zn": 0.809,
+      "Cl/Te": 0.473,
+      "Te/Cl": 2.115
     }
   },
   "II-VI/ZnTe/HLE17/20ang/start/Zn68Te55Cl26_HLE17_20ang_start.xyz": {
@@ -2207,6 +2483,29 @@
       "Cl/Te": 0.473
     }
   },
+  "II-VI/ZnTe/HLE17/28ang/geo_opt/Zn176Te147Cl58_HLE17_28ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "ZnTe",
+    "filename": "Zn176Te147Cl58_HLE17_28ang_OPT.xyz",
+    "size": 2.8,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Zn": 176,
+      "Te": 147,
+      "Cl": 58
+    },
+    "ratios": {
+      "Zn/Te": 1.197,
+      "Te/Zn": 0.835,
+      "Zn/Cl": 3.034,
+      "Cl/Zn": 0.33,
+      "Te/Cl": 2.534,
+      "Cl/Te": 0.395
+    }
+  },
   "II-VI/ZnTe/HLE17/28ang/start/Zn176Te147Cl58_HLE17_28ang_start.xyz": {
     "system_type": "II-VI",
     "material": "ZnTe",
@@ -2228,6 +2527,29 @@
       "Cl/Zn": 0.33,
       "Te/Cl": 2.534,
       "Cl/Te": 0.395
+    }
+  },
+  "II-VI/ZnTe/HLE17/34ang/geo_opt/Zn324Te281Cl86_HLE17_34ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "ZnTe",
+    "filename": "Zn324Te281Cl86_HLE17_34ang_OPT.xyz",
+    "size": 3.4,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Zn": 324,
+      "Cl": 86,
+      "Te": 281
+    },
+    "ratios": {
+      "Zn/Cl": 3.767,
+      "Cl/Zn": 0.265,
+      "Zn/Te": 1.153,
+      "Te/Zn": 0.867,
+      "Cl/Te": 0.306,
+      "Te/Cl": 3.267
     }
   },
   "II-VI/ZnTe/HLE17/34ang/start/Zn324Te281Cl86_HLE17_34ang_start.xyz": {
