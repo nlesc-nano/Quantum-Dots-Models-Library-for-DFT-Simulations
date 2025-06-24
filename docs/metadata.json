@@ -1126,6 +1126,29 @@
       "Cl/S": 0.462
     }
   },
+  "II-VI/HgS/PBE/20ang/geo_opt/Hg68S55Cl26_PBE_20ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "HgS",
+    "filename": "Hg68S55Cl26_PBE_20ang_OPT.xyz",
+    "size": 2.0,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 68,
+      "S": 55,
+      "Cl": 26
+    },
+    "ratios": {
+      "Hg/S": 1.236,
+      "S/Hg": 0.809,
+      "Hg/Cl": 2.615,
+      "Cl/Hg": 0.382,
+      "S/Cl": 2.115,
+      "Cl/S": 0.473
+    }
+  },
   "II-VI/HgS/PBE/20ang/start/Hg68S55Cl26_HLE17_20ang_start.xyz": {
     "system_type": "II-VI",
     "material": "HgS",
@@ -1147,6 +1170,29 @@
       "Cl/Hg": 0.382,
       "S/Cl": 2.115,
       "Cl/S": 0.473
+    }
+  },
+  "II-VI/HgS/PBE/28ang/geo_opt/Hg176S147Cl58_PBE_28ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "HgS",
+    "filename": "Hg176S147Cl58_PBE_28ang_OPT.xyz",
+    "size": 2.8,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 176,
+      "S": 147,
+      "Cl": 58
+    },
+    "ratios": {
+      "Hg/S": 1.197,
+      "S/Hg": 0.835,
+      "Hg/Cl": 3.034,
+      "Cl/Hg": 0.33,
+      "S/Cl": 2.534,
+      "Cl/S": 0.395
     }
   },
   "II-VI/HgS/PBE/28ang/start/Hg176S147Cl58_HLE17_28ang_start.xyz": {
@@ -1586,6 +1632,29 @@
       "Cl/Se": 0.395
     }
   },
+  "II-VI/HgSe/PBE/34ang/geo_opt/Hg324Se281Cl86_PBE_34ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "HgSe",
+    "filename": "Hg324Se281Cl86_PBE_34ang_OPT.xyz",
+    "size": 3.4,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 324,
+      "Se": 281,
+      "Cl": 86
+    },
+    "ratios": {
+      "Hg/Se": 1.153,
+      "Se/Hg": 0.867,
+      "Hg/Cl": 3.767,
+      "Cl/Hg": 0.265,
+      "Se/Cl": 3.267,
+      "Cl/Se": 0.306
+    }
+  },
   "II-VI/HgSe/PBE/34ang/start/Hg324Se281Cl86_HLE17_34ang_start.xyz": {
     "system_type": "II-VI",
     "material": "HgSe",
@@ -1862,6 +1931,29 @@
       "Cl/Te": 0.29
     }
   },
+  "II-VI/HgTe/PBE/12ang/geo_opt/Hg16Te13Cl6_PBE_12ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "HgTe",
+    "filename": "Hg16Te13Cl6_PBE_12ang_OPT.xyz",
+    "size": 1.2,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 16,
+      "Te": 13,
+      "Cl": 6
+    },
+    "ratios": {
+      "Hg/Te": 1.231,
+      "Te/Hg": 0.812,
+      "Hg/Cl": 2.667,
+      "Cl/Hg": 0.375,
+      "Te/Cl": 2.167,
+      "Cl/Te": 0.462
+    }
+  },
   "II-VI/HgTe/PBE/12ang/start/Hg16Te13Cl6_HLE17_12ang_start.xyz": {
     "system_type": "II-VI",
     "material": "HgTe",
@@ -1885,6 +1977,29 @@
       "Cl/Te": 0.462
     }
   },
+  "II-VI/HgTe/PBE/20ang/geo_opt/Hg68Te55Cl26_PBE_20ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "HgTe",
+    "filename": "Hg68Te55Cl26_PBE_20ang_OPT.xyz",
+    "size": 2.0,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 68,
+      "Te": 55,
+      "Cl": 26
+    },
+    "ratios": {
+      "Hg/Te": 1.236,
+      "Te/Hg": 0.809,
+      "Hg/Cl": 2.615,
+      "Cl/Hg": 0.382,
+      "Te/Cl": 2.115,
+      "Cl/Te": 0.473
+    }
+  },
   "II-VI/HgTe/PBE/20ang/start/Hg68Te55Cl26_HLE17_20ang_start.xyz": {
     "system_type": "II-VI",
     "material": "HgTe",
@@ -1906,6 +2021,29 @@
       "Cl/Hg": 0.382,
       "Te/Cl": 2.115,
       "Cl/Te": 0.473
+    }
+  },
+  "II-VI/HgTe/PBE/28ang/geo_opt/Hg176Te147Cl58_PBE_28ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "HgTe",
+    "filename": "Hg176Te147Cl58_PBE_28ang_OPT.xyz",
+    "size": 2.8,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 176,
+      "Te": 147,
+      "Cl": 58
+    },
+    "ratios": {
+      "Hg/Te": 1.197,
+      "Te/Hg": 0.835,
+      "Hg/Cl": 3.034,
+      "Cl/Hg": 0.33,
+      "Te/Cl": 2.534,
+      "Cl/Te": 0.395
     }
   },
   "II-VI/HgTe/PBE/28ang/start/Hg176Te147Cl58_HLE17_28ang_start.xyz": {
