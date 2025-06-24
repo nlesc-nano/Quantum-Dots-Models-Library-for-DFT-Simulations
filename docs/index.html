@@ -327,12 +327,204 @@
             // Use addModelsAsFrames() if available for multi-frame MD
             viewer.addModelsAsFrames(data, 'xyz');
             setStyle(styleSelect.value);
-            viewer.setAnimationMode("loop");
-            viewer.animate({ loop: true, step: 100 });
+            // viewer.setAnimationMode("loop");
+            // viewer.animate({ loop: true, interval: 100 });
+            // ---- Begin Improved Trajectory Bar ----
+            const nFrames = viewer.getNumFrames();
+            
+            let controlsDiv = document.getElementById('traj-controls');
+            if (controlsDiv) controlsDiv.remove();
+            
+            controlsDiv = document.createElement('div');
+            controlsDiv.id = 'traj-controls';
+            controlsDiv.style.display = 'flex';
+            controlsDiv.style.alignItems = 'center';
+            controlsDiv.style.justifyContent = 'center';
+            controlsDiv.style.gap = '1em';
+            controlsDiv.style.margin = '1em 0';
+            
+            // Frame slider
+            const slider = document.createElement('input');
+            slider.type = 'range';
+            slider.min = 0;
+            slider.max = nFrames - 1;
+            slider.value = 0;
+            slider.style.width = '300px';
+            
+            // Frame label
+            const label = document.createElement('span');
+            label.innerText = `Frame: 1 / ${nFrames}`;
+            
+            // Speed control (multipliers)
+            const speedLabel = document.createElement('span');
+            speedLabel.innerText = 'Speed:';
+            const speedSelect = document.createElement('select');
+            const speedOptions = [
+                { name: '0.25x', value: 4 },
+                { name: '0.5x', value: 2 },
+                { name: '0.75x', value: 1.33 },
+                { name: '1x', value: 1 },
+                { name: '2x', value: 0.5 },
+                { name: '5x', value: 0.2 },
+                { name: '10x', value: 0.1 }
+            ];
+            speedOptions.forEach(opt => {
+                let o = document.createElement('option');
+                o.value = opt.value;
+                o.innerText = opt.name;
+                if (opt.name === '1x') o.selected = true;
+                speedSelect.appendChild(o);
+            });
+            
+            // Play, Pause, Stop, Replay buttons
+            const playBtn = document.createElement('button'); playBtn.innerText = 'Play';
+            const pauseBtn = document.createElement('button'); pauseBtn.innerText = 'Pause';
+            const stopBtn = document.createElement('button'); stopBtn.innerText = 'Stop';
+            const replayBtn = document.createElement('button'); replayBtn.innerText = 'Replay';
+            
+            // Export buttons
+            const xyzBtn = document.createElement('button'); xyzBtn.innerText = 'Export XYZ';
+            const pngBtn = document.createElement('button'); pngBtn.innerText = 'Export PNG';
+            
+            let playing = false;
+            let playInterval = null;
+            let speedFactor = 1;
+            
+            // --- Frame updating function ---
+            function updateFrameDisplay(frame) {
+                slider.value = frame;
+                label.innerText = `Frame: ${parseInt(frame) + 1} / ${nFrames}`;
+            }
+            
+            // Play from current frame
+            function startAnimation(fromFrame) {
+                if (playInterval) clearInterval(playInterval);
+                playing = true;
+                playBtn.disabled = true;
+                pauseBtn.disabled = false;
+                stopBtn.disabled = false;
+                replayBtn.disabled = false;
+                let cur = fromFrame !== undefined ? parseInt(fromFrame) : parseInt(slider.value);
+                playInterval = setInterval(() => {
+                    if (cur < nFrames - 1) {
+                        cur++;
+                        viewer.setFrame(cur);
+                        viewer.render();
+                        updateFrameDisplay(cur);
+                        slider.value = cur;
+                    } else {
+                        clearInterval(playInterval);
+                        playing = false;
+                        playBtn.disabled = false;
+                        pauseBtn.disabled = true;
+                    }
+                }, Math.round(40 * speedFactor)); // 40ms = 25fps for 1x, scale by factor
+            }
+            
+            // --- Button actions ---
+            playBtn.onclick = function() {
+                if (!playing) startAnimation(slider.value);
+            };
+            pauseBtn.onclick = function() {
+                playing = false;
+                playBtn.disabled = false;
+                pauseBtn.disabled = true;
+                clearInterval(playInterval);
+            };
+            stopBtn.onclick = function() {
+                playing = false;
+                playBtn.disabled = false;
+                pauseBtn.disabled = true;
+                clearInterval(playInterval);
+                viewer.setFrame(0);
+                viewer.render();
+                updateFrameDisplay(0);
+            };
+            replayBtn.onclick = function() {
+                playing = false;
+                playBtn.disabled = true;
+                pauseBtn.disabled = false;
+                clearInterval(playInterval);
+                viewer.setFrame(0);
+                viewer.render();
+                updateFrameDisplay(0);
+                startAnimation(0);
+            };
+            
+            // Speed select changes
+            speedSelect.onchange = function() {
+                speedFactor = parseFloat(speedSelect.value);
+                if (playing) {
+                    clearInterval(playInterval);
+                    startAnimation(slider.value);
+                }
+            };
+            
+            // Slider to manual frame
+            slider.oninput = function() {
+                let frame = parseInt(slider.value);
+                viewer.setFrame(frame);
+                viewer.render();
+                updateFrameDisplay(frame);
+                if (playing) {
+                    clearInterval(playInterval);
+                    playing = false;
+                    playBtn.disabled = false;
+                    pauseBtn.disabled = true;
+                }
+            };
+            
+            // Export current frame as XYZ
+            xyzBtn.onclick = function() {
+                let frame = parseInt(slider.value);
+                let model = viewer.getModel();
+                let atoms = model.selectedAtoms({frame: frame});
+                let xyzStr = atoms.length + '\nframe ' + (frame + 1) + '\n';
+                atoms.forEach(atom => {
+                    xyzStr += `${atom.elem || atom.atom} ${atom.x} ${atom.y} ${atom.z}\n`;
+                });
+                let blob = new Blob([xyzStr], {type: 'text/plain'});
+                let a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = `frame_${frame + 1}.xyz`;
+                a.click();
+            };
+            
+            // Export current view as PNG
+            pngBtn.onclick = function() {
+                viewer.pngURI().then(uri => {
+                    let a = document.createElement('a');
+                    a.href = uri;
+                    a.download = `frame_${parseInt(slider.value) + 1}.png`;
+                    a.click();
+                });
+            };
+            
+            // Initial state
+            updateFrameDisplay(0);
+            pauseBtn.disabled = true;
+            
+            // Layout controls
+            controlsDiv.appendChild(stopBtn);
+            controlsDiv.appendChild(replayBtn);
+            controlsDiv.appendChild(playBtn);
+            controlsDiv.appendChild(pauseBtn);
+            controlsDiv.appendChild(slider);
+            controlsDiv.appendChild(label);
+            controlsDiv.appendChild(speedLabel);
+            controlsDiv.appendChild(speedSelect);
+            controlsDiv.appendChild(xyzBtn);
+            controlsDiv.appendChild(pngBtn);
+            
+            // Place under viewer (or wherever you want)
+            viewerDiv.parentNode.insertBefore(controlsDiv, viewerDiv.nextSibling);
+            // ---- End Improved Trajectory Bar ----
+
           } else {
             // Fallback: single-frame using the first frame
             viewer.addModel(xyzToLoad, 'xyz');
             setStyle(styleSelect.value);
+            
           }
 
           updateDetails(file);
