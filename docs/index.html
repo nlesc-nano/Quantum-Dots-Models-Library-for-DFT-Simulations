@@ -196,6 +196,7 @@
     let viewer = null;
     let currentFile = "";
     let currentXYZText = "";   // ← will store the raw XYZ we fetched
+    let customColors = {};
 
     // Default CPK-like colors
     const defaultColors = {
@@ -211,32 +212,30 @@
 
     // Apply custom element-color overrides
     function applyColorOverrides() {
-      if (!viewer) return;
-      const pickers = colorControlsDiv.querySelectorAll('input[type="color"]');
-      pickers.forEach(input => {
-        const el = input.dataset.element;
-        const hex = input.value;
-        const xyzColor = hexToXYZColor(hex);
-        viewer.setStyle({ elem: el }, {
-          stick: { color: xyzColor },
-          sphere: { color: xyzColor }
+        if (!viewer) return;
+        Object.keys(customColors).forEach(el => {
+            const xyzColor = hexToXYZColor(customColors[el]);
+            viewer.setStyle({ elem: el }, {
+                stick: { color: xyzColor },
+                sphere: { color: xyzColor }
+            });
         });
-      });
     }
 
     // Set rendering style
     function setStyle(style) {
-      if (!viewer) return;
-      viewer.setStyle({}, {});
-      if (style === 'stick') {
-        viewer.setStyle({}, { stick: {} });
-      } else if (style === 'ballstick') {
-        viewer.setStyle({}, { stick: {}, sphere: { scale: 0.3 } });
-      } else if (style === 'sphere') {
-        viewer.setStyle({}, { sphere: {} });
-      }
-      viewer.zoomTo();
-      viewer.render();
+        if (!viewer) return;
+        viewer.setStyle({}, {});
+        if (style === 'stick') {
+            viewer.setStyle({}, { stick: {} });
+        } else if (style === 'ballstick') {
+            viewer.setStyle({}, { stick: {}, sphere: { scale: 0.3 } });
+        } else if (style === 'sphere') {
+            viewer.setStyle({}, { sphere: {} });
+        }
+        applyColorOverrides(); // <--- ensure custom colors always apply!
+        viewer.zoomTo();
+        viewer.render();
     }
 
     // Create color pickers for each element
@@ -254,10 +253,12 @@
         input.type = 'color';
         input.value = defaultHex;
         input.dataset.element = el;
-        input.addEventListener('input', () => {
-          applyColorOverrides();
-          viewer.render();
-        });
+	input.addEventListener('input', () => {
+      customColors[el] = input.value;   // <--- save to customColors
+      applyColorOverrides();
+      viewer.render();
+      });
+
         label.appendChild(input);
         wrapper.appendChild(label);
         colorControlsDiv.appendChild(wrapper);
@@ -506,12 +507,13 @@
             // ---- End Enhanced Trajectory Control Bar ----
 
           } else {
-            // Fallback: single-frame using the first frame
-            viewer.addModel(xyzToLoad, 'xyz');
-            setStyle(styleSelect.value);
-            
+           // Remove any previous MD controls
+           let controlsDiv = document.getElementById('traj-controls');
+           if (controlsDiv) controlsDiv.remove();
+       
+           viewer.addModel(xyzToLoad, 'xyz');
+           setStyle(styleSelect.value);
           }
-
           updateDetails(file);
           afterLoadSuccess();
         })
