@@ -367,6 +367,29 @@
       "Se/Cl": 2.115
     }
   },
+  "II-VI/CdSe/HLE17/28ang/geo_opt/Cd176Se147Cl58_HLE17_28ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "CdSe",
+    "filename": "Cd176Se147Cl58_HLE17_28ang_OPT.xyz",
+    "size": 2.8,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cd": 176,
+      "Se": 147,
+      "Cl": 58
+    },
+    "ratios": {
+      "Cd/Se": 1.197,
+      "Se/Cd": 0.835,
+      "Cd/Cl": 3.034,
+      "Cl/Cd": 0.33,
+      "Se/Cl": 2.534,
+      "Cl/Se": 0.395
+    }
+  },
   "II-VI/CdSe/HLE17/28ang/start/Cd176Se147Cl58_HLE17_28ang_start.xyz": {
     "system_type": "II-VI",
     "material": "CdSe",
@@ -390,6 +413,29 @@
       "Cl/Se": 0.395
     }
   },
+  "II-VI/CdSe/HLE17/34ang/geo_opt/Cd324Se281Cl86_HLE17_34ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "CdSe",
+    "filename": "Cd324Se281Cl86_HLE17_34ang_OPT.xyz",
+    "size": 3.4,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cd": 324,
+      "Cl": 86,
+      "Se": 281
+    },
+    "ratios": {
+      "Cd/Cl": 3.767,
+      "Cl/Cd": 0.265,
+      "Cd/Se": 1.153,
+      "Se/Cd": 0.867,
+      "Cl/Se": 0.306,
+      "Se/Cl": 3.267
+    }
+  },
   "II-VI/CdSe/HLE17/34ang/start/Cd324Se281Cl86_HLE17_34ang_start.xyz": {
     "system_type": "II-VI",
     "material": "CdSe",
@@ -411,6 +457,29 @@
       "Se/Cd": 0.867,
       "Cl/Se": 0.306,
       "Se/Cl": 3.267
+    }
+  },
+  "II-VI/CdSe/HLE17/40ang/geo_opt/Cd592Se517Cl150_HLE17_40ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "CdSe",
+    "filename": "Cd592Se517Cl150_HLE17_40ang_OPT.xyz",
+    "size": 4.0,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 150,
+      "Se": 517,
+      "Cd": 592
+    },
+    "ratios": {
+      "Cl/Se": 0.29,
+      "Se/Cl": 3.447,
+      "Cl/Cd": 0.253,
+      "Cd/Cl": 3.947,
+      "Se/Cd": 0.873,
+      "Cd/Se": 1.145
     }
   },
   "II-VI/CdSe/HLE17/40ang/start/Cd592Se517Cl150_HLE17_40ang_start.xyz": {
@@ -1218,6 +1287,29 @@
       "Cl/S": 0.395
     }
   },
+  "II-VI/HgS/PBE/34ang/geo_opt/Hg324S281Cl86_PBE_34ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "HgS",
+    "filename": "Hg324S281Cl86_PBE_34ang_OPT.xyz",
+    "size": 3.4,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 324,
+      "S": 281,
+      "Cl": 86
+    },
+    "ratios": {
+      "Hg/S": 1.153,
+      "S/Hg": 0.867,
+      "Hg/Cl": 3.767,
+      "Cl/Hg": 0.265,
+      "S/Cl": 3.267,
+      "Cl/S": 0.306
+    }
+  },
   "II-VI/HgS/PBE/34ang/start/Hg324S281Cl86_HLE17_34ang_start.xyz": {
     "system_type": "II-VI",
     "material": "HgS",
@@ -1676,6 +1768,29 @@
       "Cl/Hg": 0.265,
       "Se/Cl": 3.267,
       "Cl/Se": 0.306
+    }
+  },
+  "II-VI/HgSe/PBE/40ang/geo_opt/Hg592Se517Cl150_PBE_40ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "HgSe",
+    "filename": "Hg592Se517Cl150_PBE_40ang_OPT.xyz",
+    "size": 4.0,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 592,
+      "Se": 517,
+      "Cl": 150
+    },
+    "ratios": {
+      "Hg/Se": 1.145,
+      "Se/Hg": 0.873,
+      "Hg/Cl": 3.947,
+      "Cl/Hg": 0.253,
+      "Se/Cl": 3.447,
+      "Cl/Se": 0.29
     }
   },
   "II-VI/HgSe/PBE/40ang/start/Hg592Se517Cl150_HLE17_40ang_start.xyz": {
@@ -2504,6 +2619,29 @@
       "Cl/Zn": 0.265,
       "Se/Cl": 3.267,
       "Cl/Se": 0.306
+    }
+  },
+  "II-VI/ZnSe/HLE17/40ang/geo_opt/Zn592Se517Cl150_HLE17_40ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "ZnSe",
+    "filename": "Zn592Se517Cl150_HLE17_40ang_OPT.xyz",
+    "size": 4.0,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Zn": 592,
+      "Se": 517,
+      "Cl": 150
+    },
+    "ratios": {
+      "Zn/Se": 1.145,
+      "Se/Zn": 0.873,
+      "Zn/Cl": 3.947,
+      "Cl/Zn": 0.253,
+      "Se/Cl": 3.447,
+      "Cl/Se": 0.29
     }
   },
   "II-VI/ZnSe/HLE17/40ang/start/Zn592Se517Cl150_HLE17_40ang_start.xyz": {
