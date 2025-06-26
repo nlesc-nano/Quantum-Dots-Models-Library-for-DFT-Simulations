@@ -212,15 +212,26 @@
 
     // Apply custom element-color overrides
     function applyColorOverrides() {
-        if (!viewer) return;
-        Object.keys(customColors).forEach(el => {
-            const xyzColor = hexToXYZColor(customColors[el]);
-            viewer.setStyle({ elem: el }, {
-                stick: { color: xyzColor },
-                sphere: { color: xyzColor }
-            });
-        });
-    }
+    if (!viewer) return;
+    const style = styleSelect.value;
+    // Use all elements currently in the structure, not just those in customColors!
+    const allElements = new Set([
+        ...Object.keys(defaultColors),
+        ...Object.keys(customColors)
+    ]);
+    allElements.forEach(el => {
+        // Use the color from customColors (if picked), else the default
+        const hex = customColors[el] || defaultColors[el] || "#CCCCCC";
+        const xyzColor = hexToXYZColor(hex);
+        if (style === "stick") {
+            viewer.setStyle({ elem: el }, { stick: { color: xyzColor } });
+        } else if (style === "ballstick") {
+            viewer.setStyle({ elem: el }, { stick: { color: xyzColor }, sphere: { color: xyzColor, scale: 0.3 } });
+        } else if (style === "sphere") {
+            viewer.setStyle({ elem: el }, { sphere: { color: xyzColor } });
+        }
+    });
+}
 
     // Set rendering style
     function setStyle(style) {
@@ -244,24 +255,26 @@
       const elements = Object.keys(stoich || {});
       if (!elements.length) return;
       elements.forEach(el => {
-        const defaultHex = defaultColors[el] || "#CCCCCC";
+	const colorHex = customColors[el] || defaultColors[el] || "#CCCCCC";
         const wrapper = document.createElement('div');
         wrapper.className = 'color-picker';
         const label = document.createElement('label');
         label.innerText = el;
         const input = document.createElement('input');
         input.type = 'color';
-        input.value = defaultHex;
+        input.value = colorHex; // shows current color in picker!
+        input.style.backgroundColor = colorHex; // color input bg
         input.dataset.element = el;
-	input.addEventListener('input', () => {
-      customColors[el] = input.value;   // <--- save to customColors
-      applyColorOverrides();
-      viewer.render();
-      });
-
+        input.addEventListener('input', () => {
+          customColors[el] = input.value;
+          input.style.backgroundColor = input.value; // update bg live
+          applyColorOverrides();
+          viewer.render();
+        });
         label.appendChild(input);
         wrapper.appendChild(label);
         colorControlsDiv.appendChild(wrapper);
+              
       });
     }
 
