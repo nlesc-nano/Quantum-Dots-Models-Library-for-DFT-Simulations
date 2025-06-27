@@ -212,15 +212,26 @@
 
     // Apply custom element-color overrides
     function applyColorOverrides() {
-        if (!viewer) return;
-        Object.keys(customColors).forEach(el => {
-            const xyzColor = hexToXYZColor(customColors[el]);
-            viewer.setStyle({ elem: el }, {
-                stick: { color: xyzColor },
-                sphere: { color: xyzColor }
-            });
-        });
-    }
+    if (!viewer) return;
+    const style = styleSelect.value;
+    // Use all elements currently in the structure, not just those in customColors!
+    const allElements = new Set([
+        ...Object.keys(defaultColors),
+        ...Object.keys(customColors)
+    ]);
+    allElements.forEach(el => {
+        // Use the color from customColors (if picked), else the default
+        const hex = customColors[el] || defaultColors[el] || "#CCCCCC";
+        const xyzColor = hexToXYZColor(hex);
+        if (style === "stick") {
+            viewer.setStyle({ elem: el }, { stick: { color: xyzColor } });
+        } else if (style === "ballstick") {
+            viewer.setStyle({ elem: el }, { stick: { color: xyzColor }, sphere: { color: xyzColor, scale: 0.3 } });
+        } else if (style === "sphere") {
+            viewer.setStyle({ elem: el }, { sphere: { color: xyzColor } });
+        }
+    });
+}
 
     // Set rendering style
     function setStyle(style) {
@@ -244,24 +255,26 @@
       const elements = Object.keys(stoich || {});
       if (!elements.length) return;
       elements.forEach(el => {
-        const defaultHex = defaultColors[el] || "#CCCCCC";
+	const colorHex = customColors[el] || defaultColors[el] || "#CCCCCC";
         const wrapper = document.createElement('div');
         wrapper.className = 'color-picker';
         const label = document.createElement('label');
         label.innerText = el;
         const input = document.createElement('input');
         input.type = 'color';
-        input.value = defaultHex;
+        input.value = colorHex; // shows current color in picker!
+        input.style.backgroundColor = colorHex; // color input bg
         input.dataset.element = el;
-	input.addEventListener('input', () => {
-      customColors[el] = input.value;   // <--- save to customColors
-      applyColorOverrides();
-      viewer.render();
-      });
-
+        input.addEventListener('input', () => {
+          customColors[el] = input.value;
+          input.style.backgroundColor = input.value; // update bg live
+          applyColorOverrides();
+          viewer.render();
+        });
         label.appendChild(input);
         wrapper.appendChild(label);
         colorControlsDiv.appendChild(wrapper);
+              
       });
     }
 
@@ -375,6 +388,7 @@
             // --- Export buttons
             const xyzBtn = document.createElement('button'); xyzBtn.innerText = 'Export XYZ';
             const pngBtn = document.createElement('button'); pngBtn.innerText = 'Export PNG';
+	    const videoBtn = document.createElement('button'); videoBtn.innerText = 'Export Video';
             
             // --- Playback buttons
             const playPauseBtn = document.createElement('button'); playPauseBtn.innerText = 'Play';
@@ -501,9 +515,124 @@
             controlsDiv.appendChild(speedSelect);
             controlsDiv.appendChild(xyzBtn);
             controlsDiv.appendChild(pngBtn);
+            controlsDiv.appendChild(videoBtn);
             
             // --- Place controls under viewer
             viewerDiv.parentNode.insertBefore(controlsDiv, viewerDiv.nextSibling);
+            // --------- Video Export Advanced --------
+            // Modal elements
+            const videoModal = document.getElementById('videoExportModal');
+            const videoForm = document.getElementById('videoExportForm');
+            const videoStartFrame = document.getElementById('videoStartFrame');
+            const videoEndFrame = document.getElementById('videoEndFrame');
+            const videoSpeed = document.getElementById('videoSpeed');
+            const videoStatus = document.getElementById('videoExportStatus');
+            const videoProgress = document.getElementById('videoExportProgress');
+            const videoCancel = document.getElementById('videoExportCancel');
+            
+            let videoExportAbort = false;
+            
+            videoBtn.onclick = function() {
+                if (playing) {
+                    playing = false;
+                    playPauseBtn.innerText = 'Play';
+                    clearInterval(playInterval);
+                }
+                // Set modal defaults
+                videoStartFrame.value = 1;
+                videoEndFrame.value = nFrames;
+                videoStatus.textContent = '';
+                videoProgress.style.display = 'none';
+                videoProgress.value = 0;
+                videoExportAbort = false;
+                videoModal.style.display = 'flex';
+            };
+            
+            videoCancel.onclick = function() {
+                videoExportAbort = true;
+                videoModal.style.display = 'none';
+                videoStatus.textContent = '';
+            };
+            
+            videoForm.onsubmit = async function(e) {
+                e.preventDefault();
+            
+                // Save the current frame to restore later
+                let prevFrame = parseInt(slider.value);
+
+                // Parse settings
+                let start = Math.max(0, parseInt(videoStartFrame.value) - 1);
+                let end = Math.min(nFrames - 1, parseInt(videoEndFrame.value) - 1);
+                let speedFactor = parseFloat(videoSpeed.value);
+                let baseFps = 25; // or adjust for smoother/faster/slower video
+                let fps = Math.max(1, Math.round(baseFps * speedFactor));
+                let canvas = viewerDiv.querySelector('canvas');
+                if (!canvas) {
+                    videoStatus.style.color = "red";
+                    videoStatus.textContent = "No canvas for video export.";
+                    return;
+                }
+                if (end < start) [start, end] = [end, start]; // Swap if needed
+                let totalFrames = end - start + 1;
+            
+                // Prepare UI
+                videoStatus.style.color = "#008000";
+                videoStatus.textContent = "Exporting video...";
+                videoProgress.style.display = 'block';
+                videoProgress.value = 0;
+                [...controlsDiv.querySelectorAll('button,input,select')].forEach(e => e.disabled = true);
+                videoForm.querySelector('button[type=submit]').disabled = true;
+            
+                // Start recorder
+                let stream = canvas.captureStream(fps);
+                let recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
+                let chunks = [];
+                recorder.ondataavailable = e => chunks.push(e.data);
+            
+                let resolveRecorder;
+                recorder.onstop = function() {
+                    let blob = new Blob(chunks, {type: "video/webm"});
+                    let a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = `trajectory_${start+1}-${end+1}_${speedFactor}x.webm`;
+                    a.click();
+                    videoStatus.style.color = "#008000";
+                    videoStatus.textContent = "Done! Video downloaded.";
+                    [...controlsDiv.querySelectorAll('button,input,select')].forEach(e => e.disabled = false);
+                    videoForm.querySelector('button[type=submit]').disabled = false;
+                    videoModal.style.display = 'none';
+                    resolveRecorder && resolveRecorder();
+                    // Restore previous frame!
+                    viewer.setFrame(prevFrame);
+                    viewer.render();
+                    updateFrameDisplay(prevFrame);
+              };
+                recorder.start();
+            
+                // Animate and record
+                for (let i = start; i <= end; i++) {
+                    if (videoExportAbort) break;
+                    viewer.setFrame(i);
+                    viewer.render();
+                    updateFrameDisplay(i);
+                    videoProgress.value = Math.round(((i - start + 1) / totalFrames) * 100);
+                    await new Promise(r => setTimeout(r, 1000 / fps));
+                }
+                recorder.stop();
+                await new Promise(res => resolveRecorder = res); // Wait for download
+            
+                // Restore UI
+                videoModal.style.display = 'none';
+                [...controlsDiv.querySelectorAll('button,input,select')].forEach(e => e.disabled = false);
+                videoForm.querySelector('button[type=submit]').disabled = false;
+                videoExportAbort = false;
+		// Restore previous frame on cancel as well
+                viewer.setFrame(prevFrame);
+                viewer.render();
+                updateFrameDisplay(prevFrame);
+            };
+            // --------- END Video Export Advanced --------
+
             // ---- End Enhanced Trajectory Control Bar ----
 
           } else {
@@ -996,6 +1125,37 @@
     }
 
   </script>
+  <!-- Video Export Modal -->
+<div id="videoExportModal" style="display:none; position:fixed; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); z-index:1000; align-items:center; justify-content:center;">
+  <div style="background:white; padding:2em; border-radius:10px; box-shadow:0 0 24px #0006; min-width:320px;">
+    <h3>Export MD Trajectory as Video</h3>
+    <form id="videoExportForm">
+      <label>
+        Start frame: <input type="number" id="videoStartFrame" min="1" required>
+      </label>
+      <br>
+      <label>
+        End frame: <input type="number" id="videoEndFrame" min="1" required>
+      </label>
+      <br>
+      <label>
+        Speed:
+        <select id="videoSpeed">
+          <option value="0.25">0.25x</option>
+          <option value="0.5">0.5x</option>
+          <option value="1" selected>1x (real time)</option>
+          <option value="2">2x</option>
+        </select>
+      </label>
+      <br>
+      <progress id="videoExportProgress" value="0" max="100" style="width:100%; display:none;"></progress>
+      <br>
+      <button type="submit">Start Export</button>
+      <button type="button" id="videoExportCancel">Cancel</button>
+    </form>
+    <div id="videoExportStatus" style="color:#008000; margin-top:1em;"></div>
+  </div>
+</div>
 </body>
 </html>
 
