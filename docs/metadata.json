@@ -1333,6 +1333,29 @@
       "Cl/S": 0.306
     }
   },
+  "II-VI/HgS/PBE/40ang/geo_opt/Hg592S517Cl150_PBE_40ang_OPT.xyz": {
+    "system_type": "II-VI",
+    "material": "HgS",
+    "filename": "Hg592S517Cl150_PBE_40ang_OPT.xyz",
+    "size": 4.0,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 592,
+      "S": 517,
+      "Cl": 150
+    },
+    "ratios": {
+      "Hg/S": 1.145,
+      "S/Hg": 0.873,
+      "Hg/Cl": 3.947,
+      "Cl/Hg": 0.253,
+      "S/Cl": 3.447,
+      "Cl/S": 0.29
+    }
+  },
   "II-VI/HgS/PBE/40ang/start/Hg592S517Cl150_HLE17_40ang_start.xyz": {
     "system_type": "II-VI",
     "material": "HgS",

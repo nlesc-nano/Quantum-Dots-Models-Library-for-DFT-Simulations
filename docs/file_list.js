@@ -57,6 +57,7 @@ const xyzFiles = [
   "II-VI/HgS/PBE/28ang/start/Hg176S147Cl58_HLE17_28ang_start.xyz",
   "II-VI/HgS/PBE/34ang/geo_opt/Hg324S281Cl86_PBE_34ang_OPT.xyz",
   "II-VI/HgS/PBE/34ang/start/Hg324S281Cl86_HLE17_34ang_start.xyz",
+  "II-VI/HgS/PBE/40ang/geo_opt/Hg592S517Cl150_PBE_40ang_OPT.xyz",
   "II-VI/HgS/PBE/40ang/start/Hg592S517Cl150_HLE17_40ang_start.xyz",
   "II-VI/HgSe/HLE17/12ang/geo_opt/Hg16Se13Cl6_HLE17_12ang_OPT.xyz",
   "II-VI/HgSe/HLE17/12ang/start/Hg16Se13Cl6_HLE17_12ang_start.xyz",
