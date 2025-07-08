@@ -3502,7 +3502,7 @@
       "Cl/As": 0.614
     }
   },
-  "III-V/InAs/InAs1116_GeoOpt-pos-1.xyz": {
+  "III-V/InAs/OLD/InAs1116_GeoOpt-pos-1.xyz": {
     "system_type": "III-V",
     "material": "InAs",
     "filename": "InAs1116_GeoOpt-pos-1.xyz",
@@ -3525,7 +3525,7 @@
       "As/In": 0.83
     }
   },
-  "III-V/InAs/InAs1847_GeoOpt-pos-1.xyz": {
+  "III-V/InAs/OLD/InAs1847_GeoOpt-pos-1.xyz": {
     "system_type": "III-V",
     "material": "InAs",
     "filename": "InAs1847_GeoOpt-pos-1.xyz",
@@ -3534,28 +3534,10 @@
     "basis": "",
     "run_type": "Start",
     "code": "CP2K",
-    "stoichiometry": {
-      "In": 790,
-      "As": 688,
-      "Cl": 348,
-      "Zn": 21
-    },
-    "ratios": {
-      "In/As": 1.148,
-      "As/In": 0.871,
-      "In/Cl": 2.27,
-      "Cl/In": 0.441,
-      "In/Zn": 37.619,
-      "Zn/In": 0.027,
-      "As/Cl": 1.977,
-      "Cl/As": 0.506,
-      "As/Zn": 32.762,
-      "Zn/As": 0.031,
-      "Cl/Zn": 16.571,
-      "Zn/Cl": 0.06
-    }
+    "stoichiometry": {},
+    "ratios": {}
   },
-  "III-V/InAs/InAs282_GeoOpt-pos-1.xyz": {
+  "III-V/InAs/OLD/InAs282_GeoOpt-pos-1.xyz": {
     "system_type": "III-V",
     "material": "InAs",
     "filename": "InAs282_GeoOpt-pos-1.xyz",
@@ -3578,7 +3560,7 @@
       "As/Cl": 0.716
     }
   },
-  "III-V/InAs/InAs2839_GeoOpt-pos-1.xyz": {
+  "III-V/InAs/OLD/InAs2839_GeoOpt-pos-1.xyz": {
     "system_type": "III-V",
     "material": "InAs",
     "filename": "InAs2839_GeoOpt-pos-1.xyz",
@@ -3587,28 +3569,10 @@
     "basis": "",
     "run_type": "Start",
     "code": "CP2K",
-    "stoichiometry": {
-      "In": 1242,
-      "As": 1108,
-      "Cl": 460,
-      "Zn": 29
-    },
-    "ratios": {
-      "In/As": 1.121,
-      "As/In": 0.892,
-      "In/Cl": 2.7,
-      "Cl/In": 0.37,
-      "In/Zn": 42.828,
-      "Zn/In": 0.023,
-      "As/Cl": 2.409,
-      "Cl/As": 0.415,
-      "As/Zn": 38.207,
-      "Zn/As": 0.026,
-      "Cl/Zn": 15.862,
-      "Zn/Cl": 0.063
-    }
+    "stoichiometry": {},
+    "ratios": {}
   },
-  "III-V/InAs/InAs608_GeoOpt-pos-1.xyz": {
+  "III-V/InAs/OLD/InAs608_GeoOpt-pos-1.xyz": {
     "system_type": "III-V",
     "material": "InAs",
     "filename": "InAs608_GeoOpt-pos-1.xyz",
@@ -3631,7 +3595,7 @@
       "As/In": 0.779
     }
   },
-  "III-V/InAs/InAs92_GeoOpt-pos-1.xyz": {
+  "III-V/InAs/OLD/InAs92_GeoOpt-pos-1.xyz": {
     "system_type": "III-V",
     "material": "InAs",
     "filename": "InAs92_GeoOpt-pos-1.xyz",
