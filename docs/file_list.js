@@ -198,4 +198,6 @@ const xyzFiles = [
   "III-V/InSb/HLE17/39ang/geo_opt/In477Sb396Cl243_HLE17_39ang_OPT.xyz",
   "III-V/InSb/HLE17/45ang/geo_opt/In790Zn21Sb688Cl348_HLE17_45ang_OPT.xyz",
   "IV-VI/PbS/PbS_1532-pos-1.xyz",
+  "IV-VI/PbSe/PBE/18ang/geo_opt/Pb200Se140Cl120_PBE_18ang_OPT.xyz",
+  "IV-VI/PbSe/PBE/18ang/start/Pb200Se140Cl120_PBE_18ang_start.xyz",
 ];

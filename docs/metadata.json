@@ -4882,5 +4882,51 @@
       "S/Cl": 2.442,
       "Cl/S": 0.41
     }
+  },
+  "IV-VI/PbSe/PBE/18ang/geo_opt/Pb200Se140Cl120_PBE_18ang_OPT.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbSe",
+    "filename": "Pb200Se140Cl120_PBE_18ang_OPT.xyz",
+    "size": 1.8,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 120,
+      "Pb": 200,
+      "Se": 140
+    },
+    "ratios": {
+      "Cl/Pb": 0.6,
+      "Pb/Cl": 1.667,
+      "Cl/Se": 0.857,
+      "Se/Cl": 1.167,
+      "Pb/Se": 1.429,
+      "Se/Pb": 0.7
+    }
+  },
+  "IV-VI/PbSe/PBE/18ang/start/Pb200Se140Cl120_PBE_18ang_start.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbSe",
+    "filename": "Pb200Se140Cl120_PBE_18ang_start.xyz",
+    "size": 1.8,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Start",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 120,
+      "Pb": 200,
+      "Se": 140
+    },
+    "ratios": {
+      "Cl/Pb": 0.6,
+      "Pb/Cl": 1.667,
+      "Cl/Se": 0.857,
+      "Se/Cl": 1.167,
+      "Pb/Se": 1.429,
+      "Se/Pb": 0.7
+    }
   }
 }
