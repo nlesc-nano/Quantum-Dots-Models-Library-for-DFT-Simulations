@@ -4112,6 +4112,36 @@
       "As/In": 0.83
     }
   },
+  "III-V/InAs/HLE17/41ang/geo_opt/In790Zn21As688Cl348_HLE17_41ang_OPT.xyz": {
+    "system_type": "III-V",
+    "material": "InAs",
+    "filename": "In790Zn21As688Cl348_HLE17_41ang_OPT.xyz",
+    "size": 4.1,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "In": 790,
+      "As": 688,
+      "Cl": 348,
+      "Zn": 21
+    },
+    "ratios": {
+      "In/As": 1.148,
+      "As/In": 0.871,
+      "In/Cl": 2.27,
+      "Cl/In": 0.441,
+      "In/Zn": 37.619,
+      "Zn/In": 0.027,
+      "As/Cl": 1.977,
+      "Cl/As": 0.506,
+      "As/Zn": 32.762,
+      "Zn/As": 0.031,
+      "Cl/Zn": 16.571,
+      "Zn/Cl": 0.06
+    }
+  },
   "III-V/InAs/HLE17/42ang/geo_opt/In790Zn21As688Cl348_HLE17_42ang_OPT.xyz": {
     "system_type": "III-V",
     "material": "InAs",
