@@ -22,6 +22,29 @@
       "Cl/S": 0.462
     }
   },
+  "II-VI/CdS/HLE17/12ang/md/Cd16S13Cl6_HLE17_12ang_pos_md.xyz": {
+    "system_type": "II-VI",
+    "material": "CdS",
+    "filename": "Cd16S13Cl6_HLE17_12ang_pos_md.xyz",
+    "size": 1.2,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Molecular Dynamics",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cd": 16,
+      "S": 13,
+      "Cl": 6
+    },
+    "ratios": {
+      "Cd/S": 1.231,
+      "S/Cd": 0.812,
+      "Cd/Cl": 2.667,
+      "Cl/Cd": 0.375,
+      "S/Cl": 2.167,
+      "Cl/S": 0.462
+    }
+  },
   "II-VI/CdS/HLE17/12ang/start/Cd16S13Cl6_HLE17_12ang_start.xyz": {
     "system_type": "II-VI",
     "material": "CdS",
@@ -712,6 +735,29 @@
       "Cl/Te": 0.462
     }
   },
+  "II-VI/CdTe/HLE17/12ang/md/Cd16Te13Cl6_HLE17_12ang_pos_md.xyz": {
+    "system_type": "II-VI",
+    "material": "CdTe",
+    "filename": "Cd16Te13Cl6_HLE17_12ang_pos_md.xyz",
+    "size": 1.2,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Molecular Dynamics",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cd": 16,
+      "Te": 13,
+      "Cl": 6
+    },
+    "ratios": {
+      "Cd/Te": 1.231,
+      "Te/Cd": 0.812,
+      "Cd/Cl": 2.667,
+      "Cl/Cd": 0.375,
+      "Te/Cl": 2.167,
+      "Cl/Te": 0.462
+    }
+  },
   "II-VI/CdTe/HLE17/12ang/start/Cd16Te13Cl6_HLE17_12ang_start.xyz": {
     "system_type": "II-VI",
     "material": "CdTe",
@@ -927,6 +973,29 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 16,
+      "S": 13,
+      "Cl": 6
+    },
+    "ratios": {
+      "Hg/S": 1.231,
+      "S/Hg": 0.812,
+      "Hg/Cl": 2.667,
+      "Cl/Hg": 0.375,
+      "S/Cl": 2.167,
+      "Cl/S": 0.462
+    }
+  },
+  "II-VI/HgS/HLE17/12ang/md/Hg16S13Cl6_HLE17_12ang_pos_md.xyz": {
+    "system_type": "II-VI",
+    "material": "HgS",
+    "filename": "Hg16S13Cl6_HLE17_12ang_pos_md.xyz",
+    "size": 1.2,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Molecular Dynamics",
     "code": "CP2K",
     "stoichiometry": {
       "Hg": 16,
@@ -1402,6 +1471,29 @@
       "Cl/Se": 0.462
     }
   },
+  "II-VI/HgSe/HLE17/12ang/md/Hg16Se13Cl6_HLE17_12ang_pos_md.xyz": {
+    "system_type": "II-VI",
+    "material": "HgSe",
+    "filename": "Hg16Se13Cl6_HLE17_12ang_pos_md.xyz",
+    "size": 1.2,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Molecular Dynamics",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 16,
+      "Se": 13,
+      "Cl": 6
+    },
+    "ratios": {
+      "Hg/Se": 1.231,
+      "Se/Hg": 0.812,
+      "Hg/Cl": 2.667,
+      "Cl/Hg": 0.375,
+      "Se/Cl": 2.167,
+      "Cl/Se": 0.462
+    }
+  },
   "II-VI/HgSe/HLE17/12ang/start/Hg16Se13Cl6_HLE17_12ang_start.xyz": {
     "system_type": "II-VI",
     "material": "HgSe",
@@ -1847,6 +1939,29 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Hg": 16,
+      "Te": 13,
+      "Cl": 6
+    },
+    "ratios": {
+      "Hg/Te": 1.231,
+      "Te/Hg": 0.812,
+      "Hg/Cl": 2.667,
+      "Cl/Hg": 0.375,
+      "Te/Cl": 2.167,
+      "Cl/Te": 0.462
+    }
+  },
+  "II-VI/HgTe/HLE17/12ang/md/Hg16Te13Cl6_HLE17_12ang_pos_md.xyz": {
+    "system_type": "II-VI",
+    "material": "HgTe",
+    "filename": "Hg16Te13Cl6_HLE17_12ang_pos_md.xyz",
+    "size": 1.2,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Molecular Dynamics",
     "code": "CP2K",
     "stoichiometry": {
       "Hg": 16,
@@ -2322,6 +2437,29 @@
       "Cl/S": 0.462
     }
   },
+  "II-VI/ZnS/HLE17/12ang/md/Zn16S13Cl6_HLE17_12ang_pos_md.xyz": {
+    "system_type": "II-VI",
+    "material": "ZnS",
+    "filename": "Zn16S13Cl6_HLE17_12ang_pos_md.xyz",
+    "size": 1.2,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Molecular Dynamics",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Zn": 16,
+      "S": 13,
+      "Cl": 6
+    },
+    "ratios": {
+      "Zn/S": 1.231,
+      "S/Zn": 0.812,
+      "Zn/Cl": 2.667,
+      "Cl/Zn": 0.375,
+      "S/Cl": 2.167,
+      "Cl/S": 0.462
+    }
+  },
   "II-VI/ZnS/HLE17/12ang/start/Zn16S13Cl6_HLE17_12ang_start.xyz": {
     "system_type": "II-VI",
     "material": "ZnS",
@@ -2552,6 +2690,29 @@
       "Cl/Se": 0.462
     }
   },
+  "II-VI/ZnSe/HLE17/12ang/md/Zn16Se13Cl6_HLE17_12ang_pos_md.xyz": {
+    "system_type": "II-VI",
+    "material": "ZnSe",
+    "filename": "Zn16Se13Cl6_HLE17_12ang_pos_md.xyz",
+    "size": 1.2,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Molecular Dynamics",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Zn": 16,
+      "Se": 13,
+      "Cl": 6
+    },
+    "ratios": {
+      "Zn/Se": 1.231,
+      "Se/Zn": 0.812,
+      "Zn/Cl": 2.667,
+      "Cl/Zn": 0.375,
+      "Se/Cl": 2.167,
+      "Cl/Se": 0.462
+    }
+  },
   "II-VI/ZnSe/HLE17/12ang/start/Zn16Se13Cl6_HLE17_12ang_start.xyz": {
     "system_type": "II-VI",
     "material": "ZnSe",
@@ -2767,6 +2928,29 @@
     "functional": "HLE17",
     "basis": "DZVP",
     "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Zn": 16,
+      "Te": 13,
+      "Cl": 6
+    },
+    "ratios": {
+      "Zn/Te": 1.231,
+      "Te/Zn": 0.812,
+      "Zn/Cl": 2.667,
+      "Cl/Zn": 0.375,
+      "Te/Cl": 2.167,
+      "Cl/Te": 0.462
+    }
+  },
+  "II-VI/ZnTe/HLE17/12ang/md/Zn16Te13Cl6_HLE17_12ang_pos_md.xyz": {
+    "system_type": "II-VI",
+    "material": "ZnTe",
+    "filename": "Zn16Te13Cl6_HLE17_12ang_pos_md.xyz",
+    "size": 1.2,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Molecular Dynamics",
     "code": "CP2K",
     "stoichiometry": {
       "Zn": 16,
