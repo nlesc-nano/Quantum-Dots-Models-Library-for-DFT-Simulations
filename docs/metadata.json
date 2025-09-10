@@ -5142,5 +5142,28 @@
       "Pb/Se": 1.429,
       "Se/Pb": 0.7
     }
+  },
+  "IV-VI/PbSe/PBE/9ang/geo_opt/Pb19Se6Cl26_PBE_9ang_OPT.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbSe",
+    "filename": "Pb19Se6Cl26_PBE_9ang_OPT.xyz",
+    "size": 0.9,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 26,
+      "Pb": 19,
+      "Se": 6
+    },
+    "ratios": {
+      "Cl/Pb": 1.368,
+      "Pb/Cl": 0.731,
+      "Cl/Se": 4.333,
+      "Se/Cl": 0.231,
+      "Pb/Se": 3.167,
+      "Se/Pb": 0.316
+    }
   }
 }

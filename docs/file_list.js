@@ -209,4 +209,5 @@ const xyzFiles = [
   "IV-VI/PbS/PbS_1532-pos-1.xyz",
   "IV-VI/PbSe/PBE/18ang/geo_opt/Pb200Se140Cl120_PBE_18ang_OPT.xyz",
   "IV-VI/PbSe/PBE/18ang/start/Pb200Se140Cl120_PBE_18ang_start.xyz",
+  "IV-VI/PbSe/PBE/9ang/geo_opt/Pb19Se6Cl26_PBE_9ang_OPT.xyz",
 ];
