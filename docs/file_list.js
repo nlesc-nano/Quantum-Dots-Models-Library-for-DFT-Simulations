@@ -205,6 +205,7 @@ const xyzFiles = [
   "III-V/InSb/HLE17/35ang/geo_opt/In477Sb396Cl243_HLE17_35ang_OPT.xyz",
   "III-V/InSb/HLE17/36ang/geo_opt/In220Sb165Cl165[CH3NH2]55_HLE17_36ang_OPT.xyz",
   "III-V/InSb/HLE17/39ang/geo_opt/In477Sb396Cl243_HLE17_39ang_OPT.xyz",
+  "III-V/InSb/HLE17/41ang/geo_opt/In790Zn21Sb688Cl348_HLE17_41ang_OPT.xyz",
   "III-V/InSb/HLE17/45ang/geo_opt/In790Zn21Sb688Cl348_HLE17_45ang_OPT.xyz",
   "IV-VI/PbS/PbS_1532-pos-1.xyz",
   "IV-VI/PbSe/PBE/18ang/geo_opt/Pb200Se140Cl120_PBE_18ang_OPT.xyz",
