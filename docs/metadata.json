@@ -3929,6 +3929,52 @@
       "Zn/Cl": 0.063
     }
   },
+  "III-V/GaSb/HLE17/18ang/geo_opt/Ga31Sb20Cl33_HLE17_18ang_OPT.xyz": {
+    "system_type": "III-V",
+    "material": "GaSb",
+    "filename": "Ga31Sb20Cl33_HLE17_18ang_OPT.xyz",
+    "size": 1.8,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Ga": 31,
+      "Sb": 20,
+      "Cl": 33
+    },
+    "ratios": {
+      "Ga/Sb": 1.55,
+      "Sb/Ga": 0.645,
+      "Ga/Cl": 0.939,
+      "Cl/Ga": 1.065,
+      "Sb/Cl": 0.606,
+      "Cl/Sb": 1.65
+    }
+  },
+  "III-V/GaSb/HLE17/23ang/geo_opt/Ga107Sb73Cl102_HLE17_23ang_OPT.xyz": {
+    "system_type": "III-V",
+    "material": "GaSb",
+    "filename": "Ga107Sb73Cl102_HLE17_23ang_OPT.xyz",
+    "size": 2.3,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Ga": 107,
+      "Sb": 73,
+      "Cl": 102
+    },
+    "ratios": {
+      "Ga/Sb": 1.466,
+      "Sb/Ga": 0.682,
+      "Ga/Cl": 1.049,
+      "Cl/Ga": 0.953,
+      "Sb/Cl": 0.716,
+      "Cl/Sb": 1.397
+    }
+  },
   "III-V/GaSb/HLE17/30ang/geo_opt/Ga249Sb194Cl165_HLE17_30ang_OPT.xyz": {
     "system_type": "III-V",
     "material": "GaSb",
@@ -5125,6 +5171,29 @@
       "Cl/Pb": 0.34,
       "S/Cl": 2.442,
       "Cl/S": 0.41
+    }
+  },
+  "IV-VI/PbSe/PBE/14ang/geo_opt/Pb79Se44Cl70_PBE_14ang_OPT.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbSe",
+    "filename": "Pb79Se44Cl70_PBE_14ang_OPT.xyz",
+    "size": 1.4,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 70,
+      "Pb": 79,
+      "Se": 44
+    },
+    "ratios": {
+      "Cl/Pb": 0.886,
+      "Pb/Cl": 1.129,
+      "Cl/Se": 1.591,
+      "Se/Cl": 0.629,
+      "Pb/Se": 1.795,
+      "Se/Pb": 0.557
     }
   },
   "IV-VI/PbSe/PBE/18ang/geo_opt/Pb200Se140Cl120_PBE_18ang_OPT.xyz": {
