@@ -3975,6 +3975,29 @@
       "Cl/Sb": 1.397
     }
   },
+  "III-V/GaSb/HLE17/29ang/geo_opt/Ga249Sb194Cl165_HLE17_29ang_OPT.xyz": {
+    "system_type": "III-V",
+    "material": "GaSb",
+    "filename": "Ga249Sb194Cl165_HLE17_29ang_OPT.xyz",
+    "size": 2.9,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Ga": 249,
+      "Sb": 194,
+      "Cl": 165
+    },
+    "ratios": {
+      "Ga/Sb": 1.284,
+      "Sb/Ga": 0.779,
+      "Ga/Cl": 1.509,
+      "Cl/Ga": 0.663,
+      "Sb/Cl": 1.176,
+      "Cl/Sb": 0.851
+    }
+  },
   "III-V/GaSb/HLE17/30ang/geo_opt/Ga249Sb194Cl165_HLE17_30ang_OPT.xyz": {
     "system_type": "III-V",
     "material": "GaSb",

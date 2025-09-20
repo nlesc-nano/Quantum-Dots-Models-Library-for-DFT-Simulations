@@ -165,6 +165,7 @@ const xyzFiles = [
   "III-V/GaP/HLE17/43ang/geo_opt/Ga1242Zn29P1108Cl460_HLE17_43ang_OPT.xyz",
   "III-V/GaSb/HLE17/18ang/geo_opt/Ga31Sb20Cl33_HLE17_18ang_OPT.xyz",
   "III-V/GaSb/HLE17/23ang/geo_opt/Ga107Sb73Cl102_HLE17_23ang_OPT.xyz",
+  "III-V/GaSb/HLE17/29ang/geo_opt/Ga249Sb194Cl165_HLE17_29ang_OPT.xyz",
   "III-V/GaSb/HLE17/30ang/geo_opt/Ga249Sb194Cl165_HLE17_30ang_OPT.xyz",
   "III-V/GaSb/HLE17/35ang/geo_opt/Ga220Sb165Cl165[CH3NH2]55_HLE17_35ang_OPT.xyz",
   "III-V/GaSb/HLE17/36ang/geo_opt/Ga477Sb396Cl243_HLE17_36ang_OPT.xyz",
