@@ -5173,6 +5173,144 @@
       "Zn/Cl": 0.06
     }
   },
+  "IV-VI/PbS/14ang/geo_opt/Pb79S44Cl70_PBE_14ang_OPT.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbS",
+    "filename": "Pb79S44Cl70_PBE_14ang_OPT.xyz",
+    "size": 1.4,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Pb": 79,
+      "Cl": 68,
+      "S": 44
+    },
+    "ratios": {
+      "Pb/Cl": 1.162,
+      "Cl/Pb": 0.861,
+      "Pb/S": 1.795,
+      "S/Pb": 0.557,
+      "Cl/S": 1.545,
+      "S/Cl": 0.647
+    }
+  },
+  "IV-VI/PbS/14ang/start/Pb79S44Cl70_PBE_14ang_start.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbS",
+    "filename": "Pb79S44Cl70_PBE_14ang_start.xyz",
+    "size": 1.4,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Start",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 70,
+      "Pb": 79,
+      "S": 44
+    },
+    "ratios": {
+      "Cl/Pb": 0.886,
+      "Pb/Cl": 1.129,
+      "Cl/S": 1.591,
+      "S/Cl": 0.629,
+      "Pb/S": 1.795,
+      "S/Pb": 0.557
+    }
+  },
+  "IV-VI/PbS/18ang/geo_opt/Pb200S140Cl120_PBE_18ang_OPT.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbS",
+    "filename": "Pb200S140Cl120_PBE_18ang_OPT.xyz",
+    "size": 1.8,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 120,
+      "Pb": 200,
+      "S": 140
+    },
+    "ratios": {
+      "Cl/Pb": 0.6,
+      "Pb/Cl": 1.667,
+      "Cl/S": 0.857,
+      "S/Cl": 1.167,
+      "Pb/S": 1.429,
+      "S/Pb": 0.7
+    }
+  },
+  "IV-VI/PbS/18ang/start/Pb200S140Cl120_PBE_18ang_start.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbS",
+    "filename": "Pb200S140Cl120_PBE_18ang_start.xyz",
+    "size": 1.8,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Start",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 120,
+      "Pb": 200,
+      "S": 140
+    },
+    "ratios": {
+      "Cl/Pb": 0.6,
+      "Pb/Cl": 1.667,
+      "Cl/S": 0.857,
+      "S/Cl": 1.167,
+      "Pb/S": 1.429,
+      "S/Pb": 0.7
+    }
+  },
+  "IV-VI/PbS/9ang/geo_opt/Pb19S6Cl26_PBE_9ang_OPT.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbS",
+    "filename": "Pb19S6Cl26_PBE_9ang_OPT.xyz",
+    "size": 0.9,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 26,
+      "Pb": 19,
+      "S": 6
+    },
+    "ratios": {
+      "Cl/Pb": 1.368,
+      "Pb/Cl": 0.731,
+      "Cl/S": 4.333,
+      "S/Cl": 0.231,
+      "Pb/S": 3.167,
+      "S/Pb": 0.316
+    }
+  },
+  "IV-VI/PbS/9ang/start/Pb19S6Cl26_PBE_9ang_start.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbS",
+    "filename": "Pb19S6Cl26_PBE_9ang_start.xyz",
+    "size": 0.9,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Start",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 26,
+      "Pb": 19,
+      "S": 6
+    },
+    "ratios": {
+      "Cl/Pb": 1.368,
+      "Pb/Cl": 0.731,
+      "Cl/S": 4.333,
+      "S/Cl": 0.231,
+      "Pb/S": 3.167,
+      "S/Pb": 0.316
+    }
+  },
   "IV-VI/PbS/PbS_1532-pos-1.xyz": {
     "system_type": "IV-VI",
     "material": "PbS",
@@ -5286,6 +5424,98 @@
       "Se/Cl": 0.231,
       "Pb/Se": 3.167,
       "Se/Pb": 0.316
+    }
+  },
+  "IV-VI/PbTe/PBE/14ang/geo_op/Pb79Te44Cl70_PBE_14ang_OPT.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbTe",
+    "filename": "Pb79Te44Cl70_PBE_14ang_OPT.xyz",
+    "size": 1.4,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Start",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 70,
+      "Pb": 79,
+      "Te": 44
+    },
+    "ratios": {
+      "Cl/Pb": 0.886,
+      "Pb/Cl": 1.129,
+      "Cl/Te": 1.591,
+      "Te/Cl": 0.629,
+      "Pb/Te": 1.795,
+      "Te/Pb": 0.557
+    }
+  },
+  "IV-VI/PbTe/PBE/14ang/start/Pb79Te44Cl70_PBE_14ang_start.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbTe",
+    "filename": "Pb79Te44Cl70_PBE_14ang_start.xyz",
+    "size": 1.4,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Start",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 70,
+      "Pb": 79,
+      "Te": 44
+    },
+    "ratios": {
+      "Cl/Pb": 0.886,
+      "Pb/Cl": 1.129,
+      "Cl/Te": 1.591,
+      "Te/Cl": 0.629,
+      "Pb/Te": 1.795,
+      "Te/Pb": 0.557
+    }
+  },
+  "IV-VI/PbTe/PBE/18ang/geo_opt/Pb200Te140Cl120_PBE_18ang_OPT.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbTe",
+    "filename": "Pb200Te140Cl120_PBE_18ang_OPT.xyz",
+    "size": 1.8,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 120,
+      "Pb": 200,
+      "Te": 140
+    },
+    "ratios": {
+      "Cl/Pb": 0.6,
+      "Pb/Cl": 1.667,
+      "Cl/Te": 0.857,
+      "Te/Cl": 1.167,
+      "Pb/Te": 1.429,
+      "Te/Pb": 0.7
+    }
+  },
+  "IV-VI/PbTe/PBE/9ang/geo_opt/Pb19Te6Cl26_PBE_9ang_OPT.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbTe",
+    "filename": "Pb19Te6Cl26_PBE_9ang_OPT.xyz",
+    "size": 0.9,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 26,
+      "Pb": 19,
+      "Te": 6
+    },
+    "ratios": {
+      "Cl/Pb": 1.368,
+      "Pb/Cl": 0.731,
+      "Cl/Te": 4.333,
+      "Te/Cl": 0.231,
+      "Pb/Te": 3.167,
+      "Te/Pb": 0.316
     }
   }
 }
