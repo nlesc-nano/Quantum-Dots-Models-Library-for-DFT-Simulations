@@ -5357,6 +5357,29 @@
       "Se/Pb": 0.557
     }
   },
+  "IV-VI/PbSe/PBE/14ang/start/Pb79Se44Cl70_PBE_14ang_start.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbSe",
+    "filename": "Pb79Se44Cl70_PBE_14ang_start.xyz",
+    "size": 1.4,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Start",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 70,
+      "Pb": 79,
+      "Se": 44
+    },
+    "ratios": {
+      "Cl/Pb": 0.886,
+      "Pb/Cl": 1.129,
+      "Cl/Se": 1.591,
+      "Se/Cl": 0.629,
+      "Pb/Se": 1.795,
+      "Se/Pb": 0.557
+    }
+  },
   "IV-VI/PbSe/PBE/18ang/geo_opt/Pb200Se140Cl120_PBE_18ang_OPT.xyz": {
     "system_type": "IV-VI",
     "material": "PbSe",
@@ -5411,6 +5434,29 @@
     "functional": "PBE",
     "basis": "",
     "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 26,
+      "Pb": 19,
+      "Se": 6
+    },
+    "ratios": {
+      "Cl/Pb": 1.368,
+      "Pb/Cl": 0.731,
+      "Cl/Se": 4.333,
+      "Se/Cl": 0.231,
+      "Pb/Se": 3.167,
+      "Se/Pb": 0.316
+    }
+  },
+  "IV-VI/PbSe/PBE/9ang/start/Pb19Se6Cl26_PBE_9ang_start.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbSe",
+    "filename": "Pb19Se6Cl26_PBE_9ang_start.xyz",
+    "size": 0.9,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Start",
     "code": "CP2K",
     "stoichiometry": {
       "Cl": 26,
@@ -5495,6 +5541,29 @@
       "Te/Pb": 0.7
     }
   },
+  "IV-VI/PbTe/PBE/18ang/start/Pb200Te140Cl120_PBE_18ang_start.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbTe",
+    "filename": "Pb200Te140Cl120_PBE_18ang_start.xyz",
+    "size": 1.8,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Start",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 120,
+      "Pb": 200,
+      "Te": 140
+    },
+    "ratios": {
+      "Cl/Pb": 0.6,
+      "Pb/Cl": 1.667,
+      "Cl/Te": 0.857,
+      "Te/Cl": 1.167,
+      "Pb/Te": 1.429,
+      "Te/Pb": 0.7
+    }
+  },
   "IV-VI/PbTe/PBE/9ang/geo_opt/Pb19Te6Cl26_PBE_9ang_OPT.xyz": {
     "system_type": "IV-VI",
     "material": "PbTe",
@@ -5503,6 +5572,29 @@
     "functional": "PBE",
     "basis": "",
     "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Cl": 26,
+      "Pb": 19,
+      "Te": 6
+    },
+    "ratios": {
+      "Cl/Pb": 1.368,
+      "Pb/Cl": 0.731,
+      "Cl/Te": 4.333,
+      "Te/Cl": 0.231,
+      "Pb/Te": 3.167,
+      "Te/Pb": 0.316
+    }
+  },
+  "IV-VI/PbTe/PBE/9ang/start/Pb19Te6Cl26_PBE_9ang_start.xyz": {
+    "system_type": "IV-VI",
+    "material": "PbTe",
+    "filename": "Pb19Te6Cl26_PBE_9ang_start.xyz",
+    "size": 0.9,
+    "functional": "PBE",
+    "basis": "",
+    "run_type": "Start",
     "code": "CP2K",
     "stoichiometry": {
       "Cl": 26,
