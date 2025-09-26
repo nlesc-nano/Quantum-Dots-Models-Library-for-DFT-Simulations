@@ -162,6 +162,7 @@ const xyzFiles = [
   "III-V/GaP/HLE17/33ang/geo_opt/Ga477P396Cl243_HLE17_33ang_OPT.xyz",
   "III-V/GaP/HLE17/35ang/geo_opt/Ga477P396Cl243_HLE17_35ang_OPT.xyz",
   "III-V/GaP/HLE17/38ang/geo_opt/Ga790Zn21P688Cl348_HLE17_38ang_OPT.xyz",
+  "III-V/GaP/HLE17/41ang/geo_opt/Ga790P688Cl348Zn21_HLE17_41ang_OPT.xyz",
   "III-V/GaP/HLE17/43ang/geo_opt/Ga1242Zn29P1108Cl460_HLE17_43ang_OPT.xyz",
   "III-V/GaSb/HLE17/18ang/geo_opt/Ga31Sb20Cl33_HLE17_18ang_OPT.xyz",
   "III-V/GaSb/HLE17/23ang/geo_opt/Ga107Sb73Cl102_HLE17_23ang_OPT.xyz",

@@ -3899,6 +3899,36 @@
       "Zn/Cl": 0.06
     }
   },
+  "III-V/GaP/HLE17/41ang/geo_opt/Ga790P688Cl348Zn21_HLE17_41ang_OPT.xyz": {
+    "system_type": "III-V",
+    "material": "GaP",
+    "filename": "Ga790P688Cl348Zn21_HLE17_41ang_OPT.xyz",
+    "size": 4.1,
+    "functional": "HLE17",
+    "basis": "DZVP",
+    "run_type": "Geometry Optimization",
+    "code": "CP2K",
+    "stoichiometry": {
+      "Ga": 790,
+      "P": 688,
+      "Cl": 348,
+      "Zn": 21
+    },
+    "ratios": {
+      "Ga/P": 1.148,
+      "P/Ga": 0.871,
+      "Ga/Cl": 2.27,
+      "Cl/Ga": 0.441,
+      "Ga/Zn": 37.619,
+      "Zn/Ga": 0.027,
+      "P/Cl": 1.977,
+      "Cl/P": 0.506,
+      "P/Zn": 32.762,
+      "Zn/P": 0.031,
+      "Cl/Zn": 16.571,
+      "Zn/Cl": 0.06
+    }
+  },
   "III-V/GaP/HLE17/43ang/geo_opt/Ga1242Zn29P1108Cl460_HLE17_43ang_OPT.xyz": {
     "system_type": "III-V",
     "material": "GaP",
