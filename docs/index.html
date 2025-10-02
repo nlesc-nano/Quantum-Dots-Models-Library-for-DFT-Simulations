@@ -2,1160 +2,185 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Quantum Dots 3D Viewer</title>
-  <!-- Use a build of 3Dmol.js that defines $3Dmol -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="app.css">
   <script src="https://cdn.jsdelivr.net/npm/3dmol@2.1.0/build/3Dmol-min.js"></script>
-  <style>
-    body {
-      font-family: sans-serif;
-      margin: 2em;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    #controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1em;
-      margin-bottom: 1em;
-      width: 100%;
-      max-width: 900px;
-    }
-    #controls > div {
-      display: flex;
-      flex-direction: column;
-      min-width: 160px;
-    }
-    #controls label {
-      margin-bottom: 0.3em;
-      font-weight: bold;
-    }
-    select, input[type="color"], button {
-      padding: 0.3em;
-      font-size: 1em;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    button {
-      cursor: pointer;
-    }
-    #structure-details {
-      margin: 1em 0;
-      border: 1px solid #ccc;
-      padding: 1em;
-      background: #f8f8f8;
-      width: 100%;
-      max-width: 900px;
-      box-sizing: border-box;
-    }
-    #viewer {
-      width: 100%;
-      max-width: 900px;
-      height: 600px;
-      border: 1px solid #ccc;
-      position: relative;
-    }
-    #color-controls {
-      margin-top: 1em;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1em;
-    }
-    .color-picker {
-      display: flex;
-      align-items: center;
-      gap: 0.5em;
-    }
-    .color-picker label {
-      display: flex;
-      align-items: center;
-      gap: 0.5em;
-      margin: 0;
-      font-weight: normal;
-    }
-  </style>
 </head>
-<body>
-  <h2>Quantum Dots 3D Viewer</h2>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+<header class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+  <h1 class="text-2xl font-semibold">Quantum Dots 3D Viewer</h1>
+</header>
 
-  <div id="controls">
-    <div>
-      <label for="filter-system">System Type:</label>
-      <select id="filter-system">
-        <option value="">— Select System —</option>
-      </select>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+
+  <!-- Filters -->
+  <section class="card p-4 sm:p-6 mb-6">
+    <div class="flex items-center justify-between mb-2">
+      <h2 class="text-lg font-semibold">Filters</h2>
     </div>
-    <div>
-      <label for="filter-material">Material:</label>
-      <select id="filter-material" disabled>
-        <option value="">— Select Material —</option>
-      </select>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="flex flex-col">
+        <label class="label-underline text-sm font-medium mb-1">System Type</label>
+        <select id="filter-system" class="input"><option value="">— Select —</option></select>
+      </div>
+      <div class="flex flex-col">
+        <label class="label-underline text-sm font-medium mb-1">Material</label>
+        <select id="filter-material" class="input" disabled><option value="">— Select —</option></select>
+      </div>
+      <div class="flex flex-col">
+        <label class="label-underline text-sm font-medium mb-1">Size (nm)</label>
+        <select id="filter-size" class="input" disabled><option value="">— Select —</option></select>
+      </div>
+      <div class="flex flex-col">
+        <label class="label-underline text-sm font-medium mb-1">DFT Functional</label>
+        <select id="filter-functional" class="input" disabled><option value="">— Select —</option></select>
+      </div>
+      <div class="flex flex-col">
+        <label class="label-underline text-sm font-medium mb-1">Run Type</label>
+        <select id="filter-runtype" class="input" disabled><option value="">— Select —</option></select>
+      </div>
+      <div class="flex flex-col sm:col-span-2 lg:col-span-2">
+        <label class="label-underline text-sm font-medium mb-1">Structure File</label>
+        <select id="xyz-file" class="input" disabled><option value="">— Select —</option></select>
+      </div>
     </div>
-    <div>
-      <label for="filter-size">Size (nm):</label>
-      <select id="filter-size" disabled>
-        <option value="">— Select Size —</option>
-      </select>
+
+    <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <button id="download-btn" disabled class="px-6 py-2 rounded-lg bg-green-500 hover:bg-green-600 text-white font-semibold shadow">Download Structure</button>
+      <button id="download-png-btn" disabled class="px-6 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow">Download PNG</button>
+      <button id="reset-btn" class="px-6 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white font-semibold shadow">Reset</button>
     </div>
-    <div>
-      <label for="filter-functional">DFT Functional:</label>
-      <select id="filter-functional" disabled>
-        <option value="">— Select Functional —</option>
-      </select>
-    </div>
-    <div>
-      <label for="filter-runtype">Run Type:</label>
-      <select id="filter-runtype" disabled>
-        <option value="">— Select Run Type —</option>
-      </select>
-    </div>
-    <div>
-      <label for="xyz-file">Structure File:</label>
-      <select id="xyz-file" disabled>
-        <option value="">— Select File —</option>
-      </select>
-    </div>
-    <div>
-      <label for="style">Rendering Style:</label>
-      <select id="style" disabled>
-        <option value="stick">Stick</option>
-        <option value="ballstick">Ball &amp; Stick</option>
-        <option value="sphere">Space Filling (CPK)</option>
-      </select>
-    </div>
-    <div>
-      <label>&nbsp;</label>
-      <button id="download-btn" disabled>Download Structure</button>
-    </div>
-    <div>
-      <label>&nbsp;</label>
-      <button id="download-png-btn" disabled>Download PNG</button>
-    </div>
+  </section>
+
+  <!-- Toggle miniCAT -->
+  <div class="flex justify-center my-4">
+    <button id="toggle-cat-card" class="px-6 py-2 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold shadow">
+      Attach Ligand using miniCAT
+    </button>
   </div>
 
-  <!-- CAT integration panel -->
-  <details>
-    <summary>Attach Ligand (CAT)</summary>
-    <div style="margin-top:0.5em;">
-      <label for="smiles-input">SMILES:
-        <input id="smiles-input" type="text" value="C(=O)O" placeholder="e.g. C(=O)O" />
-      </label>
-      <label style="margin-left:1em;">
-        <input type="checkbox" id="split-checkbox" checked /> split
-      </label>
-      <button id="run-cat-btn" disabled style="margin-left:1em;">Run CAT</button>
+  <!-- miniCAT card -->
+  <section id="cat-card" class="card p-4 sm:p-6 mb-6 hidden">
+    <div class="flex items-center justify-between mb-2">
+      <h3 class="font-semibold">Attach Ligand (miniCAT)</h3>
+      <span class="text-xs text-slate-500">Needs a loaded QD</span>
     </div>
-    <div id="cat-status" style="margin-top:0.5em; font-size:0.9em; color:#333;">
-      Enter a SMILES and click “Run CAT” after selecting a QD.
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <!-- Left: form -->
+      <div class="lg:col-span-2 space-y-4">
+        <!-- Anionic job only -->
+        <div class="rounded-lg border p-3 bg-orange-50">
+          <div class="font-semibold mb-2">Anionic ligands</div>
+
+          <div id="an_rows" class="space-y-2"></div>
+          <button id="an_add" class="px-3 py-1 rounded bg-orange-200 hover:bg-orange-300 text-slate-800">+ Add</button>
+
+          <!-- fixed dummy = Cl (hidden) -->
+          <input id="an_dummy" type="hidden" value="Cl">
+
+          <div class="mt-3">
+            <div class="text-sm">Ligand distribution</div>
+            <div class="mt-1 flex gap-6">
+              <label class="inline-flex items-center gap-1 text-sm"><input type="radio" name="an_mode" value="random" checked> random</label>
+              <label class="inline-flex items-center gap-1 text-sm"><input type="radio" name="an_mode" value="segmented"> segmented</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Run + outputs -->
+        <div class="flex flex-wrap items-center gap-3">
+          <button id="run-cat-btn" class="px-5 py-2 rounded-lg bg-slate-900 text-white shadow" disabled>Run CAT</button>
+	  <button id="reset-cat-btn" class="px-5 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white shadow">Reset</button>
+          <span id="cat-status" class="text-sm text-slate-600">Add ligands and select a QD.</span>
+        </div>
+
+        <div class="mt-3 flex items-center gap-3">
+          <label for="cat-output-select" class="text-sm font-medium">Choose CAT output:</label>
+          <select id="cat-output-select" class="input min-w-[220px]" disabled>
+            <option value="">— none —</option>
+          </select>
+          <button id="download-catxyz-btn"
+            class="px-5 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white shadow"
+            disabled>
+            Download CAT-XYZ
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: terminal -->
+      <div class="lg:col-span-1">
+        <div class="text-sm font-semibold mb-1">miniCAT log</div>
+        <pre id="cat-term" class="h-64 overflow-auto bg-slate-900 text-slate-100 p-3 rounded-lg text-xs"></pre>
+      </div>
     </div>
-    <div style="margin-top:0.5em;">
-      <label for="cat-output-select"><b>Choose CAT output:</b></label>
-      <select id="cat-output-select" disabled style="margin-left:0.5em; min-width:200px;">
-        <option value="">— none —</option>
-      </select>
-      <button id="download-catxyz-btn" disabled style="margin-left:1em;">Download CAT‐XYZ</button>
+  </section>
+
+  <!-- Main grid -->
+  <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2 card">
+      <div class="card-head">
+        <h3 class="font-semibold">3D View</h3>
+        <span class="hint">Drag to rotate • Scroll to zoom</span>
+      </div>
+      <div id="viewer" class="relative w-full h-[560px]"></div>
+      <div id="traj-controls" class="px-4 sm:px-6 py-3 hidden"></div>
     </div>
-  </details>
 
-  <div id="structure-details">
-    <b>Structure Details</b>
-    <div id="details-content">Select a structure to see details.</div>
-    <div id="color-controls"></div>
-  </div>
+    <div class="card">
+      <div class="card-head">
+        <h3 class="font-semibold">Structure Details</h3>
+        <span class="hint">Hover badges</span>
+      </div>
+      <div class="p-4 sm:p-6 space-y-6">
+        <div id="details-content" class="text-[15px] leading-6 text-slate-800"></div>
 
-  <div id="viewer"></div>
+        <div>
+          <div class="text-sm font-semibold mb-2">Ratios</div>
+          <div id="ratios-wrap" class="flex flex-wrap"></div>
+        </div>
 
-  <!-- Auto-generated by make_file_list.py -->
-  <script src="file_list.js"></script>
-  <script>
-    let metadata = {};
-    // Load metadata.json
-    fetch('metadata.json')
-      .then(response => response.json())
-      .then(data => {
-        metadata = data;
-        populateSystemTypes();
-      })
-      .catch(() => {
-        console.warn('Could not load metadata.json');
-      });
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="subcard">
+            <h4 class="subcard-title">Stoichiometry</h4>
+            <div id="charge-warning" class="mb-2"></div>
+            <div id="stoich-totals" class="mb-2 text-lg font-semibold"></div>
+            <div id="stoich-core" class="mb-3"></div>
+            <div id="stoich-shell" class="mb-3"></div>
+            <div id="stoich-lig" class="mb-1"></div>
+          </div>
+          <div class="subcard">
+            <h4 class="subcard-title">Viewer Parameters</h4>
+            <div class="flex flex-col space-y-2 text-sm">
+              <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="style-radio" value="ballstick"><span>Ball &amp; Stick</span></label>
+              <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="style-radio" value="sphere" checked><span>Space Filling</span></label>
+              <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="style-radio" value="stick"><span>Sticks</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 
-    // DOM references
-    const filterSystem     = document.getElementById('filter-system');
-    const filterMaterial   = document.getElementById('filter-material');
-    const filterSize       = document.getElementById('filter-size');
-    const filterFunctional = document.getElementById('filter-functional');
-    const filterRunType    = document.getElementById('filter-runtype');
-    const selectFile       = document.getElementById('xyz-file');
-    const styleSelect      = document.getElementById('style');
-    const downloadBtn      = document.getElementById('download-btn');
-    const downloadPngBtn   = document.getElementById('download-png-btn');
-    const viewerDiv        = document.getElementById('viewer');
-    const detailsDiv       = document.getElementById('details-content');
-    const colorControlsDiv = document.getElementById('color-controls');
-    let viewer = null;
-    let currentFile = "";
-    let currentXYZText = "";   // ← will store the raw XYZ we fetched
-    let customColors = {};
+<div id="tooltip" class="tooltip rounded-lg bg-slate-900 text-white text-xs px-2 py-1 shadow-lg"></div>
 
-    // Default CPK-like colors
-    const defaultColors = {
-      "H": "#FFFFFF",  "C": "#909090",  "N": "#3050F8",  "O": "#FF0D0D",
-      "S": "#FFFF30",  "P": "#FF8000",  "Cl": "#1FF01F", "Br": "#A62929",
-      "I": "#6600AA",  "Cd": "#FFD700", "Se": "#FFA500", "Pb": "#808080"
-    };
+<script src="file_list.js"></script>
+<script src="app.js"></script>
 
-    // Helper: Convert "#RRGGBB" → "0xRRGGBB"
-    function hexToXYZColor(hex) {
-      return "0x" + hex.slice(1);
-    }
-
-    // Apply custom element-color overrides
-    function applyColorOverrides() {
-    if (!viewer) return;
-    const style = styleSelect.value;
-    // Use all elements currently in the structure, not just those in customColors!
-    const allElements = new Set([
-        ...Object.keys(defaultColors),
-        ...Object.keys(customColors)
-    ]);
-    allElements.forEach(el => {
-        // Use the color from customColors (if picked), else the default
-        const hex = customColors[el] || defaultColors[el] || "#CCCCCC";
-        const xyzColor = hexToXYZColor(hex);
-        if (style === "stick") {
-            viewer.setStyle({ elem: el }, { stick: { color: xyzColor } });
-        } else if (style === "ballstick") {
-            viewer.setStyle({ elem: el }, { stick: { color: xyzColor }, sphere: { color: xyzColor, scale: 0.3 } });
-        } else if (style === "sphere") {
-            viewer.setStyle({ elem: el }, { sphere: { color: xyzColor } });
-        }
+<script>
+  const toggleBtn = document.getElementById('toggle-cat-card');
+  const catCard   = document.getElementById('cat-card');
+  if (toggleBtn && catCard) {
+    toggleBtn.addEventListener('click', () => {
+      const hidden = catCard.classList.toggle('hidden');
+      toggleBtn.textContent = hidden ? 'Attach Ligand using miniCAT' : 'Hide miniCAT';
     });
-}
-
-    // Set rendering style
-    function setStyle(style) {
-        if (!viewer) return;
-        viewer.setStyle({}, {});
-        if (style === 'stick') {
-            viewer.setStyle({}, { stick: {} });
-        } else if (style === 'ballstick') {
-            viewer.setStyle({}, { stick: {}, sphere: { scale: 0.3 } });
-        } else if (style === 'sphere') {
-            viewer.setStyle({}, { sphere: {} });
-        }
-        applyColorOverrides(); // <--- ensure custom colors always apply!
-        viewer.zoomTo();
-        viewer.render();
-    }
-
-    // Create color pickers for each element
-    function setupColorControls(stoich) {
-      colorControlsDiv.innerHTML = '';
-      const elements = Object.keys(stoich || {});
-      if (!elements.length) return;
-      elements.forEach(el => {
-	const colorHex = customColors[el] || defaultColors[el] || "#CCCCCC";
-        const wrapper = document.createElement('div');
-        wrapper.className = 'color-picker';
-        const label = document.createElement('label');
-        label.innerText = el;
-        const input = document.createElement('input');
-        input.type = 'color';
-        input.value = colorHex; // shows current color in picker!
-        input.style.backgroundColor = colorHex; // color input bg
-        input.dataset.element = el;
-        input.addEventListener('input', () => {
-          customColors[el] = input.value;
-          input.style.backgroundColor = input.value; // update bg live
-          applyColorOverrides();
-          viewer.render();
-        });
-        label.appendChild(input);
-        wrapper.appendChild(label);
-        colorControlsDiv.appendChild(wrapper);
-              
-      });
-    }
-
-    // Update the details panel
-    function updateDetails(filepath) {
-      const meta = metadata[filepath];
-      if (!meta) {
-        detailsDiv.innerHTML = "<i>No metadata available for this structure.</i>";
-        colorControlsDiv.innerHTML = "";
-        return;
-      }
-      const stoich = Object.entries(meta.stoichiometry || {})
-        .map(([el, cnt]) => `${el} (${cnt})`).join(", ") || "N/A";
-      const ratios = Object.entries(meta.ratios || {})
-        .map(([pair, val]) => `${pair} = ${val}`).join(", ") || "N/A";
-      const sizeDisplay = meta.size != null ? `${meta.size} nm` : "N/A";
-
-      detailsDiv.innerHTML = `
-        <b>System type:</b> ${meta.system_type || "N/A"}<br>
-        <b>Material:</b> ${meta.material || "N/A"}<br>
-        <b>Size:</b> ${sizeDisplay}<br>
-        <b>DFT functional:</b> ${meta.functional || "N/A"}<br>
-        <b>Basis set:</b> ${meta.basis || "N/A"}<br>
-        <b>DFT code:</b> ${meta.code || "N/A"}<br>
-        <b>Run Type:</b> ${meta.run_type || "N/A"}<br>
-        <b>Stoichiometry:</b> ${stoich}<br>
-        <b>Ratios:</b> ${ratios}<br>
-        <b>Filename:</b> ${meta.filename}
-      `;
-
-      setupColorControls(meta.stoichiometry);
-      applyColorOverrides();
-    }
-
-    // Load and render the chosen XYZ file (multi-frame MD if supported)
-    function loadXYZ(file) {
-      currentFile = file;
-      downloadBtn.disabled = false;
-      downloadBtn.innerText = `Download ${file.split('/').pop()}`;
-      downloadPngBtn.disabled = false;
-      downloadPngBtn.innerText = `Download PNG`;
-
-      fetch(`./${file}`)
-        .then(resp => {
-          if (!resp.ok) throw new Error("File not found");
-          return resp.text();
-        })
-        .then(data => {
-
-          // Store the raw XYZ (or first-frame if MD) into currentXYZText
-          const meta = metadata[file] || {};
-          let xyzToLoad = data;
-          if (meta.run_type === "Molecular Dynamics") {
-            const lines = data.split('\n');
-            const n = parseInt(lines[0].trim());
-            xyzToLoad = lines.slice(0, n + 2).join('\n');
-          }
-          currentXYZText = xyzToLoad;
-      
-          viewerDiv.innerHTML = '';
-          viewer = $3Dmol.createViewer(viewerDiv, { backgroundColor: 'white' });
-
-          if (meta.run_type === "Molecular Dynamics" && viewer.addModelsAsFrames) {
-            // Use addModelsAsFrames() if available for multi-frame MD
-            viewer.addModelsAsFrames(data, 'xyz');
-            setStyle(styleSelect.value);
-            // ---- Begin Enhanced Trajectory Control Bar ----
-            const nFrames = viewer.getNumFrames();
-            
-            let controlsDiv = document.getElementById('traj-controls');
-            if (controlsDiv) controlsDiv.remove();
-            
-            controlsDiv = document.createElement('div');
-            controlsDiv.id = 'traj-controls';
-            controlsDiv.style.display = 'flex';
-            controlsDiv.style.alignItems = 'center';
-            controlsDiv.style.justifyContent = 'center';
-            controlsDiv.style.gap = '1em';
-            controlsDiv.style.margin = '1em 0';
-            
-            // --- Frame slider
-            const slider = document.createElement('input');
-            slider.type = 'range';
-            slider.min = 0;
-            slider.max = nFrames - 1;
-            slider.value = 0;
-            slider.style.width = '300px';
-            
-            // --- Frame label
-            const label = document.createElement('span');
-            label.innerText = `Frame: 1 / ${nFrames}`;
-            
-            // --- Speed dropdown
-            const speedLabel = document.createElement('span');
-            speedLabel.innerText = 'Speed:';
-            const speedSelect = document.createElement('select');
-            const speeds = [
-                { label: '0.25x', value: 160 },
-                { label: '0.5x', value: 80 },
-                { label: '1x', value: 40 },
-                { label: '2x', value: 20 }
-            ];
-            speeds.forEach(s => {
-                const o = document.createElement('option');
-                o.value = s.value;
-                o.text = s.label;
-                if (s.label === '1x') o.selected = true;
-                speedSelect.appendChild(o);
-            });
-            
-            // --- Export buttons
-            const xyzBtn = document.createElement('button'); xyzBtn.innerText = 'Export XYZ';
-            const pngBtn = document.createElement('button'); pngBtn.innerText = 'Export PNG';
-	    const videoBtn = document.createElement('button'); videoBtn.innerText = 'Export Video';
-            
-            // --- Playback buttons
-            const playPauseBtn = document.createElement('button'); playPauseBtn.innerText = 'Play';
-            const stopBtn = document.createElement('button'); stopBtn.innerText = 'Stop';
-            const replayBtn = document.createElement('button'); replayBtn.innerText = 'Replay';
-            
-            let playing = false;
-            let playInterval = null;
-            let interval = parseInt(speedSelect.value);
-            
-            // --- Frame display updater
-            function updateFrameDisplay(frame) {
-                slider.value = frame;
-                label.innerText = `Frame: ${parseInt(frame) + 1} / ${nFrames}`;
-            }
-            
-            // --- Animation logic
-            function startAnimation(fromFrame) {
-                if (playInterval) clearInterval(playInterval);
-                playing = true;
-                playPauseBtn.innerText = 'Pause';
-                let cur = fromFrame !== undefined ? parseInt(fromFrame) : parseInt(slider.value);
-                playInterval = setInterval(() => {
-                    if (cur < nFrames - 1) {
-                        cur++;
-                        viewer.setFrame(cur);
-                        viewer.render();
-                        updateFrameDisplay(cur);
-                    } else {
-                        clearInterval(playInterval);
-                        playing = false;
-                        playPauseBtn.innerText = 'Play';
-                    }
-                }, interval);
-            }
-            
-            // --- Playback controls
-            playPauseBtn.onclick = function() {
-                if (!playing) {
-                    startAnimation(slider.value);
-                } else {
-                    playing = false;
-                    playPauseBtn.innerText = 'Play';
-                    clearInterval(playInterval);
-                }
-            };
-            stopBtn.onclick = function() {
-                playing = false;
-                playPauseBtn.innerText = 'Play';
-                clearInterval(playInterval);
-                viewer.setFrame(0);
-                viewer.render();
-                updateFrameDisplay(0);
-            };
-            replayBtn.onclick = function() {
-                playing = false;
-                playPauseBtn.innerText = 'Pause';
-                clearInterval(playInterval);
-                viewer.setFrame(0);
-                viewer.render();
-                updateFrameDisplay(0);
-                startAnimation(0);
-            };
-            speedSelect.onchange = function() {
-                interval = parseInt(speedSelect.value);
-                if (playing) {
-                    clearInterval(playInterval);
-                    startAnimation(slider.value);
-                }
-            };
-            slider.oninput = function() {
-                let frame = parseInt(slider.value);
-                viewer.setFrame(frame);
-                viewer.render();
-                updateFrameDisplay(frame);
-                if (playing) {
-                    playing = false;
-                    playPauseBtn.innerText = 'Play';
-                    clearInterval(playInterval);
-                }
-            };
-            
-            // --- Export current frame as XYZ
-            xyzBtn.onclick = function() {
-                let frame = parseInt(slider.value);
-                let model = viewer.getModel();
-                let atoms = model.selectedAtoms({frame: frame});
-                let xyzStr = atoms.length + '\nframe ' + (frame + 1) + '\n';
-                atoms.forEach(atom => {
-                    xyzStr += `${atom.elem || atom.atom} ${atom.x} ${atom.y} ${atom.z}\n`;
-                });
-                let blob = new Blob([xyzStr], {type: 'text/plain'});
-                let a = document.createElement('a');
-                a.href = URL.createObjectURL(blob);
-                a.download = `frame_${frame + 1}.xyz`;
-                a.click();
-            };
-            
-            // --- Export current view as PNG
-            pngBtn.onclick = function() {
-                let canvas = viewerDiv.querySelector('canvas');
-                if (canvas) {
-                    let img = canvas.toDataURL("image/png");
-                    let a = document.createElement('a');
-                    a.href = img;
-                    a.download = `frame_${parseInt(slider.value) + 1}.png`;
-                    a.click();
-                } else {
-                    alert("No canvas found for PNG export.");
-                }
-            };
-            
-            // --- Initial state
-            updateFrameDisplay(0);
-            playPauseBtn.innerText = 'Play';
-            
-            // --- Layout controls
-            controlsDiv.appendChild(stopBtn);
-            controlsDiv.appendChild(replayBtn);
-            controlsDiv.appendChild(playPauseBtn);
-            controlsDiv.appendChild(slider);
-            controlsDiv.appendChild(label);
-            controlsDiv.appendChild(speedLabel);
-            controlsDiv.appendChild(speedSelect);
-            controlsDiv.appendChild(xyzBtn);
-            controlsDiv.appendChild(pngBtn);
-            controlsDiv.appendChild(videoBtn);
-            
-            // --- Place controls under viewer
-            viewerDiv.parentNode.insertBefore(controlsDiv, viewerDiv.nextSibling);
-            // --------- Video Export Advanced --------
-            // Modal elements
-            const videoModal = document.getElementById('videoExportModal');
-            const videoForm = document.getElementById('videoExportForm');
-            const videoStartFrame = document.getElementById('videoStartFrame');
-            const videoEndFrame = document.getElementById('videoEndFrame');
-            const videoSpeed = document.getElementById('videoSpeed');
-            const videoStatus = document.getElementById('videoExportStatus');
-            const videoProgress = document.getElementById('videoExportProgress');
-            const videoCancel = document.getElementById('videoExportCancel');
-            
-            let videoExportAbort = false;
-            
-            videoBtn.onclick = function() {
-                if (playing) {
-                    playing = false;
-                    playPauseBtn.innerText = 'Play';
-                    clearInterval(playInterval);
-                }
-                // Set modal defaults
-                videoStartFrame.value = 1;
-                videoEndFrame.value = nFrames;
-                videoStatus.textContent = '';
-                videoProgress.style.display = 'none';
-                videoProgress.value = 0;
-                videoExportAbort = false;
-                videoModal.style.display = 'flex';
-            };
-            
-            videoCancel.onclick = function() {
-                videoExportAbort = true;
-                videoModal.style.display = 'none';
-                videoStatus.textContent = '';
-            };
-            
-            videoForm.onsubmit = async function(e) {
-                e.preventDefault();
-            
-                // Save the current frame to restore later
-                let prevFrame = parseInt(slider.value);
-
-                // Parse settings
-                let start = Math.max(0, parseInt(videoStartFrame.value) - 1);
-                let end = Math.min(nFrames - 1, parseInt(videoEndFrame.value) - 1);
-                let speedFactor = parseFloat(videoSpeed.value);
-                let baseFps = 25; // or adjust for smoother/faster/slower video
-                let fps = Math.max(1, Math.round(baseFps * speedFactor));
-                let canvas = viewerDiv.querySelector('canvas');
-                if (!canvas) {
-                    videoStatus.style.color = "red";
-                    videoStatus.textContent = "No canvas for video export.";
-                    return;
-                }
-                if (end < start) [start, end] = [end, start]; // Swap if needed
-                let totalFrames = end - start + 1;
-            
-                // Prepare UI
-                videoStatus.style.color = "#008000";
-                videoStatus.textContent = "Exporting video...";
-                videoProgress.style.display = 'block';
-                videoProgress.value = 0;
-                [...controlsDiv.querySelectorAll('button,input,select')].forEach(e => e.disabled = true);
-                videoForm.querySelector('button[type=submit]').disabled = true;
-            
-                // Start recorder
-                let stream = canvas.captureStream(fps);
-                let recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
-                let chunks = [];
-                recorder.ondataavailable = e => chunks.push(e.data);
-            
-                let resolveRecorder;
-                recorder.onstop = function() {
-                    let blob = new Blob(chunks, {type: "video/webm"});
-                    let a = document.createElement('a');
-                    a.href = URL.createObjectURL(blob);
-                    a.download = `trajectory_${start+1}-${end+1}_${speedFactor}x.webm`;
-                    a.click();
-                    videoStatus.style.color = "#008000";
-                    videoStatus.textContent = "Done! Video downloaded.";
-                    [...controlsDiv.querySelectorAll('button,input,select')].forEach(e => e.disabled = false);
-                    videoForm.querySelector('button[type=submit]').disabled = false;
-                    videoModal.style.display = 'none';
-                    resolveRecorder && resolveRecorder();
-                    // Restore previous frame!
-                    viewer.setFrame(prevFrame);
-                    viewer.render();
-                    updateFrameDisplay(prevFrame);
-              };
-                recorder.start();
-            
-                // Animate and record
-                for (let i = start; i <= end; i++) {
-                    if (videoExportAbort) break;
-                    viewer.setFrame(i);
-                    viewer.render();
-                    updateFrameDisplay(i);
-                    videoProgress.value = Math.round(((i - start + 1) / totalFrames) * 100);
-                    await new Promise(r => setTimeout(r, 1000 / fps));
-                }
-                recorder.stop();
-                await new Promise(res => resolveRecorder = res); // Wait for download
-            
-                // Restore UI
-                videoModal.style.display = 'none';
-                [...controlsDiv.querySelectorAll('button,input,select')].forEach(e => e.disabled = false);
-                videoForm.querySelector('button[type=submit]').disabled = false;
-                videoExportAbort = false;
-		// Restore previous frame on cancel as well
-                viewer.setFrame(prevFrame);
-                viewer.render();
-                updateFrameDisplay(prevFrame);
-            };
-            // --------- END Video Export Advanced --------
-
-            // ---- End Enhanced Trajectory Control Bar ----
-
-          } else {
-           // Remove any previous MD controls
-           let controlsDiv = document.getElementById('traj-controls');
-           if (controlsDiv) controlsDiv.remove();
-       
-           viewer.addModel(xyzToLoad, 'xyz');
-           setStyle(styleSelect.value);
-          }
-          updateDetails(file);
-          afterLoadSuccess();
-        })
-        .catch(err => {
-          console.error("Error fetching", file, "→", err);
-          viewerDiv.innerHTML = "<b>Error loading file.</b>";
-          detailsDiv.innerHTML = "<b>No details available.</b>";
-          colorControlsDiv.innerHTML = "";
-        });
-    }
-
-    // Trigger download of the raw .xyz
-    downloadBtn.addEventListener('click', () => {
-      if (!currentFile) return;
-      const link = document.createElement('a');
-      link.href = `./${currentFile}`;
-      link.download = currentFile.split('/').pop();
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
-
-    // Trigger download of a PNG snapshot of the viewer
-    downloadPngBtn.addEventListener('click', () => {
-      if (!viewer) return;
-      // Ensure the viewer is rendered
-      viewer.render();
-      // Get the PNG data URI of the canvas
-      const uri = viewer.pngURI();
-      // Create a temporary link to download
-      const link = document.createElement('a');
-      link.href = uri;
-      const pngName = (currentFile.split('/').pop().replace(/\.xyz$/i, '')) + '.png';
-      link.download = pngName;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
-
-    // Populate the “System Type” dropdown
-    function populateSystemTypes() {
-      const systems = new Set();
-      for (const relpath in metadata) {
-        const m = metadata[relpath];
-        if (m.system_type) systems.add(m.system_type);
-      }
-      Array.from(systems).sort().forEach(val => {
-        const opt = document.createElement('option');
-        opt.value = val;
-        opt.text = val;
-        filterSystem.appendChild(opt);
-      });
-    }
-
-    // Populate “Material” based on selected system
-    function populateMaterials() {
-      filterMaterial.innerHTML = '<option value="">— Select Material —</option>';
-      const selectedSystem = filterSystem.value;
-      const mats = new Set();
-      for (const relpath in metadata) {
-        const m = metadata[relpath];
-        if (m.system_type === selectedSystem) {
-          if (m.material) mats.add(m.material);
-        }
-      }
-      Array.from(mats).sort().forEach(val => {
-        const opt = document.createElement('option');
-        opt.value = val;
-        opt.text = val;
-        filterMaterial.appendChild(opt);
-      });
-      filterMaterial.disabled = mats.size === 0;
-    }
-
-    // Populate “Size” based on system + material
-    function populateSizes() {
-      filterSize.innerHTML = '<option value="">— Select Size —</option>';
-      const sysVal = filterSystem.value;
-      const matVal = filterMaterial.value;
-      const sizes = new Set();
-      for (const relpath in metadata) {
-        const m = metadata[relpath];
-        if (m.system_type === sysVal && m.material === matVal && m.size != null) {
-          sizes.add(m.size);
-        }
-      }
-      Array.from(sizes).sort((a, b) => a - b).forEach(val => {
-        const opt = document.createElement('option');
-        opt.value = val;
-        opt.text = `${val} nm`;
-        filterSize.appendChild(opt);
-      });
-      filterSize.disabled = sizes.size === 0;
-    }
-
-    // Populate “DFT Functional” based on system + material + size
-    function populateFunctionals() {
-      filterFunctional.innerHTML = '<option value="">— Select Functional —</option>';
-      const sysVal = filterSystem.value;
-      const matVal = filterMaterial.value;
-      const sizeVal = parseFloat(filterSize.value);
-      const funcs = new Set();
-      for (const relpath in metadata) {
-        const m = metadata[relpath];
-        if (
-          m.system_type === sysVal &&
-          m.material === matVal &&
-          m.size === sizeVal &&
-          m.functional
-        ) {
-          funcs.add(m.functional);
-        }
-      }
-      Array.from(funcs).sort().forEach(val => {
-        const opt = document.createElement('option');
-        opt.value = val;
-        opt.text = val;
-        filterFunctional.appendChild(opt);
-      });
-      filterFunctional.disabled = funcs.size === 0;
-    }
-
-    // Populate “Run Type” based on system + material + size + functional
-    function populateRunTypes() {
-      filterRunType.innerHTML = '<option value="">— Select Run Type —</option>';
-      const sysVal = filterSystem.value;
-      const matVal = filterMaterial.value;
-      const sizeVal = parseFloat(filterSize.value);
-      const funcVal = filterFunctional.value;
-      const runs = new Set();
-      for (const relpath in metadata) {
-        const m = metadata[relpath];
-        if (
-          m.system_type === sysVal &&
-          m.material === matVal &&
-          m.size === sizeVal &&
-          m.functional === funcVal &&
-          m.run_type
-        ) {
-          runs.add(m.run_type);
-        }
-      }
-      Array.from(runs).sort().forEach(val => {
-        const opt = document.createElement('option');
-        opt.value = val;
-        opt.text = val;
-        filterRunType.appendChild(opt);
-      });
-      filterRunType.disabled = runs.size === 0;
-    }
-
-    // Populate the “Structure File” dropdown based on all previous selections
-    function populateFileList() {
-      selectFile.innerHTML = '<option value="">— Select File —</option>';
-      const sysVal = filterSystem.value;
-      const matVal = filterMaterial.value;
-      const sizeVal = parseFloat(filterSize.value);
-      const funcVal = filterFunctional.value;
-      const runVal = filterRunType.value;
-      const matches = [];
-
-      for (const relpath in metadata) {
-        const m = metadata[relpath];
-        if (
-          m.system_type === sysVal &&
-          m.material === matVal &&
-          m.size === sizeVal &&
-          m.functional === funcVal &&
-          m.run_type === runVal
-        ) {
-          matches.push(relpath);
-        }
-      }
-
-      matches.sort();
-      matches.forEach(relpath => {
-        const opt = document.createElement('option');
-        opt.value = relpath;
-        opt.text = metadata[relpath].filename;
-        selectFile.appendChild(opt);
-      });
-
-      if (matches.length > 0) {
-        selectFile.disabled = false;
-        styleSelect.disabled = false;   // ensure style selector is enabled
-        downloadBtn.disabled = false;
-        downloadPngBtn.disabled = false;
-        // Select and display the first file that was loaded
-        selectFile.value = matches[0];
-        loadXYZ(matches[0]);
-      } else {
-        selectFile.disabled = true;
-        styleSelect.disabled = true;
-        downloadBtn.disabled = true;
-        downloadPngBtn.disabled = true;
-        viewerDiv.innerHTML = "<b>No structure to display</b>";
-        detailsDiv.innerHTML = "<i>No details available.</i>";
-        colorControlsDiv.innerHTML = "";
-      }
-    }
-
-    // Event listeners chaining
-    filterSystem.addEventListener('change', () => {
-      if (filterSystem.value) {
-        populateMaterials();
-        filterMaterial.value = "";
-        filterMaterial.disabled = false;
-      } else {
-        filterMaterial.innerHTML = '<option value="">— Select Material —</option>';
-        filterMaterial.disabled = true;
-      }
-      filterSize.innerHTML = '<option value="">— Select Size —</option>';
-      filterSize.disabled = true;
-      filterFunctional.innerHTML = '<option value="">— Select Functional —</option>';
-      filterFunctional.disabled = true;
-      filterRunType.innerHTML = '<option value="">— Select Run Type —</option>';
-      filterRunType.disabled = true;
-      selectFile.innerHTML = '<option value="">— Select File —</option>';
-      selectFile.disabled = true;
-      styleSelect.disabled = true;
-      downloadBtn.disabled = true;
-      downloadPngBtn.disabled = true;
-      viewerDiv.innerHTML = "<b>Select a System Type first</b>";
-      detailsDiv.innerHTML = "";
-      colorControlsDiv.innerHTML = "";
-    });
-
-    filterMaterial.addEventListener('change', () => {
-      if (filterMaterial.value) {
-        populateSizes();
-        filterSize.value = "";
-        filterSize.disabled = false;
-      } else {
-        filterSize.innerHTML = '<option value="">— Select Size —</option>';
-        filterSize.disabled = true;
-      }
-      filterFunctional.innerHTML = '<option value="">— Select Functional —</option>';
-      filterFunctional.disabled = true;
-      filterRunType.innerHTML = '<option value="">— Select Run Type —</option>';
-      filterRunType.disabled = true;
-      selectFile.innerHTML = '<option value="">— Select File —</option>';
-      selectFile.disabled = true;
-      styleSelect.disabled = true;
-      downloadBtn.disabled = true;
-      downloadPngBtn.disabled = true;
-      viewerDiv.innerHTML = "<b>Select a Material first</b>";
-      detailsDiv.innerHTML = "";
-      colorControlsDiv.innerHTML = "";
-    });
-
-    filterSize.addEventListener('change', () => {
-      if (filterSize.value) {
-        populateFunctionals();
-        filterFunctional.value = "";
-        filterFunctional.disabled = false;
-      } else {
-        filterFunctional.innerHTML = '<option value="">— Select Functional —</option>';
-        filterFunctional.disabled = true;
-      }
-      filterRunType.innerHTML = '<option value="">— Select Run Type —</option>';
-      filterRunType.disabled = true;
-      selectFile.innerHTML = '<option value="">— Select File —</option>';
-      selectFile.disabled = true;
-      styleSelect.disabled = true;
-      downloadBtn.disabled = true;
-      downloadPngBtn.disabled = true;
-      viewerDiv.innerHTML = "<b>Select a Size first</b>";
-      detailsDiv.innerHTML = "";
-      colorControlsDiv.innerHTML = "";
-    });
-
-    filterFunctional.addEventListener('change', () => {
-      if (filterFunctional.value) {
-        populateRunTypes();
-        filterRunType.value = "";
-        filterRunType.disabled = false;
-      } else {
-        filterRunType.innerHTML = '<option value="">— Select Run Type —</option>';
-        filterRunType.disabled = true;
-      }
-      selectFile.innerHTML = '<option value="">— Select File —</option>';
-      selectFile.disabled = true;
-      styleSelect.disabled = true;
-      downloadBtn.disabled = true;
-      downloadPngBtn.disabled = true;
-      viewerDiv.innerHTML = "<b>Select a Functional first</b>";
-      detailsDiv.innerHTML = "";
-      colorControlsDiv.innerHTML = "";
-    });
-
-    filterRunType.addEventListener('change', () => {
-      if (filterRunType.value) {
-        populateFileList();
-      } else {
-        selectFile.innerHTML = '<option value="">— Select File —</option>';
-        selectFile.disabled = true;
-        styleSelect.disabled = true;
-        downloadBtn.disabled = true;
-        downloadPngBtn.disabled = true;
-        viewerDiv.innerHTML = "<b>Select a Run Type first</b>";
-        detailsDiv.innerHTML = "";
-        colorControlsDiv.innerHTML = "";
-      }
-    });
-
-    selectFile.addEventListener('change', () => {
-      if (selectFile.value) {
-        loadXYZ(selectFile.value);
-      }
-    });
-
-    styleSelect.addEventListener('change', () => setStyle(styleSelect.value));
-
-    // ─── CAT UI elements ──────────────────────────────────────────────────────
-    const runCatBtn   = document.getElementById("run-cat-btn");
-    const smilesInput = document.getElementById("smiles-input");
-    const splitCheck  = document.getElementById("split-checkbox");
-    const catStatus   = document.getElementById("cat-status");
-    
-    // Disable Run CAT until a structure is loaded
-    function enableCatUI(enable) {
-      runCatBtn.disabled = !enable;
-      if (!enable) {
-        catStatus.textContent = "Select a structure first.";
-      }
-    }
-    enableCatUI(false);
-    
-    // In your loadXYZ(file) success callback, add this line so CAT UI becomes enabled:
-    function afterLoadSuccess() {
-      enableCatUI(true);
-    }
-    // At the end of loadXYZ (after updateDetails), call:
-    afterLoadSuccess();
-    
-    // ─── Run CAT on button click ──────────────────────────────────────────────
-    runCatBtn.addEventListener("click", () => {
-      if (!viewer || !currentFile) return;
-      const xyzText = currentXYZText;
-      catStatus.textContent = "Running CAT…";
-      runCatBtn.disabled = true;
-    
-      fetch("https://cat-backend-integration.onrender.com/attach", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          xyztext: xyzText,
-          smiles: smilesInput.value.trim(),
-          split: splitCheck.checked
-        })
-      })
-      .then(r => {
-        if (!r.ok) return r.json().then(err => { throw err; });
-        return r.json();
-      })
-      .then(resp => {
-        // If resp is null/undefined (no JSON), bail out early:
-        if (!resp) {
-          catStatus.textContent = "No response from CAT backend.";
-          return;
-        }
-
-        // If the backend only returned a single "xyz" (old‐style), wrap it into results[]
-        if (!resp.results && resp.xyz) {
-          resp = {
-            results: [{ filename: "cat_output.xyz", xyz: resp.xyz }],
-            message: "Single structure generated"
-          };
-        }
-
-        // resp.results is an array of { filename, xyz }
-        if (!resp.results || !resp.results.length) {
-          catStatus.textContent = "CAT returned no structures.";
-          return;
-        }
-    
-        // 1) Populate the dropdown (#cat-output-select)
-        const outSelect = document.getElementById("cat-output-select");
-        outSelect.innerHTML = '<option value="">— choose —</option>';
-        resp.results.forEach((entry, idx) => {
-          const opt = document.createElement("option");
-          opt.value = idx;                  // use index as the value
-          opt.text  = entry.filename;       // show “qdXYZ.xyz” or similar
-          outSelect.appendChild(opt);
-        });
-        outSelect.disabled = false;
-        catStatus.textContent = resp.message || `Returned ${resp.results.length} structure(s)`;
-    
-        // 2) Show the first result by default
-        const first = resp.results[0];
-        loadCATResult(first);   // see helper below
-    
-        // 3) Enable “Download CAT‐XYZ” button for that first result
-        const downloadCatBtn = document.getElementById("download-catxyz-btn");
-        downloadCatBtn.disabled = false;
-        downloadCatBtn.onclick = () => downloadCATXYZ(first.filename, first.xyz);
-    
-        // 4) When user picks a different dropdown option, re‐render & update details
-        outSelect.onchange = () => {
-          const idx = parseInt(outSelect.value);
-          if (isNaN(idx) || idx < 0 || idx >= resp.results.length) return;
-          const chosen = resp.results[idx];
-          loadCATResult(chosen);
-          downloadCatBtn.disabled = false;
-          downloadCatBtn.onclick = () => downloadCATXYZ(chosen.filename, chosen.xyz);
-        };
-      })
-      .catch(err => {
-        catStatus.textContent = "Error: " + (err.detail || err);
-        console.error(err);
-      })
-      .finally(() => runCatBtn.disabled = false);
-    });
-
-    /**
-     * Helper: render a CAT result (an object { filename, xyz })
-     * into the existing 3Dmol viewer and update the “details” panel.
-     */
-    function loadCATResult(entry) {
-      // Clear old viewer
-      viewerDiv.innerHTML = "";
-      viewer = $3Dmol.createViewer(viewerDiv, { backgroundColor: "white" });
-      viewer.addModel(entry.xyz, "xyz");
-      setStyle(styleSelect.value);
-      viewer.zoomTo();
-      viewer.render();
-    
-      // Recompute simple “structure details” from the raw XYZ text
-      // (we do a naive atom‐count from the first frame)
-      const lines = entry.xyz.split("\n");
-      let nAtoms = parseInt(lines[0].trim()) || 0;
-      const stoichCounts = {};
-      let start = 2;               // skip the first two lines
-      for (let i = 0; i < nAtoms && start + i < lines.length; i++) {
-        const tokens = lines[start + i].trim().split(/\s+/);
-        if (tokens.length >= 4) {
-          const el = tokens[0];
-          stoichCounts[el] = (stoichCounts[el]||0) + 1;
-        }
-      }
-      // Build a little HTML snippet for details
-      const stoichText = Object.entries(stoichCounts)
-        .map(([el, cnt]) => `${el} (${cnt})`).join(", ") || "N/A";
-      const ratios = [];
-      const elems = Object.keys(stoichCounts);
-      for (let i = 0; i < elems.length; i++) {
-        for (let j = i+1; j < elems.length; j++) {
-          const e1 = elems[i], e2 = elems[j];
-          const r1 = (stoichCounts[e1] / stoichCounts[e2]).toFixed(3);
-          const r2 = (stoichCounts[e2] / stoichCounts[e1]).toFixed(3);
-          ratios.push(`${e1}/${e2} = ${r1}`, `${e2}/${e1} = ${r2}`);
-        }
-      }
-      const ratiosText = ratios.join(", ") || "N/A";
-    
-      detailsDiv.innerHTML = `
-        <b>Filename:</b> ${entry.filename}<br>
-        <b>Total atoms:</b> ${nAtoms}<br>
-        <b>Stoichiometry:</b> ${stoichText}<br>
-        <b>Ratios:</b> ${ratiosText}
-      `;
-      // Rebuild color pickers based on the new stoichiometry
-      setupColorControls(stoichCounts);
-      applyColorOverrides();
-    }
-    
-    /**
-     * Helper: trigger a download of a CAT result’s XYZ text
-     */
-    function downloadCATXYZ(fname, xyzText) {
-      const blob = new Blob([xyzText], { type: "chemical/x-xyz" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = fname;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
-  </script>
-  <!-- Video Export Modal -->
-<div id="videoExportModal" style="display:none; position:fixed; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); z-index:1000; align-items:center; justify-content:center;">
-  <div style="background:white; padding:2em; border-radius:10px; box-shadow:0 0 24px #0006; min-width:320px;">
-    <h3>Export MD Trajectory as Video</h3>
-    <form id="videoExportForm">
-      <label>
-        Start frame: <input type="number" id="videoStartFrame" min="1" required>
-      </label>
-      <br>
-      <label>
-        End frame: <input type="number" id="videoEndFrame" min="1" required>
-      </label>
-      <br>
-      <label>
-        Speed:
-        <select id="videoSpeed">
-          <option value="0.25">0.25x</option>
-          <option value="0.5">0.5x</option>
-          <option value="1" selected>1x (real time)</option>
-          <option value="2">2x</option>
-        </select>
-      </label>
-      <br>
-      <progress id="videoExportProgress" value="0" max="100" style="width:100%; display:none;"></progress>
-      <br>
-      <button type="submit">Start Export</button>
-      <button type="button" id="videoExportCancel">Cancel</button>
-    </form>
-    <div id="videoExportStatus" style="color:#008000; margin-top:1em;"></div>
-  </div>
-</div>
+  }
+</script>
 </body>
 </html>
 
