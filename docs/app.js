@@ -1,47 +1,64 @@
-// ---- Config
-const CAT_ATTACH = 'http://127.0.0.1:8000/attach';
+/* app.js  — merged viewer + miniCAT + properties */
 
-// ---- State
+// ------------------------- Config -------------------------
+const CAT_ATTACH = 'http://127.0.0.1:8000/attach';
+const PLOT_URL   = 'http://127.0.0.1:8000/plot';
+
+// ------------------------- State --------------------------
 let metadata = {};
 let viewer = null;
 let currentFile = "";
 let currentXYZText = "";
 let currentMeta = null;      // keep selected meta
 let atomColors = {};
-
-// ---- DOM map
+let lastQDPath = null;   // remember the last structure chosen from the filters
+// ------------------------- DOM map ------------------------
 const els = {
-  sys: document.getElementById('filter-system'),
-  mat: document.getElementById('filter-material'),
-  size: document.getElementById('filter-size'),
-  fun: document.getElementById('filter-functional'),
-  run: document.getElementById('filter-runtype'),
-  file: document.getElementById('xyz-file'),
-  down: document.getElementById('download-btn'),
-  downpng: document.getElementById('download-png-btn'),
-  reset: document.getElementById('reset-btn'),
-  viewer: document.getElementById('viewer'),
-  traj: document.getElementById('traj-controls'),
-  details: document.getElementById('details-content'),
-  ratios: document.getElementById('ratios-wrap'),
-  stoTot: document.getElementById('stoich-totals'),
-  stoCore: document.getElementById('stoich-core'),
-  stoShell: document.getElementById('stoich-shell'),
-  stoLig: document.getElementById('stoich-lig'),
+  // Filters + viewer
+  sys:   document.getElementById('filter-system'),
+  mat:   document.getElementById('filter-material'),
+  size:  document.getElementById('filter-size'),
+  fun:   document.getElementById('filter-functional'),
+  run:   document.getElementById('filter-runtype'),
+  file:  document.getElementById('xyz-file'),
+  down:      document.getElementById('download-btn'),
+  downpng:   document.getElementById('download-png-btn'),
+  reset:     document.getElementById('reset-btn'),
+  viewer:    document.getElementById('viewer'),
+  traj:      document.getElementById('traj-controls'),
+  details:   document.getElementById('details-content'),
+  ratios:    document.getElementById('ratios-wrap'),
+  stoTot:    document.getElementById('stoich-totals'),
+  stoCore:   document.getElementById('stoich-core'),
+  stoShell:  document.getElementById('stoich-shell'),
+  stoLig:    document.getElementById('stoich-lig'),
 
-  // miniCAT
-  anRows: document.getElementById('an_rows'),
-  anAdd: document.getElementById('an_add'),
-  anDummy: document.getElementById('an_dummy'),
-  runCat: document.getElementById('run-cat-btn'),
-  catStatus: document.getElementById('cat-status'),
-  catSelect: document.getElementById('cat-output-select'),
+  // miniCAT card + toggle
+  catToggleBtn: document.getElementById('toggle-cat-card'),
+  catCard:      document.getElementById('cat-card'),
+
+  // miniCAT UI
+  anRows:      document.getElementById('an_rows'),
+  anAdd:       document.getElementById('an_add'),
+  anDummy:     document.getElementById('an_dummy'),
+  runCat:      document.getElementById('run-cat-btn'),
+  catStatus:   document.getElementById('cat-status'),
+  catSelect:   document.getElementById('cat-output-select'),
   catDownload: document.getElementById('download-catxyz-btn'),
-  term: document.getElementById('cat-term'),
-  resetCat: document.getElementById('reset-cat-btn'),
+  term:        document.getElementById('cat-term'),
+  resetCat:    document.getElementById('reset-cat-btn'),
+
+  // Properties (Proprieties) card
+  plotBtn:      document.getElementById('toggle-props-btn'),
+  propsCard:    document.getElementById('props-card'),
+  propsBody:    document.getElementById('props-body'),
+  propsLoad:    document.getElementById('props-loading'),
+  propsFolder:  document.getElementById('props-folder-label'),
 };
 
 const tooltipEl = document.getElementById('tooltip');
+
+// --------------------- Tooltips ---------------------------
 document.addEventListener('mouseover', e=>{
   const t=e.target.getAttribute('data-help'); if(!t) return;
   tooltipEl.textContent=t; tooltipEl.style.left=(e.clientX+12)+'px'; tooltipEl.style.top=(e.clientY+12)+'px'; tooltipEl.classList.add('show');
@@ -53,7 +70,7 @@ document.addEventListener('mouseout', e=>{
   if(e.target.getAttribute('data-help')) tooltipEl.classList.remove('show');
 });
 
-// ---- helpers
+// --------------------- Helpers ----------------------------
 function jmolHex(el){
   const v = $3Dmol.elementColors.Jmol[el];
   if (typeof v === 'number') return '#'+v.toString(16).padStart(6,'0');
@@ -74,7 +91,24 @@ function autoPrefix(meta){
   return parts.join('_') + '_passivated';
 }
 
-// ---- style
+// Toggle miniCAT card
+els.catToggleBtn?.addEventListener('click', () => {
+  const hidden = els.catCard.classList.toggle('hidden');
+  els.catToggleBtn.textContent = hidden ? 'Attach Ligand using miniCAT' : 'Hide miniCAT';
+});
+
+// Enable/disable “Plot Proprieties” button
+function setPlotEnabled(on) {
+  if (!els.plotBtn) return;
+  els.plotBtn.disabled = !on;
+  els.plotBtn.classList.toggle('opacity-60', !on);
+  els.plotBtn.classList.toggle('cursor-not-allowed', !on);
+}
+// default disabled until a structure is loaded
+setPlotEnabled(false);
+els.propsCard?.classList.add('hidden');
+
+// --------------------- Viewer styles -----------------------
 function applyStyle(){
   if(!viewer) return;
   const mode = document.querySelector('input[name="style-radio"]:checked').value;
@@ -93,7 +127,7 @@ function applyStyle(){
 }
 document.querySelectorAll('input[name="style-radio"]').forEach(r=>r.addEventListener('change',applyStyle));
 
-// ---- stoichiometry
+// --------------------- Stoichiometry -----------------------
 function chipHTML(el,n){
   const hex = atomColors[el] || jmolHex(el);
   return `<span class="atom-chip border" data-el="${el}"
@@ -135,7 +169,7 @@ function updateStoichiometry(meta){
   bindChipPickers(document);
 }
 
-// ---- ratios
+// ----------------------- Ratios ---------------------------
 function renderRatios(obj){
   els.ratios.innerHTML='';
   Object.entries(obj||{}).sort().forEach(([k,v])=>{
@@ -145,7 +179,7 @@ function renderRatios(obj){
   });
 }
 
-// ---- MD controls
+// -------------------- MD controls -------------------------
 function setupTrajectoryControls(){
   const n = viewer.getNumFrames?.() || 0;
   els.traj.innerHTML = '';
@@ -197,7 +231,7 @@ function setupTrajectoryControls(){
   els.traj.appendChild(wrap);
 }
 
-// ---- filter chain (unchanged)
+// --------------------- Filter chain -----------------------
 function populateSystemTypes(){ const s=new Set(); for(const p in metadata){ const m=metadata[p]; if(m.system_type) s.add(m.system_type);} [...s].sort().forEach(v=>{const o=document.createElement('option'); o.value=v; o.text=v; els.sys.appendChild(o);}); }
 function populateMaterials(){ els.mat.innerHTML='<option value="">— Select —</option>'; const sys=els.sys.value; const s=new Set(); for(const p in metadata){ const m=metadata[p]; if(m.system_type===sys && m.material) s.add(m.material);} [...s].sort().forEach(v=>{const o=document.createElement('option'); o.value=v; o.text=v; els.mat.appendChild(o);}); els.mat.disabled=s.size===0; }
 function populateSizes(){ els.size.innerHTML='<option value="">— Select —</option>'; const sys=els.sys.value, mat=els.mat.value; const s=new Set(); for(const p in metadata){ const m=metadata[p]; if(m.system_type===sys && m.material===mat && m.size!=null) s.add(m.size);} [...s].sort((a,b)=>a-b).forEach(v=>{const o=document.createElement('option'); o.value=v; o.text=`${v} nm`; els.size.appendChild(o);}); els.size.disabled=s.size===0; }
@@ -212,7 +246,7 @@ els.fun.addEventListener('change', ()=>{ if(els.fun.value){ populateRunTypes(); 
 els.run.addEventListener('change', ()=>{ if(els.run.value) populateFileList(); });
 els.file.addEventListener('change', ()=>{ if(els.file.value) loadXYZ(els.file.value); });
 
-// ---- details + load
+// ------------------ Details + load XYZ --------------------
 function renderDetails(meta,file){
   const sizeText = meta.size!=null ? `${meta.size} nm` : 'N/A';
   els.details.innerHTML = `
@@ -231,6 +265,7 @@ function renderDetails(meta,file){
 
 function loadXYZ(file){
   currentFile=file;
+  lastQDPath = file;
   fetch(`./${file}`).then(r=>{ if(!r.ok) throw new Error('File not found'); return r.text();})
   .then(data=>{
     const meta=metadata[file]||{};
@@ -261,6 +296,7 @@ function loadXYZ(file){
     updateStoichiometry(meta);
     viewer.zoomTo(); viewer.render();
 
+    setPlotEnabled(true);                // enable "Plot Proprieties"
     if (els.runCat) els.runCat.disabled = false;
   })
   .catch(err=>{
@@ -271,12 +307,12 @@ function loadXYZ(file){
   });
 }
 
-// ---- downloads/reset
+// ---------------- Downloads / Reset -----------------------
 els.down?.addEventListener('click', ()=>{ if(!currentFile) return; const a=document.createElement('a'); a.href=`./${currentFile}`; a.download='structure.xyz'; document.body.appendChild(a); a.click(); a.remove();});
 els.downpng?.addEventListener('click', ()=>{ if(!viewer) return; viewer.render(); const uri=viewer.pngURI(); downloadDataURL(uri,'structure.png');});
 els.reset?.addEventListener('click', ()=> window.location.reload());
 
-// ---- miniCAT UI
+// -------------------- miniCAT UI --------------------------
 function mkRow(smiles = '', ratio = '') {
   const row = document.createElement('div');
   row.className = 'grid grid-cols-1 md:grid-cols-3 gap-2';
@@ -311,7 +347,7 @@ function collectJob(rowsId, dummyId, modeName){
   const dist = `${norm.map(v=>v.toFixed(3)).join(':')}:${mode}`;
   return { ligands: ligs, dummy: document.getElementById(dummyId).value.trim(), dist };
 }
-// init rows
+// init ligand row add
 if (els.anRows && els.anAdd){
   els.anAdd.onclick = ()=> els.anRows.appendChild(mkRow());
 }
@@ -327,7 +363,7 @@ els.runCat?.addEventListener('click', ()=>{
   if (anJob?.error){
     const msg = 'Error: ' + anJob.error;
     els.catStatus.textContent = msg;
-    window.alert(msg);        // popup
+    window.alert(msg);
     return;
   }
   if (!anJob){
@@ -398,7 +434,8 @@ function loadCATResult(entry){
     </div>`;
   updateStoichiometry({stoichiometry:sto});
 }
-// ---- Reset miniCAT process
+
+// Reset miniCAT process
 function resetMiniCAT(){
   els.anRows.innerHTML = '';
   els.catStatus.textContent = 'Add ligands and select a QD.';
@@ -410,6 +447,76 @@ function resetMiniCAT(){
 }
 els.resetCat?.addEventListener('click', resetMiniCAT);
 
-// ---- boot
-fetch('metadata.json').then(r=>r.json()).then(d=>{ metadata=d; populateSystemTypes();}).catch(()=>console.warn('metadata.json missing'));
+// ----------------- Properties (Proprieties) ----------------
+function folderOfCurrentFile() {
+  // use the last QD selected via the filters
+  if (!lastQDPath) return null;
+
+  const parts = String(lastQDPath).split('/');
+  parts.pop(); // remove filename
+  const last = parts[parts.length - 1];
+  if (last === 'geo_opt' || last === 'md') {
+    parts.pop(); // remove run-type dir so we land on .../12ang
+  }
+  return parts.join('/');
+}
+
+function showPropsCard() {
+  els.propsCard.classList.remove('hidden');
+  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+function renderIframeWithHTML(html) {
+  els.propsBody.innerHTML = '';
+  const frame = document.createElement('iframe');
+  frame.setAttribute('title', 'interactive-properties');
+  frame.className = 'w-full h-[820px] rounded border';
+  frame.srcdoc = html;
+  els.propsBody.appendChild(frame);
+}
+els.plotBtn?.addEventListener('click', () => {
+  if (els.plotBtn.disabled) return;
+  const folder = folderOfCurrentFile();
+  if (!folder) { alert('Load a structure first, then click "Plot Proprieties".'); return; }
+
+  // Show card + loader
+  els.propsFolder.textContent = folder;
+  els.propsBody.innerHTML = '';
+  els.propsLoad.textContent = 'Preparing command…';
+  els.propsBody.appendChild(els.propsLoad);
+  showPropsCard();
+
+  fetch(PLOT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      folder: folder,
+      fuzzy: 'fuzzy_data.npz',
+      pdos:  'pdos_data.csv',
+      coop:  'coop_data.csv',
+      out:   'fuzzy_pdos_coop_interactive.html',
+      normalize_coop: true
+    })
+  })
+  .then(async r => {
+    const data = await r.json().catch(()=>null);
+    if (!r.ok) throw (data?.detail || `HTTP ${r.status}`);
+    return data;
+  })
+  .then(resp => {
+    if (!resp?.html) {
+      els.propsBody.innerHTML = '<div class="text-red-600 text-sm">No HTML returned from backend.</div>';
+      return;
+    }
+    renderIframeWithHTML(resp.html);
+  })
+  .catch(err => {
+    els.propsBody.innerHTML = `<div class="text-red-600 text-sm">Error: ${err}</div>`;
+  });
+});
+
+// ------------------------- Boot ---------------------------
+fetch('metadata.json')
+  .then(r=>r.json())
+  .then(d=>{ metadata=d; populateSystemTypes();})
+  .catch(()=>console.warn('metadata.json missing'));
 

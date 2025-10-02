@@ -164,23 +164,36 @@
       </div>
     </div>
   </section>
+<!-- Toggle button fixed at the bottom of the page area -->
+<div class="flex justify-center my-6">
+  <button id="toggle-props-btn"
+          class="px-6 py-2 rounded-lg bg-indigo-600 text-white font-semibold shadow opacity-60 cursor-not-allowed"
+          disabled>
+    Plot Proprieties
+  </button>
+</div>
+
+<!-- Proprieties card (hidden until the button is clicked) -->
+<section id="props-card" class="card mb-12 hidden">
+  <div class="card-head">
+    <h3 class="font-semibold">Proprieties</h3>
+  </div>
+
+  <div id="props-toolbar" class="px-6 pb-2 text-sm text-slate-600">
+    Folder: <span id="props-folder-label" class="font-mono"></span>
+  </div>
+
+  <div id="props-body" class="p-6">
+    <div id="props-loading" class="text-sm text-slate-600">Preparing command…</div>
+    <!-- We will inject an iframe here with the returned HTML -->
+  </div>
+</section>
 </main>
 
 <div id="tooltip" class="tooltip rounded-lg bg-slate-900 text-white text-xs px-2 py-1 shadow-lg"></div>
 
 <script src="file_list.js"></script>
 <script src="app.js"></script>
-
-<script>
-  const toggleBtn = document.getElementById('toggle-cat-card');
-  const catCard   = document.getElementById('cat-card');
-  if (toggleBtn && catCard) {
-    toggleBtn.addEventListener('click', () => {
-      const hidden = catCard.classList.toggle('hidden');
-      toggleBtn.textContent = hidden ? 'Attach Ligand using miniCAT' : 'Hide miniCAT';
-    });
-  }
-</script>
 </body>
 </html>
 

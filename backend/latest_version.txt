@@ -5,12 +5,6 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-PROPS_ROOT   = os.environ.get(
-    "PROPS_ROOT",
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "docs"))
-)
-PROPS_SUBDIR = os.environ.get("PROPS_SUBDIR", "properties")  # <-- use 'properties'
-
 class Job(BaseModel):
     ligands: List[str] = Field(..., min_items=1)
     dummy: str
@@ -94,63 +88,6 @@ def attach(payload: Dict):
             "stderr": proc.stderr,
         }
     finally:
-        shutil.rmtree(tmp, ignore_errors=True)
-class PlotRequest(BaseModel):
-    folder: str
-    fuzzy: str
-    pdos: str
-    coop: str
-    out: str
-    normalize_coop: bool = True
-
-@app.post("/plot")
-def plot_interactive(req: PlotRequest):
-    """
-    Run: python plot_interactive.py --fuzzy F --pdos P --coop C --out OUT [--normalize-coop]
-    in <req.folder>/properties, then return the generated HTML content.
-    """
-    base = os.path.normpath(os.path.join(PROPS_ROOT, req.folder or ""))
-    if not base.startswith(PROPS_ROOT):
-        raise HTTPException(status_code=400, detail="Invalid folder path")
-    workdir = os.path.join(base, PROPS_SUBDIR)
-    if not os.path.isdir(workdir):
-        raise HTTPException(status_code=400, detail=f"'properties' folder not found: {workdir}")
-    fuzzy_path = os.path.join(workdir, req.fuzzy)
-    pdos_path  = os.path.join(workdir, req.pdos)
-    coop_path  = os.path.join(workdir, req.coop)
-    out_path   = os.path.join(workdir, req.out)
-
-    for p in (fuzzy_path, pdos_path, coop_path):
-        if not os.path.isfile(p):
-            raise HTTPException(status_code=400, detail=f"Missing input file: {p}")
-
-    cmd = [
-        "python", "plot_interactive.py",
-        "--fuzzy", req.fuzzy,
-        "--pdos",  req.pdos,
-        "--coop",  req.coop,
-        "--out",   req.out,
-    ]
-    if req.normalize_coop:
-        cmd.append("--normalize-coop")
-
-    try:
-        run = subprocess.run(cmd, cwd=workdir, check=True, capture_output=True, text=True)
-    except subprocess.CalledProcessError as e:
-        err = (e.stderr or e.stdout or "").strip()
-        raise HTTPException(status_code=500, detail=f"plot_interactive failed: {err}")
-
-    if not os.path.isfile(out_path):
-        raise HTTPException(status_code=500, detail=f"Output HTML not found: {out_path}")
-
-    with open(out_path, "r", encoding="utf-8") as f:
-        html = f.read()
-
-    return {
-        "cmd": " ".join(cmd),
-        "stdout": run.stdout or "",
-        "stderr": run.stderr or "",
-        "html": html,
-        "message": "OK",
-    }
+        try: shutil.rmtree(tmp)
+        except OSError: pass
 
